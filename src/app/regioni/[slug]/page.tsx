@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { SiteHeader } from "@/components/site-header";
 import { ArrowLink, Chip, Container, Eyebrow, Figure, GuideCard, PageHeader, SectionHeading, TripCard } from "@/components/ui";
 import { guides } from "@/data/guides";
 import { getRegion, regions } from "@/data/regions";
@@ -31,7 +30,6 @@ export default async function RegionPage({ params }: PageProps<"/regioni/[slug]"
 
   return (
     <>
-      <SiteHeader />
       <PageHeader eyebrow="Reģions" title={region.name} intro={region.tagline}>
         <div className="mt-12">
           <Figure scene={region.scene} seed={`region-${region.slug}`} caption={region.waters.join(" · ")} />

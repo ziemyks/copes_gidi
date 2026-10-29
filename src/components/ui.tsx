@@ -8,13 +8,13 @@ import { formatPrice } from "@/lib/site";
 import { Scene, type SceneVariant } from "./scene";
 
 export function Container({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return <div className={`mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ${className}`}>{children}</div>;
+  return <div className={`mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 ${className}`}>{children}</div>;
 }
 
 export function Eyebrow({ index, children, className = "" }: { index?: string; children: React.ReactNode; className?: string }) {
   return (
     <p className={`eyebrow flex items-center gap-3 ${className}`}>
-      {index && <span className="text-gold-deep">{index}</span>}
+      {index && <span className="text-accent-deep">{index}</span>}
       {index && <span className="h-px w-6 bg-current opacity-40" />}
       {children}
     </p>
@@ -61,9 +61,9 @@ export function ArrowLink({ href, children }: { href: string; children: React.Re
 export function Chip({ children, tone = "light" }: { children: React.ReactNode; tone?: "light" | "dark" }) {
   const styles =
     tone === "dark"
-      ? "bg-instrument/85 text-instrument-text backdrop-blur"
-      : "border border-rule bg-raised text-text";
-  return <span className={`inline-block rounded-full px-2.5 py-0.5 text-xs ${styles}`}>{children}</span>;
+      ? "bg-black/75 text-ink backdrop-blur"
+      : "border border-rule bg-black/40 text-text";
+  return <span className={`inline-block rounded-full px-3 py-1 font-mono text-[0.68rem] font-bold uppercase ${styles}`}>{children}</span>;
 }
 
 /** Fotogrāfija, ja tāda ir, citādi ilustrēta ainava. */
@@ -104,7 +104,7 @@ export function Figure({
 }) {
   return (
     <figure>
-      <div className={`relative overflow-hidden rounded-lg border border-rule ${className}`}>
+      <div className={`card dogear overflow-hidden ${className}`}>
         <Scene variant={scene} seed={seed} className="absolute inset-0 h-full w-full" />
       </div>
       <figcaption className="eyebrow mt-3 flex justify-between gap-4">
@@ -144,7 +144,7 @@ export function TripCard({ trip }: { trip: Trip }) {
   const guide = getGuide(trip.guide);
   const region = getRegion(trip.region);
   return (
-    <Link href={`/braucieni/${trip.slug}`} className="card group flex h-full flex-col overflow-hidden">
+    <Link href={`/braucieni/${trip.slug}`} className="card dogear group flex h-full flex-col overflow-hidden">
       <div className="relative aspect-[4/3] overflow-hidden border-b border-rule">
         <Photo alt={trip.title} scene={trip.scene} seed={trip.slug} />
         <div className="absolute left-3 top-3 flex flex-wrap gap-1.5">
@@ -160,7 +160,7 @@ export function TripCard({ trip }: { trip: Trip }) {
         <p className="mt-1 text-sm text-muted">Gids: {guide?.name}</p>
         <CardFooter>
           <p className="text-sm text-muted">
-            no <span className="text-base font-semibold text-ink">{formatPrice(trip.priceFrom)}</span> / {trip.priceUnit}
+            no <span className="font-display text-lg font-black text-ink">{formatPrice(trip.priceFrom)}</span> / {trip.priceUnit}
           </p>
           <span className="eyebrow">{trip.hours} h</span>
         </CardFooter>
@@ -173,7 +173,7 @@ export function GuideCard({ guide, showBio = false }: { guide: Guide; showBio?: 
   const region = getRegion(guide.region);
   const names = speciesNames(guide.species);
   return (
-    <Link href={`/gidi/${guide.slug}`} className="card group flex h-full flex-col p-6">
+    <Link href={`/gidi/${guide.slug}`} className="card dogear group flex h-full flex-col p-6">
       <div className="flex items-center gap-4">
         <Avatar guide={guide} />
         <div className="min-w-0">
@@ -194,7 +194,7 @@ export function GuideCard({ guide, showBio = false }: { guide: Guide; showBio?: 
         <span className="eyebrow">
           {guide.yearsExperience} g. · {guide.languages.length} valodas
         </span>
-        <span className="text-sm font-medium text-ink group-hover:underline group-hover:decoration-gold group-hover:underline-offset-4">
+        <span className="font-mono text-xs font-bold uppercase text-accent">
           Profils →
         </span>
       </CardFooter>
@@ -215,7 +215,7 @@ export function PageHeader({
 }) {
   return (
     <section className="border-b border-rule">
-      <Container className="pb-14 pt-16 sm:pt-24">
+      <Container className="pb-16 pt-32 sm:pt-44">
         <Eyebrow className="mb-6">{eyebrow}</Eyebrow>
         <h1 className="display max-w-4xl">{title}</h1>
         {intro && <p className="mt-6 max-w-2xl text-lg text-muted">{intro}</p>}

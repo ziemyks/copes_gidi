@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { InquiryForm } from "@/components/forms";
-import { SiteHeader } from "@/components/site-header";
 import { Avatar, Chip, Container, Eyebrow, Figure, TripCard } from "@/components/ui";
 import { getGuide, guides } from "@/data/guides";
 import { getRegion } from "@/data/regions";
@@ -43,10 +42,9 @@ export default async function GuidePage({ params }: PageProps<"/gidi/[slug]">) {
 
   return (
     <>
-      <SiteHeader />
 
       <section className="border-b border-rule">
-        <Container className="pb-12 pt-10">
+        <Container className="pb-12 pt-32 sm:pt-40">
           <nav className="eyebrow flex gap-2">
             <Link href="/gidi" className="hover:text-ink">
               Gidi
@@ -131,7 +129,7 @@ export default async function GuidePage({ params }: PageProps<"/gidi/[slug]">) {
             )}
           </div>
 
-          <aside className="lg:sticky lg:top-24 lg:self-start">
+          <aside className="relative z-[45] lg:sticky lg:top-28 lg:self-start">
             <div className="card p-6 shadow-lift-1">
               <h2 className="title text-xl">Sazinies ar gidu</h2>
               <p className="mb-6 mt-1 text-sm text-muted">Parasti atbild 24–48 stundu laikā.</p>

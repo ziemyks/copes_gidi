@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { InquiryForm } from "@/components/forms";
-import { SiteHeader } from "@/components/site-header";
 import { ArrowLink, Avatar, Chip, Container, Eyebrow, Photo, TripCard } from "@/components/ui";
 import { getGuide } from "@/data/guides";
 import { getRegion } from "@/data/regions";
@@ -41,8 +40,7 @@ export default async function TripPage({ params }: PageProps<"/braucieni/[slug]"
 
   return (
     <>
-      <SiteHeader />
-      <Container className="pb-24 pt-10">
+      <Container className="pb-24 pt-32 sm:pt-40">
         <nav className="eyebrow flex gap-2">
           <Link href="/braucieni" className="hover:text-ink">
             Braucieni
@@ -132,7 +130,7 @@ export default async function TripPage({ params }: PageProps<"/braucieni/[slug]"
             )}
           </div>
 
-          <aside className="lg:sticky lg:top-24 lg:self-start">
+          <aside className="relative z-[45] lg:sticky lg:top-28 lg:self-start">
             <div className="card p-6 shadow-lift-1">
               <p className="eyebrow">Cena no</p>
               <p className="mt-1">

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { GuideExplorer, GuideGrid } from "@/components/explorers";
-import { SiteHeader } from "@/components/site-header";
 import { Container, PageHeader } from "@/components/ui";
 import { allLanguages, guides } from "@/data/guides";
 import { regions } from "@/data/regions";
@@ -14,10 +13,9 @@ export const metadata: Metadata = {
 export default function GuidesPage() {
   return (
     <>
-      <SiteHeader />
       <PageHeader
         eyebrow="Mūsu gidi"
-        title="Gidi, kas pazīst katru bedri."
+        title="Mūsu gidi"
         intro={`${guides.length} gidi · ${regions.length} reģioni · ${allLanguages.length} valodas. Katrs gids ir sava biznesa īpašnieks.`}
       />
       <Container className="pb-24 pt-10">

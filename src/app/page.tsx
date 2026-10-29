@@ -1,28 +1,32 @@
 import Link from "next/link";
-import { Carousel, CarouselItem } from "@/components/carousel";
+import { GuideDeck } from "@/components/guide-deck";
 import { Scene } from "@/components/scene";
-import { SiteHeader } from "@/components/site-header";
-import { ArrowLink, Container, Eyebrow, Figure, GuideCard, SectionHeading, TripCard } from "@/components/ui";
+import { Bobber, Fish, Hook, Lure, Sparkle } from "@/components/stickers";
+import { Container, Photo } from "@/components/ui";
 import { guides } from "@/data/guides";
-import { regions } from "@/data/regions";
+import { getRegion, regions } from "@/data/regions";
 import { species } from "@/data/species";
-import { trips, tripsByRegion, tripsBySpecies } from "@/data/trips";
-import { site } from "@/lib/site";
+import { tripTypes, trips, tripsByRegion, type Trip, type TripType } from "@/data/trips";
+import { formatPrice } from "@/lib/site";
 
 const months = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jūn", "Jūl", "Aug", "Sep", "Okt", "Nov", "Dec"];
 
 const steps = [
   {
-    title: "Izvēlies braucienu un gidu",
-    text: "Salīdzini braucienus pēc reģiona, zivs un cenas. Katram gidam ir profils ar pieredzi un valodām.",
+    title: "Izvēlies braucienu",
+    text: "Nekādu “garantēta loma” solījumu. Reģions, zivs, cena — salīdzini un izvēlies pats.",
   },
   {
     title: "Nosūti pieprasījumu",
-    text: "Norādi vēlamos datumus un pastāsti par sevi. Tas ir bez maksas un bez saistībām.",
+    text: "Datumi, cilvēku skaits, tava pieredze. Bez maksas un bez saistībām.",
   },
   {
-    title: "Gids apstiprina 48 h laikā",
-    text: "Gids atbild personīgi. Priekšapmaksu veic tikai pēc tam, kad datumi ir apstiprināti.",
+    title: "Gids apstiprina",
+    text: "Atbild īsts cilvēks 24–48 stundu laikā. Priekšapmaksa tikai pēc apstiprinājuma.",
+  },
+  {
+    title: "Uz ūdens",
+    text: "Tu copē, gids zina kur. Lineāls zivju mērīšanai — iekļauts.",
   },
 ];
 
@@ -36,267 +40,263 @@ const faq = [
     a: "Pieprasījuma nosūtīšana ir bezmaksas. Kad gids apstiprina datumus, tu veic priekšapmaksu tieši gidam. Atlikumu parasti maksā brauciena dienā.",
   },
   {
-    q: "Vai varu braukt bez iepriekšējas pieredzes?",
+    q: "Vai varu braukt bez pieredzes?",
     a: "Protams. Daudzi braucieni ir paredzēti iesācējiem un ģimenēm, un aprīkojums ir iekļauts. Braucienu sarakstā vari atlasīt piemērotākos.",
   },
   {
-    q: "Kas notiek, ja ir slikti laikapstākļi?",
+    q: "Kas notiek, ja ir slikts laiks?",
     a: "Drošība ir pirmajā vietā. Ja gids uzskata, ka laikapstākļi ir bīstami, brauciens tiek pārcelts uz citu datumu vai nauda tiek atmaksāta.",
   },
   {
-    q: "Vai drīkst paturēt noķertās zivis?",
+    q: "Vai drīkst paturēt zivis?",
     a: "Atbilstoši Latvijas noteikumiem par izmēriem un lomu limitiem — jā. Daudzi gidi lielās zivis (īpaši samus un lašus) iesaka atlaist pēc fotografēšanas.",
   },
 ];
 
-const darkSelect =
-  "min-h-11 flex-1 rounded-[3px] border border-instrument-rule bg-instrument-raised px-3 text-[0.9375rem] text-instrument-text outline-none focus:border-gold";
+// Pakalpojumu kāršu krāsas — kā paraugā: tumšs, gaišs, gaišs, oranžs papīrs
+const cardStyles = [
+  { box: "paper paper-dark text-ink", pill: "border-white/15 hover:bg-white/10", fold: "#5a5a5a", arrow: "text-accent" },
+  { box: "paper", pill: "border-black/15 hover:bg-black/5", fold: "#8d8d8d", arrow: "text-accent" },
+  { box: "paper", pill: "border-black/15 hover:bg-black/5", fold: "#8d8d8d", arrow: "text-accent" },
+  { box: "paper paper-accent", pill: "border-black/20 hover:bg-black/10", fold: "#a83a12", arrow: "text-on-accent" },
+];
 
 export default function Home() {
-  const featuredTrips = trips.slice(0, 8);
-  const featuredGuides = guides.slice(0, 6);
+  const showcase = trips.slice(0, 6);
+  const regionNames = Object.fromEntries(regions.map((r) => [r.slug, r.name]));
 
   return (
     <>
-      <SiteHeader />
-
       {/* Hero */}
-      <section className="border-b border-rule">
-        <Container className="pb-12 pt-16 sm:pb-16 sm:pt-24">
-          <Eyebrow>
-            {guides.length} gidi · {regions.length} reģioni · {trips.length} braucieni
-          </Eyebrow>
-          <h1 className="display mt-6 max-w-5xl">
-            Noķer savas dzīves zivi.{" "}
-            <span className="text-muted">Kopā ar kādu, kas šos ūdeņus pazīst.</span>
+      <section className="relative flex h-[100svh] max-h-[1000px] min-h-[640px] items-center justify-center overflow-hidden px-6 pb-16 pt-28 text-center">
+        <Sparkle className="twinkle absolute left-[16%] top-[24%] h-8 w-8 text-ink" />
+        <Sparkle className="twinkle absolute bottom-[22%] right-[14%] h-5 w-5 text-ink [animation-delay:1.4s]" />
+        <Sparkle className="twinkle absolute right-[30%] top-[18%] h-3 w-3 text-accent [animation-delay:0.7s]" />
+        <div>
+          <h1 className="mega">
+            <span className="sr-only">Cope bez pasakām</span>
+            <span aria-hidden="true">
+              C
+              <span className="sticker">
+                <Bobber />
+              </span>
+              pe <span className="text-accent">bez</span>
+              <br />
+              pasakām
+              <span className="sticker w-[0.25em] [&>svg]:h-[0.95em] [&>svg]:w-[1.35em] [&>svg]:translate-x-[-62%]">
+                <Fish />
+              </span>
+            </span>
           </h1>
-          <p className="mt-8 max-w-xl text-lg text-muted">
-            Artūrs zina katru Ventas bedri. Jānis 18 gadus ķer līdakas Rāznā. Māris naktīs medī samus Daugavā. Tu
-            maksā tikai pēc tam, kad gids apstiprina datumus.
+          <p className="mx-auto mt-8 max-w-md font-mono text-sm text-muted sm:text-base">
+            Īsti gidi. Īsti ūdeņi. Īstas zivis. Jo stāsti par “tik lielu” mums arī ir apnikuši.
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-10 flex flex-wrap justify-center gap-3">
             <Link href="/braucieni" className="btn btn-primary">
               Atrast braucienu
             </Link>
-            <Link href="#ka-tas-strada" className="btn btn-secondary">
-              Kā tas strādā
+            <Link href="/gidi" className="btn btn-secondary">
+              Iepazīt gidus
             </Link>
           </div>
-        </Container>
+        </div>
+      </section>
 
-        <Container className="pb-16 sm:pb-24">
-          <div className="relative">
-            <Figure
-              scene="lake"
-              seed="hero-latgale"
-              caption="Rāzna, Latgale — rītausma"
-              meta="56.3° N · 27.5° E"
-              className="aspect-[4/3] sm:aspect-[21/9]"
-            />
-            <form
-              action="/braucieni"
-              className="relative mt-4 flex flex-col gap-2 rounded-lg bg-instrument p-2 shadow-lift-2 sm:flex-row lg:absolute lg:bottom-14 lg:left-6 lg:mt-0 lg:w-[640px]"
-            >
-              <select name="regions" aria-label="Reģions" className={darkSelect}>
-                <option value="">Jebkurš reģions</option>
-                {regions.map((r) => (
-                  <option key={r.slug} value={r.slug}>
-                    {r.name}
-                  </option>
-                ))}
-              </select>
-              <select name="suga" aria-label="Zivs" className={darkSelect}>
-                <option value="">Jebkura zivs</option>
-                {species.map((s) => (
-                  <option key={s.slug} value={s.slug}>
-                    {s.name}
-                  </option>
-                ))}
-              </select>
-              <button className="btn btn-gold min-h-11">Meklēt</button>
-            </form>
+      {/* Rādīt, nevis stāstīt */}
+      <section className="section relative overflow-hidden">
+        <Container>
+          <div className="grid gap-8 lg:grid-cols-[1.6fr_1fr] lg:items-end">
+            <h2 className="display" data-reveal>
+              Rādīt,
+              <br />
+              nevis stāstīt
+            </h2>
+            <div data-reveal>
+              <p className="eyebrow text-ink">Braucieni</p>
+              <p className="mt-5 max-w-sm font-mono text-sm text-muted">
+                Stāsti ir lēti. Zivis — nē. Apskati braucienus, kuros gidi pierāda abus.
+              </p>
+            </div>
+          </div>
+
+          <div className="relative mt-20 grid gap-6 sm:grid-cols-2 sm:gap-10">
+            <Tape label="Braucieni" className="top-[30%]" />
+            <div data-speed="0.06" className="relative z-10 space-y-10">
+              {showcase.filter((_, i) => i % 2 === 0).map((t, i) => (
+                <ShowcaseCard key={t.slug} trip={t} tall={i % 2 === 0} />
+              ))}
+            </div>
+            <div data-speed="-0.05" className="relative z-10 space-y-10 sm:pt-48">
+              {showcase.filter((_, i) => i % 2 === 1).map((t, i) => (
+                <ShowcaseCard key={t.slug} trip={t} tall={i % 2 === 1} />
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-20 flex justify-center sm:justify-end">
+            <ShowMore href="/braucieni" label="Visi braucieni" />
           </div>
         </Container>
       </section>
 
-      {/* Stats */}
-      <section className="border-b border-rule">
-        <Container className="grid grid-cols-3 divide-x divide-rule">
-          {[
-            { value: `${guides.length}+`, label: "Vietējie gidi", text: "Katru gidu esam satikuši un pārbaudījuši personīgi." },
-            { value: `${regions.length}`, label: "Reģioni", text: "No Kurzemes jūras krasta līdz Latgales ezeriem." },
-            { value: "24 h", label: "Personīga atbilde", text: "Uz katru pieprasījumu atbild īsts cilvēks." },
-          ].map((s) => (
-            <div key={s.label} className="py-8 pl-4 first:pl-0 sm:py-10 sm:pl-8">
-              <p className="font-display text-5xl font-extralight leading-none text-ink sm:text-7xl">{s.value}</p>
-              <p className="eyebrow mt-4">{s.label}</p>
-              <p className="mt-2 hidden text-sm text-muted sm:block">{s.text}</p>
-            </div>
-          ))}
-        </Container>
-      </section>
-
-      {/* Story */}
+      {/* Ko mēs ķeram */}
       <section className="section">
-        <Container className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
-          <div>
-            <Eyebrow index="01" className="mb-5">
-              Par mums
-            </Eyebrow>
-            <h2 className="headline">Mēs neesam ceļojumu aģentūra.</h2>
-            <div className="mt-6 space-y-4 text-lg text-muted">
-              <p className="text-ink">Esam makšķernieki, kas atrada savējos.</p>
-              <p>
-                Latvijā ir vairāk nekā 12 000 upju un 2 000 ezeru, bet labākās vietas zina tikai vietējie. Mēs
-                izveidojām {site.name}, lai tos vietējos būtu viegli atrast.
-              </p>
-              <p>
-                Katrs gids šeit ir neatkarīgs — tas ir viņa paša bizness, viņa laiva un viņa ūdeņi. Pirms gids
-                parādās lapā, mēs izrunājam sezonu, cenas, drošību un atsauksmes. Nekādu paketes ceļojumu, nekādu
-                starpnieku uzcenojumu.
-              </p>
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <Figure scene="river" seed="story-venta" caption="Venta" className="aspect-[3/4]" />
-            <div className="pt-16">
-              <Figure scene="forest" seed="story-gauja" caption="Gauja" className="aspect-[3/4]" />
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      {/* Trips carousel */}
-      <section className="section border-t border-rule bg-paper-deep">
         <Container>
-          <SectionHeading
-            index="02"
-            eyebrow="Braucieni"
-            title="Braucieni, ko vari rezervēt."
-            action={<ArrowLink href="/braucieni">Visi braucieni</ArrowLink>}
-          />
-          <Carousel>
-            {featuredTrips.map((t) => (
-              <CarouselItem key={t.slug}>
-                <TripCard trip={t} />
-              </CarouselItem>
+          <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+            <h2 className="display" data-reveal>
+              Ko mēs ķeram
+              <br />
+              (un ķeram labi)
+            </h2>
+            <div className="flex flex-col gap-4 lg:items-end" data-reveal>
+              <p className="eyebrow text-ink">Braucienu veidi</p>
+              <p
+                aria-hidden="true"
+                className="font-mono text-5xl font-bold text-transparent [-webkit-text-stroke:1.5px_rgb(255_255_255/0.35)] sm:text-6xl"
+              >
+                {"><(((º>"}
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-16 grid gap-4 md:grid-cols-2">
+            {(Object.keys(tripTypes) as TripType[]).map((type, i) => (
+              <ServiceCard key={type} type={type} index={i} />
             ))}
-          </Carousel>
+          </div>
         </Container>
       </section>
 
-      {/* How it works */}
-      <section id="ka-tas-strada" className="section scroll-mt-16 border-t border-rule">
-        <Container>
-          <SectionHeading
-            index="03"
-            eyebrow="Kā tas strādā"
-            title="Vienkāršāk nekā meklēt pašam."
-            intro="Bez reģistrācijas un bez komisijas. Tu runā tieši ar gidu."
-          />
-          <ol className="grid border-t border-rule md:grid-cols-3 md:divide-x md:divide-rule">
+      {/* Pieeja */}
+      <section id="ka-tas-strada" className="section scroll-mt-24">
+        <Container className="grid gap-16 lg:grid-cols-2 lg:gap-20">
+          <div className="lg:sticky lg:top-36 lg:self-start">
+            <h2 className="display">
+              <span className="sr-only">Mūsu pieeja</span>
+              <span aria-hidden="true">
+                <span className="text-accent">Mūsu</span>{" "}
+                <span className="sticker">
+                  <Hook />
+                </span>
+                <br />
+                pieeja
+              </span>
+            </h2>
+            <p className="mt-8 max-w-sm font-mono text-sm text-muted">
+              Bez reģistrācijas un bez komisijas. Tu runā tieši ar gidu — mēs tikai palīdzam jums satikties.
+            </p>
+          </div>
+
+          <ol data-progress className="relative pl-10 sm:pl-14">
+            <span aria-hidden="true" className="absolute bottom-2 left-3 top-2 w-px bg-white/15 sm:left-5" />
+            <span
+              aria-hidden="true"
+              className="absolute left-3 top-2 w-px bg-accent sm:left-5"
+              style={{ height: "calc((100% - 1rem) * var(--progress, 0))" }}
+            />
             {steps.map((s, i) => (
-              <li key={s.title} className="py-8 md:px-8 md:first:pl-0">
-                <span className="font-mono text-sm text-gold-deep">{String(i + 1).padStart(2, "0")}</span>
-                <h3 className="title mt-4 text-xl">{s.title}</h3>
-                <p className="mt-2 text-muted">{s.text}</p>
+              <li key={s.title} data-step className="relative pb-28 last:pb-4">
+                <span
+                  aria-hidden="true"
+                  className="absolute -left-[34px] top-3 h-3 w-3 rounded-full bg-accent sm:-left-[42px]"
+                />
+                <h3 className="flex items-baseline gap-4 font-display text-3xl font-black uppercase leading-none text-ink [font-variation-settings:'wdth'_115] sm:text-4xl">
+                  <span className="slashed font-mono text-xl text-accent">{String(i + 1).padStart(2, "0")}</span>
+                  {s.title}
+                </h3>
+                <p className="mt-4 max-w-md font-mono text-sm text-muted">{s.text}</p>
               </li>
             ))}
           </ol>
-          <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
-            <Link href="/braucieni" className="btn btn-primary">
-              Apskatīt braucienus
+        </Container>
+      </section>
+
+      {/* Reģioni */}
+      <section id="regioni" className="section scroll-mt-24">
+        <Container>
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <h2 className="display" data-reveal>
+              Kur? <span className="text-accent">Visur.</span>
+            </h2>
+            <p className="eyebrow text-ink">Reģioni</p>
+          </div>
+          <ul className="mt-14 border-t border-rule">
+            {regions.map((r, i) => (
+              <li key={r.slug} className="border-b border-rule">
+                <Link href={`/regioni/${r.slug}`} className="group relative flex items-center justify-between gap-6 py-6 sm:py-8">
+                  <span className="flex items-baseline gap-5">
+                    <span className="slashed font-mono text-sm text-accent">{String(i + 1).padStart(2, "0")}</span>
+                    <span className="font-display text-3xl font-black uppercase leading-none text-ink transition-[color,translate] duration-300 [font-variation-settings:'wdth'_125] group-hover:translate-x-3 group-hover:text-accent sm:text-6xl">
+                      {r.name}
+                    </span>
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute right-[24%] top-1/2 z-10 hidden h-40 w-60 -translate-y-1/2 rotate-[-6deg] scale-75 overflow-hidden rounded-2xl opacity-0 shadow-lift-2 transition duration-300 group-hover:scale-100 group-hover:opacity-100 lg:block"
+                  >
+                    <Scene variant={r.scene} seed={`region-${r.slug}`} className="h-full w-full" />
+                  </span>
+                  <span className="hidden text-right font-mono text-xs uppercase leading-relaxed text-muted md:block">
+                    {tripsByRegion(r.slug).length} braucieni
+                    <br />
+                    {r.waters.slice(0, 3).join(" · ")}
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </section>
+
+      {/* Gidi */}
+      <section className="section overflow-hidden">
+        <Container>
+          <h2 className="mega text-center">
+            <span className="sr-only">Mūsu gidi</span>
+            <span aria-hidden="true">
+              Mūsu
+              <span className="sticker w-[0.6em] [&>svg]:h-[1em] [&>svg]:w-[1.7em]">
+                <Lure />
+              </span>
+              <br />
+              gidi
+            </span>
+          </h2>
+          <p className="mx-auto mt-6 max-w-md text-center font-mono text-sm text-muted">
+            Neatkarīgi gidi ar savām laivām un saviem ūdeņiem. Pāršķir un iepazīsties.
+          </p>
+          <div className="mt-20">
+            <GuideDeck guides={guides} regionNames={regionNames} />
+          </div>
+          <div className="mt-14 text-center">
+            <Link href="/gidi" className="btn btn-secondary">
+              Visi gidi →
             </Link>
-            <p className="text-sm text-muted">Pārlūkot un sūtīt pieprasījumus var bez maksas.</p>
           </div>
         </Container>
       </section>
 
-      {/* Regions */}
-      <section id="regioni" className="section scroll-mt-16 border-t border-rule">
+      {/* Sezonas */}
+      <section className="section">
         <Container>
-          <SectionHeading index="04" eyebrow="Reģioni" title="Pieci reģioni. Tūkstošiem ezeru." />
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {regions.map((r) => (
-              <Link key={r.slug} href={`/regioni/${r.slug}`} className="card group flex flex-col overflow-hidden">
-                <div className="relative aspect-[16/10] overflow-hidden border-b border-rule">
-                  <Scene variant={r.scene} seed={`region-${r.slug}`} className="absolute inset-0 h-full w-full" />
-                </div>
-                <div className="flex flex-1 flex-col p-5">
-                  <h3 className="font-display text-3xl font-light text-ink">{r.name}</h3>
-                  <p className="mt-1 text-muted">{r.tagline}</p>
-                  <p className="eyebrow mt-auto pt-5">
-                    {tripsByRegion(r.slug).length} braucieni · {r.waters.slice(0, 3).join(", ")}
-                  </p>
-                </div>
-              </Link>
-            ))}
-            <div className="flex flex-col justify-between rounded-lg border border-dashed border-edge/40 p-6">
-              <p className="text-muted">Nezini, kur braukt? Pastāsti, ko gribi noķert, un mēs ieteiksim gidu.</p>
-              <a href={`mailto:${site.email}`} className="link mt-6 self-start font-medium">
-                {site.email}
-              </a>
-            </div>
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <h2 className="display" data-reveal>
+              Kad ko
+              <br />
+              <span className="text-accent">ķert</span>
+            </h2>
+            <p className="max-w-xs font-mono text-xs text-muted">
+              Aptuvens kalendārs. Pirms brauciena pārbaudi aktuālos makšķerēšanas noteikumus un liegumus.
+            </p>
           </div>
-        </Container>
-      </section>
-
-      {/* Guides */}
-      <section className="section border-t border-rule bg-paper-deep">
-        <Container>
-          <SectionHeading
-            index="05"
-            eyebrow="Gidi"
-            title="Cilvēki, ar kuriem copēsi."
-            action={<ArrowLink href="/gidi">Visi gidi</ArrowLink>}
-          />
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {featuredGuides.map((g) => (
-              <GuideCard key={g.slug} guide={g} />
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      {/* Species */}
-      <section className="section border-t border-rule">
-        <Container>
-          <SectionHeading index="06" eyebrow="Zivis" title="Ko tu gribi noķert?" />
-          <div className="grid grid-cols-2 border-l border-t border-rule md:grid-cols-3 lg:grid-cols-5">
-            {species.map((s) => (
-              <Link
-                key={s.slug}
-                href={`/braucieni?suga=${s.slug}`}
-                className="group border-b border-r border-rule p-5 transition-colors hover:bg-raised"
-              >
-                <FishIcon className="h-6 w-12 text-faint transition-colors group-hover:text-gold" />
-                <h3 className="title mt-5">{s.name}</h3>
-                <p className="text-sm italic text-muted">{s.latin}</p>
-                <p className="eyebrow mt-4">{tripsBySpecies(s.slug).length} braucieni →</p>
-              </Link>
-            ))}
-            <div className="hidden border-b border-r border-rule bg-paper-deep lg:block" />
-          </div>
-        </Container>
-      </section>
-
-      {/* Season calendar */}
-      <section className="section border-t border-rule">
-        <Container>
-          <SectionHeading
-            index="07"
-            eyebrow="Sezonas"
-            title="Kad ko ķert."
-            intro="Aptuvens kalendārs. Pirms brauciena pārbaudi aktuālos makšķerēšanas noteikumus un liegumus."
-          />
-          <div className="overflow-hidden rounded-lg bg-instrument shadow-lift-2">
-            <div className="overflow-x-auto p-2 sm:p-4">
-              <table className="w-full min-w-[720px] text-sm text-instrument-text">
+          <div className="mt-12 overflow-hidden rounded-[24px] bg-raised">
+            <div className="overflow-x-auto p-3 sm:p-6">
+              <table className="w-full min-w-[720px] text-sm">
                 <thead>
-                  <tr className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-instrument-muted">
-                    <th className="px-4 py-3 text-left font-normal">Zivs</th>
+                  <tr className="font-mono text-[0.68rem] uppercase text-muted">
+                    <th className="px-4 py-3 text-left font-bold">Zivs</th>
                     {months.map((m) => (
-                      <th key={m} className="px-1 py-3 text-center font-normal">
+                      <th key={m} className="px-1 py-3 text-center font-bold">
                         {m}
                       </th>
                     ))}
@@ -304,22 +304,22 @@ export default function Home() {
                 </thead>
                 <tbody>
                   {species.map((s) => (
-                    <tr key={s.slug} className="border-t border-instrument-rule">
+                    <tr key={s.slug} className="border-t border-white/[0.07]">
                       <td className="px-4 py-2.5">
-                        <Link href={`/braucieni?suga=${s.slug}`} className="hover:text-gold">
+                        <Link href={`/braucieni?suga=${s.slug}`} className="font-medium text-ink hover:text-accent">
                           {s.name}
                         </Link>
                       </td>
                       {months.map((m, i) => {
                         const month = i + 1;
                         const cls = s.best.includes(month)
-                          ? "bg-gold shadow-led"
+                          ? "bg-accent shadow-led"
                           : s.good.includes(month)
-                            ? "bg-gold/30"
-                            : "bg-instrument-raised";
+                            ? "bg-accent/30"
+                            : "bg-white/[0.06]";
                         return (
                           <td key={m} className="px-1 py-2.5">
-                            <div className={`mx-auto h-4 w-full max-w-9 rounded-[2px] ${cls}`} />
+                            <div className={`mx-auto h-5 w-full max-w-10 rounded-full ${cls}`} />
                           </td>
                         );
                       })}
@@ -328,70 +328,38 @@ export default function Home() {
                 </tbody>
               </table>
             </div>
-            <div className="flex gap-6 border-t border-instrument-rule px-6 py-4 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-instrument-muted">
+            <div className="flex gap-6 border-t border-white/[0.07] px-6 py-4 font-mono text-[0.68rem] font-bold uppercase text-muted">
               <span className="flex items-center gap-2">
-                <span className="h-2.5 w-2.5 rounded-[2px] bg-gold shadow-led" /> Labākais laiks
+                <span className="h-3 w-5 rounded-full bg-accent shadow-led" /> Labākais laiks
               </span>
               <span className="flex items-center gap-2">
-                <span className="h-2.5 w-2.5 rounded-[2px] bg-gold/30" /> Labs laiks
+                <span className="h-3 w-5 rounded-full bg-accent/30" /> Labs laiks
               </span>
             </div>
           </div>
         </Container>
       </section>
 
-      {/* FAQ */}
-      <section id="buj" className="section scroll-mt-16 border-t border-rule bg-paper-deep">
-        <Container className="grid items-start gap-12 lg:grid-cols-[1fr_1.6fr]">
-          <div>
-            <Eyebrow index="08" className="mb-5">
-              BUJ
-            </Eyebrow>
-            <h2 className="headline">Biežākie jautājumi.</h2>
-          </div>
+      {/* BUJ */}
+      <section id="buj" className="section scroll-mt-24">
+        <Container className="grid gap-12 lg:grid-cols-[1fr_1.5fr]">
+          <h2 className="display lg:sticky lg:top-36 lg:self-start">
+            Jautā
+            <br />
+            <span className="text-accent">droši</span>
+          </h2>
           <div className="border-t border-rule">
             {faq.map((item) => (
-              <details key={item.q} className="group border-b border-rule py-5">
-                <summary className="flex cursor-pointer items-center justify-between gap-4 text-lg font-medium text-ink">
+              <details key={item.q} className="group border-b border-rule py-6">
+                <summary className="flex cursor-pointer items-center justify-between gap-6 font-display text-lg font-black uppercase leading-tight text-ink [font-variation-settings:'wdth'_110] sm:text-2xl">
                   {item.q}
-                  <span className="font-mono text-faint transition-transform group-open:rotate-45">+</span>
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-edge text-xl transition group-open:rotate-45 group-open:border-accent group-open:bg-accent group-open:text-on-accent">
+                    +
+                  </span>
                 </summary>
-                <p className="mt-3 max-w-2xl text-muted">{item.a}</p>
+                <p className="mt-4 max-w-2xl text-muted">{item.a}</p>
               </details>
             ))}
-          </div>
-        </Container>
-      </section>
-
-      {/* CTA */}
-      <section className="bg-instrument-deep text-instrument-text">
-        <Container className="grid gap-12 py-20 sm:py-28 lg:grid-cols-[1.4fr_1fr] lg:items-end">
-          <div>
-            <p className="eyebrow mb-5 text-instrument-muted">Sezona 2026/27</p>
-            <h2 className="display text-instrument-text">Rudens plēsēji. Ziemā — ledus.</h2>
-            <p className="mt-6 max-w-lg text-lg text-instrument-muted">
-              Labākās nedēļas aizpildās ātri. Raksti gidam jau tagad, un viņš ieteiks piemērotāko laiku.
-            </p>
-            <Link href="/braucieni" className="btn btn-gold mt-8">
-              Atrast braucienu
-            </Link>
-          </div>
-          <div className="space-y-8 border-t border-instrument-rule pt-8 lg:border-l lg:border-t-0 lg:pl-10 lg:pt-0">
-            <div>
-              <h3 className="title text-instrument-text">Runā ar mums</h3>
-              <p className="mt-2 text-sm text-instrument-muted">
-                Nezini, kuru gidu izvēlēties? Atbildam 24 stundu laikā latviešu, angļu vai krievu valodā.
-              </p>
-              <a href={`mailto:${site.email}`} className="mt-3 inline-block text-instrument-text underline decoration-gold underline-offset-4">
-                {site.email}
-              </a>
-            </div>
-            <div>
-              <h3 className="title text-instrument-text">Esi makšķerēšanas gids?</h3>
-              <Link href="/klusti-par-gidu" className="mt-2 inline-block text-instrument-text underline decoration-instrument-rule underline-offset-4 hover:decoration-gold">
-                Pievienojies {site.name} →
-              </Link>
-            </div>
           </div>
         </Container>
       </section>
@@ -399,10 +367,116 @@ export default function Home() {
   );
 }
 
-function FishIcon({ className }: { className?: string }) {
+function ShowcaseCard({ trip, tall }: { trip: Trip; tall: boolean }) {
+  const region = getRegion(trip.region);
   return (
-    <svg viewBox="0 0 64 32" className={className} fill="currentColor" aria-hidden="true">
-      <path d="M4 16c8-11 26-13 40-4l12-8v24l-12-8C30 29 12 27 4 16z" />
-    </svg>
+    <div data-reveal>
+      <Link href={`/braucieni/${trip.slug}`} className="card dogear group block overflow-hidden">
+        <div className={`relative ${tall ? "aspect-[4/5]" : "aspect-[4/3]"}`}>
+          <div className="absolute inset-0 transition duration-700 group-hover:scale-105">
+            <Photo alt={trip.title} scene={trip.scene} seed={trip.slug} sizes="(min-width: 640px) 45vw, 100vw" />
+          </div>
+          <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/10 to-transparent" />
+          <div className="absolute inset-x-5 bottom-6 flex items-end justify-between gap-4 pr-6">
+            <div>
+              <p className="eyebrow text-ink/75">
+                {region?.name} · {trip.water}
+              </p>
+              <h3 className="mt-2 font-display text-xl font-black uppercase leading-tight text-ink [font-variation-settings:'wdth'_110] sm:text-2xl">
+                {trip.title}
+              </h3>
+            </div>
+            <span className="shrink-0 rounded-full bg-black/80 px-3 py-1.5 font-mono text-xs font-bold text-ink">
+              no {formatPrice(trip.priceFrom)}
+            </span>
+          </div>
+        </div>
+      </Link>
+    </div>
+  );
+}
+
+function Tape({ label, className }: { label: string; className: string }) {
+  const run = (
+    <div className="flex shrink-0 items-center">
+      {Array.from({ length: 6 }, (_, i) => (
+        <span
+          key={i}
+          className="flex items-center gap-6 px-6 font-display text-2xl font-black uppercase text-on-accent [font-variation-settings:'wdth'_120] sm:text-3xl"
+        >
+          {label}
+          <Sparkle className="h-4 w-4" />
+        </span>
+      ))}
+    </div>
+  );
+  return (
+    <div
+      aria-hidden="true"
+      className={`pointer-events-none absolute -left-[15%] w-[130%] -rotate-[9deg] bg-accent py-3 shadow-lift-2 ${className}`}
+    >
+      <div className="marquee-track">
+        {run}
+        {run}
+      </div>
+    </div>
+  );
+}
+
+function ShowMore({ href, label }: { href: string; label: string }) {
+  return (
+    <Link
+      href={href}
+      className="group relative flex h-48 w-48 items-center justify-center rounded-full bg-bezel transition hover:bg-ink sm:h-56 sm:w-56"
+    >
+      <svg viewBox="0 0 100 100" aria-hidden="true" className="absolute h-[70%] w-[70%] transition duration-500 group-hover:rotate-[-45deg]">
+        <path d="M50 8 L92 50 L50 92 L50 68 L12 68 L12 32 L50 32 Z" fill="#0a0a0a" strokeLinejoin="round" />
+      </svg>
+      <span className="relative pr-2 font-mono text-[0.7rem] font-bold uppercase text-ink">{label}</span>
+    </Link>
+  );
+}
+
+function ServiceCard({ type, index }: { type: TripType; index: number }) {
+  const style = cardStyles[index % cardStyles.length];
+  const list = trips.filter((t) => t.type === type);
+  return (
+    <div
+      data-reveal
+      className={`dogear relative flex min-h-[380px] flex-col rounded-[24px] p-7 sm:p-9 ${style.box}`}
+      style={{ "--fold-color": style.fold } as React.CSSProperties}
+    >
+      <p className="slashed font-mono text-6xl font-bold leading-none">{String(index + 1).padStart(2, "0")}</p>
+      <ul className="mt-8 flex flex-col items-start gap-2">
+        {list.slice(0, 4).map((t) => (
+          <li key={t.slug}>
+            <Link
+              href={`/braucieni/${t.slug}`}
+              className={`inline-flex items-center gap-3 rounded-full border py-1.5 pl-4 pr-1.5 text-sm transition ${style.pill}`}
+            >
+              {t.title}
+              <span className="rounded-full bg-black px-2.5 py-1 font-mono text-[0.65rem] font-bold text-ink">
+                no {formatPrice(t.priceFrom)}
+              </span>
+            </Link>
+          </li>
+        ))}
+        {list.length > 4 && (
+          <li>
+            <Link href={`/braucieni?veids=${type}`} className="font-mono text-xs font-bold uppercase underline underline-offset-4">
+              +{list.length - 4} vairāk
+            </Link>
+          </li>
+        )}
+      </ul>
+      <h3 className="mt-auto flex items-center gap-3 pt-10 font-display text-2xl font-black uppercase leading-none [font-variation-settings:'wdth'_115] sm:text-3xl">
+        <span aria-hidden="true" className={style.arrow}>
+          ↘
+        </span>
+        <Link href={`/braucieni?veids=${type}`} className="hover:underline hover:underline-offset-4">
+          {tripTypes[type]}
+        </Link>
+      </h3>
+    </div>
   );
 }

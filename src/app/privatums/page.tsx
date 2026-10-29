@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { SiteHeader } from "@/components/site-header";
 import { Container } from "@/components/ui";
 import { site } from "@/lib/site";
 
@@ -9,8 +8,7 @@ export const metadata: Metadata = { title: "Privātuma politika" };
 export default function PrivacyPage() {
   return (
     <>
-      <SiteHeader />
-      <Container className="max-w-3xl pb-24 pt-16">
+      <Container className="max-w-3xl pb-24 pt-32 sm:pt-40">
         <h1 className="headline">Privātuma politika</h1>
         <div className="mt-8 space-y-5 text-muted">
           <p>

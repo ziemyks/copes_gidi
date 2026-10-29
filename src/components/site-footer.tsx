@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { regions } from "@/data/regions";
 import { site } from "@/lib/site";
-import { Logo } from "./site-header";
+import { Wordmark } from "./chrome";
+import { Bobber } from "./stickers";
 
 export function SiteFooter() {
   const columns = [
@@ -26,7 +27,7 @@ export function SiteFooter() {
       ],
     },
     {
-      title: "Informācija",
+      title: "Info",
       links: [
         { href: "/#buj", label: "Biežākie jautājumi" },
         { href: "/privatums", label: "Privātuma politika" },
@@ -36,20 +37,37 @@ export function SiteFooter() {
   ];
 
   return (
-    <footer className="border-t border-rule bg-paper-deep">
-      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="grid gap-10 lg:grid-cols-[1.4fr_repeat(4,1fr)]">
+    <footer className="border-t border-rule">
+      <div className="mx-auto max-w-7xl px-6 pb-28 pt-24 sm:px-10">
+        <div className="flex flex-col items-start gap-8 border-b border-rule pb-16 lg:flex-row lg:items-end lg:justify-between">
+          <h2 className="mega">
+            <span className="sr-only">Uz ūdens?</span>
+            <span aria-hidden="true">
+              Uz{" "}
+              <span className="sticker">
+                <Bobber />
+              </span>
+              <br />
+              ūdens?
+            </span>
+          </h2>
+          <Link href="/braucieni" className="btn btn-primary">
+            Atrast braucienu →
+          </Link>
+        </div>
+
+        <div className="grid gap-10 pt-14 sm:grid-cols-2 lg:grid-cols-[1.3fr_repeat(4,1fr)]">
           <div className="space-y-3">
-            <Logo />
+            <Wordmark />
             <p className="max-w-xs text-sm text-muted">{site.tagline}.</p>
           </div>
           {columns.map((col) => (
             <div key={col.title}>
-              <h3 className="eyebrow mb-4">{col.title}</h3>
+              <h3 className="eyebrow mb-4 text-accent">{col.title}</h3>
               <ul className="space-y-2 text-sm">
                 {col.links.map((l) => (
                   <li key={l.href}>
-                    <Link href={l.href} className="text-text transition-colors hover:text-ink hover:underline hover:decoration-gold hover:underline-offset-4">
+                    <Link href={l.href} className="text-text transition-colors hover:text-accent">
                       {l.label}
                     </Link>
                   </li>
@@ -58,7 +76,7 @@ export function SiteFooter() {
             </div>
           ))}
         </div>
-        <div className="eyebrow mt-14 flex flex-col gap-2 border-t border-rule pt-6 normal-case tracking-[0.04em] sm:flex-row sm:justify-between">
+        <div className="eyebrow mt-14 flex flex-col gap-2 font-normal normal-case sm:flex-row sm:justify-between">
           <p>© 2026 {site.name}</p>
           {site.demoContent && <p>Parauga gidi un braucieni — tie nav īsti piedāvājumi.</p>}
         </div>

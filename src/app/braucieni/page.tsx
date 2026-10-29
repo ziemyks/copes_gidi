@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { TripExplorer, TripGrid } from "@/components/explorers";
-import { SiteHeader } from "@/components/site-header";
 import { Container, PageHeader } from "@/components/ui";
 import { trips } from "@/data/trips";
 
@@ -13,10 +12,9 @@ export const metadata: Metadata = {
 export default function TripsPage() {
   return (
     <>
-      <SiteHeader />
       <PageHeader
         eyebrow={`${trips.length} braucieni`}
-        title="Makšķerēšanas braucieni ar vietējiem gidiem"
+        title="Visi braucieni"
         intro="Atlasi pēc reģiona, zivs vai brauciena veida. Pieprasījuma nosūtīšana ir bez maksas."
       />
       <Container className="pb-24 pt-10">

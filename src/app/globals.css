@@ -1,202 +1,274 @@
 @import "tailwindcss";
 
-/* Krāsas un tipogrāfija pēc impeccable.style "Kinpaku" sistēmas */
+/* Tumšs "ekrāna" stils pēc Neo Vision (Cosmos Studio) parauga */
 @theme {
-  --color-paper: oklch(97.8% 0 0);
-  --color-raised: oklch(99.5% 0 0);
-  --color-paper-deep: oklch(95% 0 0);
-  --color-gray: oklch(92% 0 0);
-  --color-ink: oklch(13% 0 0);
-  --color-text: oklch(22% 0 0);
-  --color-muted: oklch(46% 0 0);
-  --color-faint: oklch(66% 0 0);
-  --color-rule: oklch(13% 0 0 / 0.08);
-  --color-edge: oklch(13% 0 0 / 0.45);
+  --color-paper: #050505;
+  --color-raised: #1b1b1b;
+  --color-paper-deep: rgb(255 255 255 / 0.025);
+  --color-gray: #2a2a2a;
+  --color-ink: #f4f4f4;
+  --color-text: #e4e4e4;
+  --color-muted: #9b9b9b;
+  --color-faint: #6c6c6c;
+  --color-rule: rgb(255 255 255 / 0.09);
+  --color-edge: rgb(255 255 255 / 0.32);
+  --color-bezel: #d9d9d9;
 
-  --color-gold: oklch(84% 0.19 80.46);
-  --color-gold-pale: oklch(86% 0.07 84);
-  --color-gold-rich: oklch(77% 0.13 82);
-  --color-gold-deep: oklch(61% 0.085 78);
-  --color-on-gold: oklch(14% 0.018 95);
+  --color-accent: #ec5b2a;
+  --color-accent-rich: #d24a1c;
+  --color-accent-deep: #ec5b2a;
+  --color-accent-pale: #f39a78;
+  --color-on-accent: #0a0a0a;
 
-  --color-patina: oklch(70% 0.12 188);
-  --color-patina-pale: oklch(82% 0.07 188);
-  --color-patina-deep: oklch(45% 0.1 190);
+  --color-patina: #5fc2b5;
+  --color-patina-pale: #9fdcd3;
+  --color-patina-deep: #6fd0c2;
 
-  --color-vermilion: oklch(52% 0.16 35);
+  --color-vermilion: #ff6b57;
 
-  --color-instrument: oklch(24% 0 0);
-  --color-instrument-deep: oklch(17% 0 0);
-  --color-instrument-raised: oklch(31% 0 0);
-  --color-instrument-text: oklch(93% 0 0);
-  --color-instrument-muted: oklch(68% 0 0);
-  --color-instrument-rule: oklch(100% 0 0 / 0.12);
+  --color-instrument: #1b1b1b;
+  --color-instrument-deep: #000000;
+  --color-instrument-raised: #2a2a2a;
+  --color-instrument-text: #f4f4f4;
+  --color-instrument-muted: #9b9b9b;
+  --color-instrument-rule: rgb(255 255 255 / 0.1);
 
-  --shadow-lift-1: 0 1px 1px oklch(13% 0 0 / 0.05), 0 2px 3px oklch(13% 0 0 / 0.04), 0 6px 12px oklch(13% 0 0 / 0.05);
-  --shadow-lift-2: 0 1px 1px oklch(13% 0 0 / 0.04), 0 3px 5px oklch(13% 0 0 / 0.05), 0 12px 20px oklch(13% 0 0 / 0.06),
-    0 32px 48px oklch(13% 0 0 / 0.07);
-  --shadow-led: 0 0 0 1px oklch(13% 0 0 / 0.12), 0 0 4px oklch(84% 0.19 80 / 0.6);
+  --shadow-lift-1: 0 10px 30px rgb(0 0 0 / 0.45);
+  --shadow-lift-2: 0 24px 60px rgb(0 0 0 / 0.6);
+  --shadow-led: 0 0 10px rgb(236 91 42 / 0.55);
 
   --ease-ks: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 @theme inline {
-  --font-sans: var(--font-albert), "Avenir Next", "Helvetica Neue", Arial, system-ui, sans-serif;
-  --font-display: var(--font-alumni), var(--font-albert), Arial, sans-serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, Menlo, monospace;
+  --font-sans: var(--font-grotesk), system-ui, sans-serif;
+  --font-display: var(--font-archivo), Arial Black, sans-serif;
+  --font-mono: var(--font-spacemono), ui-monospace, monospace;
 }
 
 html {
+  color-scheme: dark;
   scroll-behavior: smooth;
 }
 
 body {
-  background: var(--color-paper);
+  background-color: var(--color-paper);
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.045) 1px, transparent 1px);
+  background-size: 120px 120px;
+  background-position: -1px -1px;
   color: var(--color-text);
-  line-height: 1.65;
+  line-height: 1.6;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
 }
 
 @layer components {
   .section {
-    padding-block: clamp(72px, 8vw, 120px);
+    padding-block: clamp(80px, 10vw, 160px);
   }
 
-  /* Mazs mono virsraksts virs sadaļas, piem. "01 — Braucieni" */
   .eyebrow {
     font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    letter-spacing: 0.14em;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--color-muted);
     line-height: 1.4;
   }
 
-  .display {
+  /* Smags, plats, lielais burts */
+  .display,
+  .headline,
+  .mega {
     font-family: var(--font-display);
-    font-weight: 200;
-    font-size: clamp(3.2rem, 6.2vw, 5.6rem);
-    line-height: 1;
+    font-weight: 900;
+    font-variation-settings: "wdth" 125;
+    text-transform: uppercase;
     color: var(--color-ink);
+    letter-spacing: -0.01em;
     text-wrap: balance;
   }
-
+  .mega {
+    font-size: clamp(3.4rem, 11.5vw, 10.5rem);
+    line-height: 0.98;
+  }
+  .display {
+    font-size: clamp(2.8rem, 7.5vw, 6.8rem);
+    line-height: 1.12;
+  }
   .headline {
-    font-family: var(--font-display);
-    font-weight: 300;
-    font-size: clamp(2.4rem, 3.6vw, 3.4rem);
-    line-height: 1.04;
-    color: var(--color-ink);
-    text-wrap: balance;
+    font-size: clamp(2.2rem, 5.6vw, 5rem);
+    line-height: 1.12;
   }
 
   .title {
     font-size: 1.0625rem;
     font-weight: 600;
-    line-height: 1.35;
+    line-height: 1.3;
     color: var(--color-ink);
   }
 
   .btn {
     display: inline-flex;
-    min-height: 44px;
+    min-height: 46px;
     align-items: center;
     justify-content: center;
-    gap: 12px;
-    padding: 0 22px;
+    gap: 10px;
+    padding: 0 24px;
     border: 1px solid transparent;
-    border-radius: 3px;
-    font-size: 0.9375rem;
-    font-weight: 500;
-    letter-spacing: -0.005em;
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
     cursor: pointer;
     transition:
-      background-color 0.12s var(--ease-ks),
-      border-color 0.12s var(--ease-ks),
-      color 0.12s var(--ease-ks);
+      background-color 0.15s var(--ease-ks),
+      border-color 0.15s var(--ease-ks),
+      color 0.15s var(--ease-ks),
+      transform 0.15s var(--ease-ks);
   }
   .btn:active {
-    transform: scale(0.98);
+    transform: scale(0.97);
   }
   .btn:disabled {
     opacity: 0.55;
     cursor: not-allowed;
   }
-  .btn-primary {
-    background: var(--color-ink);
-    border-color: var(--color-ink);
-    color: var(--color-raised);
+  .btn-primary,
+  .btn-accent {
+    background: var(--color-accent);
+    color: var(--color-on-accent);
   }
-  .btn-primary:hover {
-    background: var(--color-text);
-    border-color: var(--color-text);
+  .btn-primary:hover,
+  .btn-accent:hover {
+    background: var(--color-accent-rich);
   }
   .btn-secondary {
-    background: var(--color-raised);
+    background: transparent;
     border-color: var(--color-edge);
     color: var(--color-ink);
   }
   .btn-secondary:hover {
     border-color: var(--color-ink);
   }
-  .btn-gold {
-    background: var(--color-gold);
-    border-color: var(--color-gold);
-    color: var(--color-on-gold);
-  }
-  .btn-gold:hover {
-    background: var(--color-gold-rich);
-    border-color: var(--color-gold-rich);
-  }
 
   .card {
+    position: relative;
     background: var(--color-raised);
-    border: 1px solid var(--color-rule);
-    border-radius: 8px;
+    border-radius: 20px;
     transition:
-      box-shadow 0.2s var(--ease-ks),
-      transform 0.15s var(--ease-ks),
-      border-color 0.2s var(--ease-ks);
+      transform 0.25s var(--ease-ks),
+      box-shadow 0.25s var(--ease-ks);
   }
   a.card:hover {
+    transform: translateY(-4px) rotate(-0.4deg);
     box-shadow: var(--shadow-lift-2);
-    border-color: transparent;
-    transform: translateY(-1px);
   }
 
-  /* Saite ar plānu pasvītrojumu, kas uz hover kļūst zelta */
+  /* Ielocīts stūris apakšā pa labi */
+  .dogear {
+    --fold: 34px;
+    clip-path: polygon(
+      0 0,
+      100% 0,
+      100% calc(100% - var(--fold)),
+      calc(100% - var(--fold)) 100%,
+      0 100%
+    );
+  }
+  .dogear::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    width: var(--fold);
+    height: var(--fold);
+    border-top-left-radius: 8px;
+    background: linear-gradient(to top left, transparent 50%, var(--fold-color, #3b3b3b) 50%);
+    box-shadow: -3px -3px 8px rgb(0 0 0 / 0.35);
+  }
+
+  /* Saburzīta papīra faktūra */
+  .paper {
+    background-color: #cdcdcd;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.011' numOctaves='5' seed='7'/%3E%3CfeDiffuseLighting lighting-color='%23ffffff' surfaceScale='2.4'%3E%3CfeDistantLight azimuth='45' elevation='58'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+    background-size: 400px 400px;
+    background-blend-mode: multiply;
+    color: #0a0a0a;
+  }
+  .paper-dark {
+    background-color: #2b2b2b;
+  }
+  .paper-accent {
+    background-color: var(--color-accent);
+  }
+
   .link {
     color: var(--color-ink);
     text-decoration: underline;
-    text-decoration-color: oklch(13% 0 0 / 0.28);
+    text-decoration-color: rgb(255 255 255 / 0.3);
     text-decoration-thickness: 1px;
     text-underline-offset: 4px;
-    transition: text-decoration-color 0.12s var(--ease-ks);
+    transition: text-decoration-color 0.15s var(--ease-ks);
   }
   .link:hover {
-    text-decoration-color: var(--color-gold);
+    text-decoration-color: var(--color-accent);
   }
 
   .field {
     width: 100%;
-    min-height: 44px;
-    border-radius: 8px;
-    border: 1px solid oklch(13% 0 0 / 0.16);
-    background: var(--color-raised);
+    min-height: 46px;
+    border-radius: 14px;
+    border: 1px solid rgb(255 255 255 / 0.14);
+    background: #0d0d0d;
     padding: 10px 14px;
     font-size: 0.9375rem;
     color: var(--color-ink);
     outline: none;
-    transition: border-color 0.12s var(--ease-ks), box-shadow 0.12s var(--ease-ks);
+    transition: border-color 0.15s var(--ease-ks), box-shadow 0.15s var(--ease-ks);
   }
   .field:focus {
-    border-color: var(--color-patina-deep);
-    box-shadow: 0 0 0 3px oklch(45% 0.1 190 / 0.15);
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgb(236 91 42 / 0.2);
+  }
+
+  .slashed {
+    font-variant-numeric: slashed-zero;
+    font-feature-settings: "zero";
+  }
+
+  /* Uzlīme virsraksta iekšienē — aizstāj burtu */
+  .sticker {
+    display: inline-block;
+    width: 0.92em;
+    height: 0.8em;
+    position: relative;
+    vertical-align: baseline;
+  }
+  .sticker > svg {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 1.35em;
+    height: 1.35em;
+    translate: -50% -55%;
+    filter: drop-shadow(0 6px 10px rgb(0 0 0 / 0.55));
+    animation: bob 4s ease-in-out infinite;
   }
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-patina-deep);
-  outline-offset: 2px;
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
 }
 
 .no-scrollbar {
@@ -213,6 +285,131 @@ details > summary::-webkit-details-marker {
   display: none;
 }
 
+/* ---------- Kustība ---------- */
+
+@keyframes bob {
+  0%,
+  100% {
+    transform: rotate(-6deg) translateY(0);
+  }
+  50% {
+    transform: rotate(5deg) translateY(-6%);
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.7) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1) rotate(25deg);
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.twinkle {
+  animation: twinkle 3.2s ease-in-out infinite;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 22s linear infinite;
+}
+
+/* Parādīšanās ritinot (tikai ar JS) */
+html[data-js] [data-reveal] {
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 0.8s var(--ease-ks),
+    transform 0.8s var(--ease-ks);
+}
+html[data-js] [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Laika līnijas soļi */
+[data-step] {
+  opacity: 0.28;
+  transition: opacity 0.4s var(--ease-ks);
+}
+[data-step].is-active {
+  opacity: 1;
+}
+
+/* Loma metra adata seko ritināšanai */
+.meter-needle {
+  /* SVG viewBox centrs ir (0,0) — adata griežas ap to */
+  transform-origin: 0 0;
+  rotate: calc(70deg - 140deg * var(--scroll, 0));
+  transition: rotate 0.25s var(--ease-ks);
+}
+
+/* ---------- Ielādes ekrāns (tikai CSS) ---------- */
+
+@property --pct {
+  syntax: "<integer>";
+  initial-value: 0;
+  inherits: false;
+}
+
+.loader {
+  animation: loader-out 0.7s 1.9s cubic-bezier(0.7, 0, 0.2, 1) forwards;
+}
+.loader-fill {
+  width: 0;
+  animation: loader-fill 1.7s cubic-bezier(0.55, 0, 0.25, 1) forwards;
+}
+.loader-count {
+  counter-reset: pct var(--pct);
+  animation: loader-count 1.7s cubic-bezier(0.55, 0, 0.25, 1) forwards;
+}
+.loader-count::after {
+  content: counter(pct) "%";
+}
+@keyframes loader-fill {
+  to {
+    width: 100%;
+  }
+}
+@keyframes loader-count {
+  to {
+    --pct: 100;
+  }
+}
+@keyframes loader-out {
+  to {
+    transform: translateY(-105%);
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+html[data-loaded] .loader {
+  display: none;
+}
+
+/* Lietotājs izslēdzis kustību (vai sistēmas iestatījums) */
+html[data-motion="off"] *,
+html[data-motion="off"] *::before,
+html[data-motion="off"] *::after {
+  animation-duration: 0s !important;
+  animation-delay: 0s !important;
+  transition-duration: 0s !important;
+}
+html[data-motion="off"] .loader {
+  display: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -220,6 +417,15 @@ details > summary::-webkit-details-marker {
   *,
   *::before,
   *::after {
-    transition-duration: 0.01ms !important;
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+    transition-duration: 0s !important;
+  }
+  .loader {
+    display: none;
+  }
+  html[data-js] [data-reveal] {
+    opacity: 1;
+    transform: none;
   }
 }

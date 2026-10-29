@@ -1,23 +1,27 @@
 import type { Metadata } from "next";
-import { Albert_Sans, Alumni_Sans, JetBrains_Mono } from "next/font/google";
+import { Archivo, Space_Grotesk, Space_Mono } from "next/font/google";
+import { Chrome } from "@/components/chrome";
+import { Loader, loaderScript } from "@/components/loader";
+import { ScrollFx } from "@/components/scroll-fx";
 import { SiteFooter } from "@/components/site-footer";
 import { site, siteUrl } from "@/lib/site";
 import "./globals.css";
 
-const albert = Albert_Sans({
-  variable: "--font-albert",
+const archivo = Archivo({
+  variable: "--font-archivo",
+  subsets: ["latin", "latin-ext"],
+  axes: ["wdth"],
+});
+
+const grotesk = Space_Grotesk({
+  variable: "--font-grotesk",
   subsets: ["latin", "latin-ext"],
 });
 
-const alumni = Alumni_Sans({
-  variable: "--font-alumni",
+const spaceMono = Space_Mono({
+  variable: "--font-spacemono",
   subsets: ["latin", "latin-ext"],
-});
-
-const jetbrains = JetBrains_Mono({
-  variable: "--font-jetbrains",
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500"],
+  weight: ["400", "700"],
 });
 
 export const metadata: Metadata = {
@@ -38,10 +42,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="lv"
-      className={`${albert.variable} ${alumni.variable} ${jetbrains.variable} h-full antialiased`}
+      suppressHydrationWarning
+      className={`${archivo.variable} ${grotesk.variable} ${spaceMono.variable} h-full antialiased`}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: loaderScript }} />
+      </head>
       <body className="flex min-h-full flex-col font-sans">
-        <div className="flex-1">{children}</div>
+        <Loader />
+        <Chrome />
+        <ScrollFx />
+        <main className="flex-1">{children}</main>
         <SiteFooter />
       </body>
     </html>
