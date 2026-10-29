@@ -6,9 +6,9 @@ function formatPhone(phone: string) {
   return m ? `+371 ${m[1]} ${m[2]} ${m[3]}` : phone;
 }
 
+/** "2026-10-18" → "18.10.2026.", "2026-09" → "09.2026.", "2025" → "2025." */
 export function formatDate(iso: string) {
-  const [y, m, d] = iso.split("-");
-  return `${d}.${m}.${y}.`;
+  return `${iso.split("-").reverse().join(".")}.`;
 }
 
 const row = "flex items-center justify-between gap-4 rounded-2xl border border-white/10 px-4 py-3 transition hover:border-accent";
@@ -67,7 +67,7 @@ export function SourceList({ sources, checked }: { sources: Source[]; checked: s
       <p className="mb-5 text-sm text-muted">Publiskie avoti pārbaudīti {formatDate(checked)}</p>
       <ol className="space-y-2">
         {sources.map((s, i) => (
-          <li key={s.url} className="flex gap-3 text-sm">
+          <li key={`${i}-${s.url}`} className="flex gap-3 text-sm">
             <span className="slashed font-mono text-xs text-accent">{String(i + 1).padStart(2, "0")}</span>
             <span className="min-w-0">
               <a href={s.url} target="_blank" rel="noopener noreferrer" className="link break-words">

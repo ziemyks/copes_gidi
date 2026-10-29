@@ -5,7 +5,9 @@ import { getRegion } from "@/data/regions";
 import { speciesNames } from "@/data/species";
 import { durationLabel, tripTypes } from "@/data/trips";
 import type { Guide, Trip } from "@/data/types";
-import { formatPrice, initials } from "@/lib/site";
+import { formatPrice } from "@/lib/site";
+import { formatDate } from "./guide-parts";
+import { GuideMark } from "./guide-mark";
 import { Scene, type SceneVariant } from "./scene";
 
 export function Container({ children, className = "" }: { children: React.ReactNode; className?: string }) {
@@ -116,14 +118,16 @@ export function Figure({
   );
 }
 
-// Fotogrāfijas nerādām, kamēr gids nav devis atļauju — tikai iniciāļi
 export function Avatar({ guide, size = "md" }: { guide: Guide; size?: "md" | "lg" }) {
-  const dims = size === "lg" ? "h-24 w-24 text-4xl" : "h-12 w-12 text-xl";
-  return (
-    <div className={`relative shrink-0 overflow-hidden rounded-full bg-instrument font-display text-instrument-text ${dims}`}>
-      <span className="absolute inset-0 flex items-center justify-center tracking-wider">{initials(guide.name)}</span>
-    </div>
-  );
+  // Logotipi parasti ir plati, tāpēc tiem taisnstūris; iniciāļiem — aplis
+  const dims = guide.logo
+    ? size === "lg"
+      ? "h-24 w-40"
+      : "h-14 w-24"
+    : size === "lg"
+      ? "h-24 w-24 text-3xl"
+      : "h-14 w-14 text-xl";
+  return <GuideMark guide={guide} className={dims} />;
 }
 
 /** "no 150 € / par braucienu" vai "Cena pēc pieprasījuma" */
@@ -193,9 +197,15 @@ export function GuideCard({ guide, showBio = false }: { guide: Guide; showBio?: 
         ))}
         {names.length > 3 && <Chip>+{names.length - 3}</Chip>}
       </div>
+      <p className="mt-4 flex items-center gap-2 text-xs text-muted">
+        <span
+          className={`h-1.5 w-1.5 shrink-0 rounded-full ${guide.activity.status === "redzama" ? "bg-patina" : "bg-vermilion"}`}
+        />
+        Pēdējā publiskā aktivitāte: {formatDate(guide.activity.lastSeen)}
+      </p>
       <CardFooter>
         <span className="eyebrow">{from !== undefined ? `Copes brauciens no ${formatPrice(from)}` : "Cena pēc pieprasījuma"}</span>
-        <span className="font-mono text-xs font-bold uppercase text-accent">
+        <span className="shrink-0 whitespace-nowrap font-mono text-xs font-bold uppercase text-accent">
           Profils →
         </span>
       </CardFooter>

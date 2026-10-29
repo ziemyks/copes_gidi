@@ -3,10 +3,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ContactPanel, PublicDataNotice } from "@/components/guide-parts";
 import { ArrowLink, Avatar, Chip, Container, Eyebrow, Photo, PriceTag, TripCard } from "@/components/ui";
-import { getGuide, kindLabels } from "@/data/guides";
+import { getGuide, kindLabels, rankedTrips } from "@/data/guides";
 import { getRegion } from "@/data/regions";
 import { speciesNames } from "@/data/species";
-import { durationLabel, getTrip, tripTypes, trips, tripsByRegion } from "@/data/trips";
+import { durationLabel, getTrip, tripTypes, trips } from "@/data/trips";
 import { formatPrice } from "@/lib/site";
 
 export function generateStaticParams() {
@@ -27,7 +27,8 @@ export default async function TripPage({ params }: PageProps<"/braucieni/[slug]"
 
   const guide = getGuide(trip.guide);
   const region = getRegion(trip.region);
-  const related = (region ? tripsByRegion(region.slug) : [])
+  const related = rankedTrips
+    .filter((t) => region && t.region === region.slug)
     .filter((t) => t.slug !== trip.slug && t.guide !== trip.guide)
     .slice(0, 3);
 
@@ -177,7 +178,7 @@ export default async function TripPage({ params }: PageProps<"/braucieni/[slug]"
               <p className="eyebrow">Cena</p>
               <PriceTag trip={trip} className="mt-1 [&>span]:text-4xl" />
             </div>
-            {guide && <ContactPanel contacts={guide.contacts} />}
+            {guide && <ContactPanel contacts={guide.contacts} title={guide.contactTitle} />}
             <PublicDataNotice checked={guide?.checked ?? "2026-10-29"} />
           </aside>
         </div>

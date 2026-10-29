@@ -4,10 +4,10 @@ import { formatDate } from "@/components/guide-parts";
 import { Scene } from "@/components/scene";
 import { Bobber, Fish, Hook, Lure, Sparkle } from "@/components/stickers";
 import { Container, Photo } from "@/components/ui";
-import { guides, kindLabels } from "@/data/guides";
+import { guides, kindLabels, rankedTrips } from "@/data/guides";
 import { getRegion, regions } from "@/data/regions";
 import { species } from "@/data/species";
-import { tripTypes, trips, tripsByRegion } from "@/data/trips";
+import { tripTypes, tripsByRegion } from "@/data/trips";
 import type { Trip, TripType } from "@/data/types";
 import { formatPrice, site } from "@/lib/site";
 
@@ -68,7 +68,11 @@ const cardStyles = [
 ];
 
 export default function Home() {
-  const showcase = trips.slice(0, 6);
+  // Vitrīnā — pa vienam copes braucienam no aktuālākajiem gidiem
+  const showcase = guides
+    .map((g) => rankedTrips.find((t) => t.guide === g.slug && t.type !== "apmaciba" && t.priceFrom !== undefined))
+    .filter((t) => t !== undefined)
+    .slice(0, 6);
   const regionNames = Object.fromEntries(regions.map((r) => [r.slug, r.name]));
 
   return (
@@ -445,7 +449,7 @@ function ShowMore({ href, label }: { href: string; label: string }) {
 
 function ServiceCard({ type, index }: { type: TripType; index: number }) {
   const style = cardStyles[index % cardStyles.length];
-  const list = trips.filter((t) => t.type === type);
+  const list = rankedTrips.filter((t) => t.type === type);
   return (
     <div
       data-reveal

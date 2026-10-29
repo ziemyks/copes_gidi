@@ -16,7 +16,7 @@ export const kindLabels: Record<GuideKind, string> = {
   kapteinis: "Kapteinis",
 };
 
-export const guides: Guide[] = [
+const profiles: Guide[] = [
   {
     slug: "rigafishing",
     id: "E001, E002",
@@ -94,6 +94,7 @@ export const guides: Guide[] = [
     mentions: [],
     activity: {
       status: "redzama",
+      lastSeen: "2026-08-01",
       note: "bloga ieraksti 2026. gada februārī un martā, FishingBooker atsauksmes no 2026. gada braucieniem.",
       url: "https://fishingbooker.com/charters/view/41852",
     },
@@ -173,6 +174,7 @@ export const guides: Guide[] = [
     notIncluded: ["Makšķerēšanas karte un licences", "Laikapstākļiem atbilstošs apģērbs"],
     catchPolicy: "Lielās trofejas atlaiž; mazāku zivi var paņemt maltītei. LIVE apmācību piedāvā tikai tiem, kas apņemas trofejas atlaist.",
     booking: ["rezervācijas forma vietnē", "WhatsApp", "Facebook Messenger", "tālrunis", "e-pasts"],
+    logo: { src: "/logos/kaspars-holms.webp", source: "https://www.fishinginlatvia.com/lv/", bg: "dark" },
     contacts: {
       phones: ["+37129775875"],
       emails: ["fishinginlv@gmail.com"],
@@ -203,6 +205,7 @@ export const guides: Guide[] = [
     ],
     activity: {
       status: "redzama",
+      lastSeen: "2026-09-04",
       note: "meistarklases 2026. gada aprīlī, bloga ieraksts septembrī, raksts žurnālā IR augustā.",
       url: "https://www.fishinginlatvia.com/lv/blogs/",
     },
@@ -281,6 +284,7 @@ export const guides: Guide[] = [
     notIncluded: ["Makšķerēšanas licences un atļaujas", "Transfērs, maltītes un naktsmājas (papildus pēc vienošanās)"],
     catchPolicy: "Noķer un atlaid — zivis pēc fotografēšanas atlaiž.",
     booking: ["tālrunis", "e-pasts", "WhatsApp", "Facebook"],
+    logo: { src: "/logos/martins-iskrovs.webp", source: "https://www.fishingguidelatvia.com/", bg: "light" },
     contacts: {
       phones: ["+37129212325"],
       emails: ["info@fishingguidelatvia.com"],
@@ -300,6 +304,7 @@ export const guides: Guide[] = [
     ],
     activity: {
       status: "redzama",
+      lastSeen: "2026-10-18",
       note: "pakalpojumu lapa atjaunota 2026. gada janvārī; LMSF ziņa par izlases kapteiņa lomu 18.10.2026.",
       url: "https://www.lmsf.lv/index.php/component/content/article/pasuales-cempionata-spiningosana-no-laivam-sudrabs?catid=2",
     },
@@ -370,6 +375,7 @@ export const guides: Guide[] = [
     notIncluded: ["Makšķerēšanas licence un atļaujas", "Ēdiens un dzērieni", "Transfērs un naktsmītne (pēc pieprasījuma)"],
     catchPolicy: "Pēc noklusējuma noķer un atlaid; lomu var paņemt līdzi, ja klients to lūdz.",
     booking: ["rezervācija vietnē", "tālrunis / WhatsApp", "Telegram", "e-pasts", "dāvanu kartes"],
+    logo: { src: "/logos/romans-astapovs.svg", source: "https://restboat.lv/", bg: "dark" },
     contacts: {
       phones: ["+37128374256"],
       emails: ["restboat7@gmail.com"],
@@ -383,6 +389,7 @@ export const guides: Guide[] = [
     mentions: [],
     activity: {
       status: "redzama",
+      lastSeen: "2026-09",
       note: "LMSF 2026. gada kopvērtējums, bloga ieraksti par 2026. gada sacensībām.",
       url: "https://lmsf.lv/images/Rezultati/2026/laivas/SNL%20gads%20pa%20posmiem.pdf",
     },
@@ -445,6 +452,7 @@ export const guides: Guide[] = [
     included: ["Makšķerēšanas inventārs", "Laiva un elektronika"],
     notIncluded: [],
     booking: ["rezervācijas forma vietnē", "tālrunis"],
+    logo: { src: "/logos/usma-fishing.webp", source: "https://www.usmafishing.lv/", bg: "light" },
     contacts: {
       phones: ["+37129111407"],
       emails: [],
@@ -463,6 +471,7 @@ export const guides: Guide[] = [
     ],
     activity: {
       status: "redzama",
+      lastSeen: "2025-11-26",
       note: "vietnē piedāvāti 2026. gada aksesuāri; YouTube epizode publicēta 2025. gada novembrī. Datēta 2026. gada copes satura nav.",
       url: "https://www.usmafishing.lv/",
     },
@@ -526,6 +535,7 @@ export const guides: Guide[] = [
     mentions: [],
     activity: {
       status: "neskaidra",
+      lastSeen: "2021-03-06",
       note: "jaunākais datētais saturs ir no 2021. gada; 2026. gada darbības pazīmes nav atrastas.",
       url: "https://balticseafishing.com/category/fishing-guides/kurzeme-latvia/",
     },
@@ -585,6 +595,7 @@ export const guides: Guide[] = [
     notIncluded: ["Degvielas piemaksa līdz 50 € tālākiem maršrutiem", "Makšķerēšanas karte un vietējās licences", "Laikapstākļiem atbilstošs apģērbs"],
     catchPolicy: "Priekšroka “noķer un atlaid”: trofejas atlaiž, likumīga izmēra lomu var paturēt.",
     booking: ["WhatsApp", "e-pasts", "tālrunis"],
+    logo: { src: "/logos/fish-dentist.webp", source: "https://fishdentist.eu/lv", bg: "dark" },
     contacts: {
       phones: ["+37125594888"],
       emails: ["hookandsmile@fishdentist.eu"],
@@ -597,6 +608,7 @@ export const guides: Guide[] = [
     mentions: [],
     activity: {
       status: "redzama",
+      lastSeen: "2026-05-28",
       note: "vietne “© 2026”, publicētas cenas; TikTok konts izveidots 2026. gada maijā.",
       url: "https://fishdentist.eu/en",
     },
@@ -655,6 +667,7 @@ export const guides: Guide[] = [
     included: ["Laiva ar kapteini", "Spininga inventārs 2 viesiem", "Iesācēju apmācība pēc vajadzības", "Laivas transports uz slipu tālākajos maršrutos", "Glābšanas vestes"],
     notIncluded: ["Ēdiens, dzērieni un apģērbs"],
     booking: ["tālrunis 9:00–20:00", "WhatsApp", "e-pasts"],
+    logo: { src: "/logos/whitelake-adventure.webp", source: "https://www.whitelake-adventure.com/", bg: "light" },
     contacts: {
       phones: ["+37129464102"],
       emails: ["info@whitelake-adventure.com"],
@@ -666,6 +679,7 @@ export const guides: Guide[] = [
     mentions: [],
     activity: {
       status: "neskaidra",
+      lastSeen: "2023",
       note: "vietne darbojas, bet tās saturs datēts ar 2023. gadu; 2026. gada sezonas pazīmes nav atrastas.",
       url: "https://www.whitelake-adventure.com/cenu-lapa-cope/",
     },
@@ -728,6 +742,7 @@ export const guides: Guide[] = [
     notIncluded: ["Makšķerēšanas karte nav minēta kā iekļauta"],
     catchPolicy: "Formāla politika nav publicēta; visi galerijas 2024. gada lomi atzīmēti kā atlaisti.",
     booking: ["rezervācijas forma (vismaz 7 dienas iepriekš)", "tālrunis", "WhatsApp", "e-pasts"],
+    logo: { src: "/logos/lv-group.webp", source: "https://laivu-gids.lvgroup.lv/lv", bg: "dark" },
     contacts: {
       phones: ["+37127174592"],
       emails: ["lvgroup@lvgroup.lv"],
@@ -738,6 +753,7 @@ export const guides: Guide[] = [
     mentions: [],
     activity: {
       status: "neskaidra",
+      lastSeen: "2025",
       note: "vietne darbojas (“© 2026”), bet datēta 2026. gada copes satura nav; vietne izveidota pēc 2025. gada marta.",
       url: "https://laivu-gids.lvgroup.lv/",
     },
@@ -801,6 +817,7 @@ export const guides: Guide[] = [
     included: ["Transfēri (lidosta–viesnīca–ūdens)", "Ceļojuma apdrošināšana", "Makšķerēšanas atļauju noformēšana", "Klientu atbalsts 24/7"],
     notIncluded: ["Aviobiļetes"],
     booking: ["tālrunis", "e-pasts", "kontaktforma", "partneru ceļojumu aģentūras Spānijā"],
+    logo: { src: "/logos/balticprofishing.webp", source: "https://balticprofishing.com/", bg: "dark" },
     contacts: {
       phones: ["+37126579275"],
       emails: ["info@balticprofishing.com"],
@@ -812,6 +829,7 @@ export const guides: Guide[] = [
     mentions: [],
     activity: {
       status: "redzama",
+      lastSeen: "2026-05-01",
       note: "ieraksts “¡Temporada 2026!” 01.05.2026.",
       url: "https://balticprofishing.com/index.php/2026/05/01/hola-pescadores-2/",
     },
@@ -834,7 +852,400 @@ export const guides: Guide[] = [
     ],
     checked,
   },
+  {
+    slug: "raznas-breksi",
+    id: "E012",
+    name: "Jānis Kupra",
+    brand: "Rāznas brekši",
+    kind: "gids",
+    people: [],
+    region: "latgale",
+    base: "Rogs, Kaunatas pagasts, Rāznas Nacionālais parks",
+    waters: ["Rāznas ezers"],
+    species: ["plaudis"],
+    techniques: ["makšķerēšana no laivas", "pludiņmakšķerēšana", "zemledus cope (padomi un vietu ierādīšana)"],
+    audiences: ["ģimenes", "skolēnu grupas", "makšķernieki, kas vēlas iepazīt Rāznu"],
+    languages: [],
+    tagline: "Copes gids un laivu noma Rāznas ezerā — “Latgales jūrā”",
+    summary:
+      "Jānis Kupra (IK “Rāznas brekši”) iepazīstina ar Rāznas ezeru, ierāda copes vietas un knifus, ziemā arī zemledus copē. No maija līdz oktobrim iznomā airu laivas un laivu ar elektromotoru. Pašvaldība un Latgales tūrisma asociācija viņu kā copes gidu iesaka arī 2025. un 2026. gadā. Pazīstams ar paša gatavotiem Rāznas niedru pludiņiem. Cenas nav publicētas.",
+    claims: [
+      {
+        text: "Latgales tūrisma asociācija 2026. gada zemledus copes rakstā iesaka viņu kā makšķerēšanas gidu",
+        source: "https://latgale.travel/zemledus-cope-latgale/",
+        selfClaimed: false,
+      },
+      {
+        text: "Copes gida pakalpojumi Rāznas Nacionālā parka Ceļotāju dienās 2021, 2022, 2024 un 2025",
+        source: "https://latgale.travel/raznas-nacionala-parka-celotaju-dienas-12-un-13-julija/",
+        selfClaimed: false,
+      },
+      {
+        text: "Nominēts konkursā “Rēzeknes novada uzņēmums” 2024 un 2025 (nominācija “Meistars”)",
+        source: "https://rezeknesnovads.lv/godinati-konkursa-rezeknes-novada-uznemums-2025-laureati/",
+        selfClaimed: false,
+      },
+    ],
+    boats: [{ model: "Laiva ar elektromotoru un airu laivas" }],
+    included: [],
+    notIncluded: [],
+    booking: ["tālrunis (obligāta iepriekšēja pieteikšanās)", "e-pasts"],
+    contacts: {
+      phones: ["+37127867745"],
+      emails: ["raznabreksi@gmail.com"],
+      website: "https://rezeknesnovads.lv/viesiem/aktiva-atputa/raznas-breksi-copes-gids/",
+    },
+    reviews: [],
+    mentions: [
+      {
+        title: "Copes Garša — Rāznas ezers",
+        outlet: "YouTube raidījums “Copes Garša”",
+        date: "2020-06-11",
+        url: "https://www.youtube.com/watch?v=J36LArxBiNM",
+      },
+      {
+        title: "Zemledus cope Latgalē",
+        outlet: "latgale.travel",
+        date: "2026-01-20",
+        url: "https://latgale.travel/zemledus-cope-latgale/",
+      },
+    ],
+    activity: {
+      status: "redzama",
+      lastSeen: "2026-01-20",
+      note: "ieteikts latgale.travel 2026. gada zemledus copes rakstā; pašvaldības tūrisma objekts atjaunināts 2025. gada septembrī.",
+      url: "https://latgale.travel/zemledus-cope-latgale/",
+    },
+    company: { name: "IK “Rāznas brekši”", regNo: "42402019063", source: "https://data.gov.lv/dati/lv/dataset/uz" },
+    season: "Laivas un gids no maija līdz oktobrim; ziemā — zemledus copes padomi",
+    caveats: [
+      "Gida pakalpojuma cena, ilgums un dalībnieku skaits — nav publicēti.",
+      "Vai cenā iekļauta laiva un inventārs.",
+      "Apkalpošanas valodas.",
+      "Rāznas Nacionālajā parkā iekšdedzes motorlaivu lietošana ir ierobežota — gids izmanto elektromotora un airu laivas.",
+    ],
+    sources: [
+      { url: "https://rezeknesnovads.lv/viesiem/aktiva-atputa/raznas-breksi-copes-gids/", title: "Rēzeknes novads — “Rāznas brekši”, copes gids", supports: "pakalpojumi, sezona, laivas, kontakti" },
+      { url: "https://latgale.travel/zemledus-cope-latgale/", title: "latgale.travel — Zemledus cope Latgalē (2026)", supports: "2026. gada ieteikums, kontakti" },
+      { url: "https://latgale.travel/listing/raznas-nacionalais-parks/", title: "latgale.travel — Rāznas Nacionālais parks", supports: "makšķerēšanas gids Jānis Kupra" },
+      { url: "https://latgale.travel/raznas-nacionala-parka-celotaju-dienas-12-un-13-julija/", title: "Rāznas NP Ceļotāju dienas 2025", supports: "copes gida pakalpojumi" },
+      { url: "https://rezeknesnovads.lv/godinati-konkursa-rezeknes-novada-uznemums-2025-laureati/", title: "Rēzeknes novada uzņēmums 2025", supports: "nominācija" },
+      { url: "https://www.youtube.com/watch?v=J36LArxBiNM", title: "Copes Garša — Rāznas ezers", supports: "video, 2020" },
+    ],
+    checked,
+  },
+  {
+    slug: "ricards-milass",
+    id: "E013",
+    name: "Ričards Milašs",
+    brand: "NGT Latvia",
+    kind: "gids",
+    people: [],
+    region: "",
+    base: "Rīga (saziņa caur NGT makšķerlietu veikalu); copes Latvijas karpu dīķos",
+    waters: ["Latvijas karpu dīķi (konkrēti dīķi nav nosaukti)"],
+    species: ["karpa"],
+    techniques: ["karpu makšķerēšana", "trofeju karpu cope"],
+    audiences: ["karpu makšķernieki", "trofeju meklētāji"],
+    languages: ["Latviešu"],
+    tagline: "Karpu sportists un gids trofeju karpu copei Latvijas dīķos",
+    summary:
+      "Ričards Milašs ir karpu makšķerēšanas sportists — 2024. gada U22 pasaules čempionāta uzvarētājs pāru vērtējumā un Latvijas izlases dalībnieks. NGT makšķerlietu veikala blogā 2026. gadā viņš piedāvāts kā karpu gids copei mazākos un lielākos karpu dīķos. Cenas un tiešie kontakti nav publicēti — saziņa caur NGT veikalu, kurā viņš strādā par konsultantu.",
+    claims: [
+      {
+        text: "1. vieta pāru vērtējumā pasaules čempionātā karpu makšķerēšanā U22 (Baļotes ezers, 2024)",
+        source: "https://www.radio1.lv/lv/Vides-zinas/1/57037/Latvijai-piecas-medalas-Pasaules-Cempionata-karpu-makskeresana-sievietem-un-jauniesiem-(FOTO)",
+        selfClaimed: false,
+      },
+      {
+        text: "Bronza Latvijas čempionātā karpu makšķerēšanā 2024; Latvijas izlasē pasaules čempionātā Horvātijā",
+        source: "https://www.copeslietas.lv/site/zinas/3991-latvija-starte-pc-karpas-teksta-tiesraide-otrdiena-1.htm",
+        selfClaimed: false,
+      },
+      {
+        text: "Komanda “NGT Saluds” — Latvijas čempioni karpu makšķerēšanā 2026 (rakstā uzvārds “Milošs”)",
+        source: "https://www.copeslietas.lv/site/zinas/4374-kas-bus-jaunie-latvijas-cempioni-karpu-makskeresana.htm",
+        selfClaimed: false,
+      },
+      {
+        text: "NGT veikals viņu piedāvā kā karpu gidu (darba devēja reklāmas teksts)",
+        source: "https://ngt.lv/blogs/news/makskeresana-latvija-informacija-un-padomi",
+        selfClaimed: true,
+      },
+    ],
+    boats: [],
+    included: [],
+    notIncluded: [],
+    booking: ["caur NGT veikalu Rīgā, Duntes ielā 5"],
+    contacts: {
+      phones: ["+37120620777"],
+      emails: ["info@ngtlatvia.lv"],
+      website: "https://ngt.lv/",
+    },
+    contactTitle: "Saziņa caur NGT veikalu",
+    reviews: [],
+    mentions: [
+      {
+        title: "Meistarklase. Kā noķert milzu karpu jeb ko sportisti tev nestāsta",
+        outlet: "YouTube “Lielais Loms”",
+        date: "2024-04-07",
+        url: "https://www.youtube.com/watch?v=liHXv3JP9x8",
+      },
+      {
+        title: "Latvijai piecas medaļas pasaules čempionātā karpu makšķerēšanā sievietēm un jauniešiem",
+        outlet: "radio1.lv",
+        date: "2024-07-13",
+        url: "https://www.radio1.lv/lv/Vides-zinas/1/57037/Latvijai-piecas-medalas-Pasaules-Cempionata-karpu-makskeresana-sievietem-un-jauniesiem-(FOTO)",
+      },
+    ],
+    activity: {
+      status: "redzama",
+      lastSeen: "2026-02-15",
+      note: "NGT blogā nosaukts par karpu gidu; 2026. gada jūlijā startējis pasaules un Latvijas čempionātos.",
+      url: "https://ngt.lv/blogs/news/makskeresana-latvija-informacija-un-padomi",
+    },
+    caveats: [
+      "Vai gida pakalpojums ir maksas un par kādu cenu — nekur nav publicēts.",
+      "Kuros dīķos notiek cope un vai dīķa maksa ir atsevišķa.",
+      "Kontakti ir NGT veikala, nevis gida personīgie.",
+    ],
+    sources: [
+      { url: "https://ngt.lv/blogs/news/makskeresana-latvija-informacija-un-padomi", title: "NGT blogs — Makšķerēšana Latvijā (15.02.2026.)", supports: "karpu gids, NGT konsultants" },
+      { url: "https://www.radio1.lv/lv/Vides-zinas/1/57037/Latvijai-piecas-medalas-Pasaules-Cempionata-karpu-makskeresana-sievietem-un-jauniesiem-(FOTO)", title: "radio1.lv — PČ U22 rezultāti 2024", supports: "1. vieta pāros" },
+      { url: "https://www.copeslietas.lv/site/zinas/3991-latvija-starte-pc-karpas-teksta-tiesraide-otrdiena-1.htm", title: "CopesLietas — Latvija startē PČ karpās (2024)", supports: "LČ bronza, izlase" },
+      { url: "https://www.copeslietas.lv/site/zinas/4374-kas-bus-jaunie-latvijas-cempioni-karpu-makskeresana.htm", title: "CopesLietas — Latvijas čempioni karpu makšķerēšanā 2026", supports: "NGT Saluds" },
+      { url: "https://www.tvnet.lv/7985280/copmani-ir-gatavi-atklat-noslepumus-izstade-outdoor-riga-2024", title: "tvnet — Outdoor Riga 2024", supports: "izlases dalībnieks, meistarklase" },
+    ],
+    checked,
+  },
+  {
+    slug: "rainers-dzerins",
+    id: "E011",
+    name: "Rainers Džeriņš",
+    kind: "gids",
+    people: [],
+    region: "latgale",
+    base: "Preiļu novads; brauc pa visu Latgali",
+    waters: ["Latgales ezeri un upes"],
+    species: [],
+    techniques: [],
+    audiences: ["iesācēji (makšķerēšanas apmācība)", "pieredzējuši makšķernieki (jaunas copes vietas)"],
+    languages: ["Latviešu", "Krievu", "Angļu"],
+    tagline: "Makšķerēšanas gids un instruktors Preiļu novadā un visā Latgalē",
+    summary:
+      "Rainers Džeriņš ir Preiļu tūrisma informācijas centra gidu sarakstā iekļauts makšķerēšanas gids. Viņš māca makšķerēt iesācējus un pieredzējušiem makšķerniekiem rāda jaunas copes vietas Latgales ezeros un upēs latviešu, krievu un angļu valodā. Cenas, metodes un sugas nav publicētas; pieteikšanās pa tālruni.",
+    claims: [
+      {
+        text: "Vietējais no Preiļu novada, kopš bērnības makšķerē un gandrīz visu brīvo laiku pavada pie ūdens",
+        source: "https://latgale.travel/listing/fishing-guide-in-latgale/",
+        selfClaimed: true,
+      },
+      {
+        text: "Iekļauts Preiļu TIC oficiālajā gidu sarakstā un 2024. gada katalogā",
+        source: "https://www.visitpreili.lv/lv/gidi/",
+        selfClaimed: false,
+      },
+    ],
+    boats: [],
+    included: [],
+    notIncluded: [],
+    booking: ["tālrunis", "Preiļu TIC"],
+    contacts: {
+      phones: ["+37128179580"],
+      emails: [],
+      website: "https://www.visitpreili.lv/lv/gidi/",
+    },
+    reviews: [],
+    mentions: [],
+    activity: {
+      status: "neskaidra",
+      lastSeen: "2024-11-01",
+      note: "joprojām norādīts Preiļu TIC gidu lapā (2026), bet jaunākais datētais ieraksts ir 2024. gada novembra katalogs; paša gida kanālu nav.",
+      url: "https://www.visitpreili.lv/lv/gidi/",
+    },
+    caveats: [
+      "Cena, ilgums, metodes, zivju sugas un vai ir laiva vai inventārs.",
+      "Vai pakalpojums ir reģistrēta saimnieciskā darbība.",
+      `${commonCaveats}.`,
+    ],
+    sources: [
+      { url: "https://www.visitpreili.lv/lv/gidi/", title: "Visit Preiļi — gidi", supports: "apraksts, valodas, tālrunis" },
+      { url: "https://www.visitpreili.lv/en/guides/", title: "Visit Preiļi — guides (EN)", supports: "EN ieraksts" },
+      { url: "https://latgale.travel/wp-content/uploads/2025/02/katalogs_pdf_16459_preilu_tic_objekti_140x210mm_1-11-2024_v3-1_compressed.pdf", title: "Preiļu TIC katalogs (1.11.2024.)", supports: "vārds, valodas, tālrunis" },
+      { url: "https://latgale.travel/listing/fishing-guide-in-latgale/", title: "latgale.travel — Fishing guide in Latgale", supports: "bio" },
+    ],
+    checked,
+  },
+  {
+    slug: "normunds-ikomass",
+    id: "E017",
+    name: "Normunds Ikomass",
+    brand: "pike IN lv",
+    kind: "gids",
+    people: [],
+    region: "",
+    base: "Latvija (bāze nav publicēta); copes arī Somijā",
+    waters: ["Latvijas lielās upes", "Latvijas ezeri", "Somija"],
+    species: ["lidaka"],
+    techniques: ["trofeju līdaku spiningošana", "big bait", "no laivas"],
+    audiences: ["trofeju līdaku meklētāji"],
+    languages: [],
+    tagline: "Trofeju līdakas ar vienu no pirmajiem Latvijas copes gidiem",
+    summary:
+      "Normunds Ikomass (“pike IN lv”) ir viens no pirmajiem Latvijas copes gidiem, specializējies trofeju līdaku copē Latvijas upēs un ezeros un Somijā. Mediji 2021.–2024. gadā viņu raksturo kā trofejlīdaku gidu. Cenas nav publicētas, un jaunākie gida darbības pierādījumi ir no 2024. gada.",
+    claims: [
+      {
+        text: "Santa.lv (2021) viņu nosauc par pirmo copes gidu Latvijā — gidu trofeju līdaku vietās Latvijā un Somijā",
+        source: "https://www.santa.lv/raksts/privatadzive/pirmais-copes-gids-latvija-normunds-ikomass-pec-trofeju-izvilksanas-man-vienmer-tric-rokas-38698/",
+        selfClaimed: false,
+      },
+      {
+        text: "Klientu lomi viņa laivā — līdakas 129, 127 un 125 cm",
+        source: "https://www.lielaisloms.eu/ka-nokert-lielo",
+        selfClaimed: true,
+      },
+      {
+        text: "Outdoor Riga 2023 meistarklase “Kā nolasīt upi ar un bez tehnoloģijām”",
+        source: "https://www.lielaisloms.eu/meistarklase-ka-nolasit-upi-ar-un-bez-tehnologijam-saruna-ar-normundu-ikomasu",
+        selfClaimed: false,
+      },
+    ],
+    boats: [],
+    included: [],
+    notIncluded: [],
+    booking: ["tālrunis"],
+    contacts: {
+      phones: ["+37126808888"],
+      emails: [],
+      instagram: "https://www.instagram.com/pike_in_lv/",
+      youtube: "https://www.youtube.com/@pikeinlv2062",
+    },
+    reviews: [],
+    mentions: [
+      {
+        title: "Pirmais copes gids Latvijā Normunds Ikomass: Pēc trofeju izvilkšanas man vienmēr trīc rokas",
+        outlet: "Santa.lv",
+        date: "2021-01-13",
+        url: "https://www.santa.lv/raksts/privatadzive/pirmais-copes-gids-latvija-normunds-ikomass-pec-trofeju-izvilksanas-man-vienmer-tric-rokas-38698/",
+      },
+      {
+        title: "Normunds Ikomass — cilvēks, kurš noķēris vairāk nekā 400 m līdaku",
+        outlet: "YouTube “Lielais Loms”",
+        date: "2023-03-28",
+        url: "https://www.youtube.com/watch?v=EHA7ZTaki2M",
+      },
+    ],
+    activity: {
+      status: "neskaidra",
+      lastSeen: "2024-04-06",
+      note: "Outdoor Riga 2024 programmā minēts kā copes gids; 2025.–2026. gada pierādījumu nav, vecā e-pasta domēns vairs nedarbojas.",
+      url: "https://www.tvnet.lv/7985280/copmani-ir-gatavi-atklat-noslepumus-izstade-outdoor-riga-2024",
+    },
+    caveats: [
+      "Vai 2026. gadā joprojām piedāvā maksas copes.",
+      "Vai tālrunis (publicēts 2020. gadā) ir aktuāls.",
+      "Cena, laiva un dalībnieku skaits — nav publicēti.",
+    ],
+    sources: [
+      { url: "https://www.santa.lv/raksts/privatadzive/pirmais-copes-gids-latvija-normunds-ikomass-pec-trofeju-izvilksanas-man-vienmer-tric-rokas-38698/", title: "Santa.lv — Pirmais copes gids Latvijā (2021)", supports: "gids Latvijā un Somijā" },
+      { url: "https://www.lielaisloms.eu/ka-nokert-lielo", title: "Lielais Loms — Kā noķert LIELO? (2021)", supports: "gida pakalpojumi, klientu lomi" },
+      { url: "https://manalidaka.wordpress.com/2020/11/29/latvijas-makskerlietu-meistari/", title: "manalidaka — Latvijas makšķerlietu meistari (2020)", supports: "zīmols, tālrunis" },
+      { url: "https://www.tvnet.lv/7985280/copmani-ir-gatavi-atklat-noslepumus-izstade-outdoor-riga-2024", title: "tvnet — Outdoor Riga 2024", supports: "copes gids 2024. gada programmā" },
+      { url: "https://www.youtube.com/@pikeinlv2062", title: "YouTube — pike IN lv", supports: "paša kanāls, 2019–2023" },
+    ],
+    checked,
+  },
+  {
+    slug: "goldmans-fishing",
+    id: "E009",
+    name: "Kārlis Goldmans",
+    brand: "Goldmans Fishing",
+    kind: "gids",
+    people: [],
+    region: "zemgale",
+    base: "Ozolnieki; copes Latvijas upēs un piekrastē",
+    waters: ["Latvijas upes", "piekraste"],
+    species: ["lasis", "taimins", "forele"],
+    techniques: ["spiningošana no krasta un upē", "no laivas"],
+    audiences: ["privātpersonas", "uzņēmumi (3–100 cilvēku)", "iesācēji"],
+    languages: [],
+    maxAnglers: 6,
+    tagline: "Lašu un taimiņu cope upēs — privāti un korporatīvi",
+    summary:
+      "Kārlis Goldmans (Goldmans Fishing, Ozolnieki) ir zemledus makšķerēšanas sportists un Latvijas izlases dalībnieks, ko CopesLietas 2022. gadā sauca par makšķerēšanas un laivošanas gidu. 2020. gada piedāvājumā — lašu, taimiņu un foreļu cope Latvijas upēs un piekrastē par 200 € + PVN personai dienā ar inventāru, kafiju un pusdienām uz ugunskura. Jaunāka datēta piedāvājuma nav.",
+    claims: [
+      {
+        text: "CopesLietas (2022) raksturo viņu kā makšķerēšanas un laivošanas gidu",
+        source: "https://www.copeslietas.lv/site/blogi/3469-lielas-zivs-majestatiskais-miers.htm",
+        selfClaimed: false,
+      },
+      {
+        text: "Latvijas izlasē pasaules čempionātos zemledus makšķerēšanā 2024 un 2026 (2026 — komandu sudrabs)",
+        source: "https://lmsf.lv/izlases/",
+        selfClaimed: false,
+      },
+      {
+        text: "Vairāk nekā 20 gadu pieredze jūras un upju makšķerēšanā; trenējis Latvijas fīdera izlasi",
+        source: "https://balticseafishing.com/karlis-goldmans-fishing-guide/",
+        selfClaimed: true,
+      },
+    ],
+    boats: [],
+    included: ["Inventārs un ēsmas", "Bridža bikses", "Kafija", "Pusdienas uz ugunskura"],
+    notIncluded: ["PVN (cenas norādītas bez PVN)"],
+    booking: ["Facebook lapa", "tālrunis"],
+    contacts: {
+      phones: ["+37126650123"],
+      emails: [],
+      facebook: "https://www.facebook.com/GoldmansFishing/",
+    },
+    reviews: [],
+    mentions: [
+      {
+        title: "Lielās zivs majestātiskais miers",
+        outlet: "CopesLietas",
+        date: "2022-06-27",
+        url: "https://www.copeslietas.lv/site/blogi/3469-lielas-zivs-majestatiskais-miers.htm",
+      },
+      {
+        title: "Copes Frekvence S03EP15 — Lašu aktīvisti. Māris Olte un Kārlis Goldmans",
+        outlet: "YouTube “Copes Frekvence”",
+        date: "2024-11-06",
+        url: "https://www.youtube.com/watch?v=dcMAY09etIo",
+      },
+    ],
+    activity: {
+      status: "neskaidra",
+      lastSeen: "2022-06-27",
+      note: "Facebook biznesa lapa kategorijā “Fishing guiding” pastāv, bet jaunākais datētais gida darbības pieminējums ir 2022. gads; aktīvs kā sportists 2026. gadā.",
+      url: "https://www.copeslietas.lv/site/blogi/3469-lielas-zivs-majestatiskais-miers.htm",
+    },
+    caveats: [
+      "Vai 2026. gadā piedāvā maksas gidēšanu un par kādu cenu (cenas no 2020. gada).",
+      "Konkrētas upes un tikšanās vieta.",
+      "Agrāk publicētais e-pasts, visticamāk, vairs nedarbojas — sazinies pa tālruni vai Facebook.",
+    ],
+    sources: [
+      { url: "https://balticseafishing.com/karlis-goldmans-fishing-guide/", title: "Baltic Sea Fishing — Kārlis Goldmans (2020)", supports: "piedāvājumi, cenas, iekļautais" },
+      { url: "https://www.copeslietas.lv/site/blogi/3469-lielas-zivs-majestatiskais-miers.htm", title: "CopesLietas — Lielās zivs majestātiskais miers (2022)", supports: "gids, laši un taimiņi" },
+      { url: "https://lmsf.lv/izlases/", title: "LMSF — izlases", supports: "zemledus izlase 2024, 2026" },
+      { url: "https://www.youtube.com/watch?v=dcMAY09etIo", title: "Copes Frekvence S03EP15 (2024)", supports: "biedrība “Sudrablasis”" },
+    ],
+    checked,
+  },
 ];
+
+/** Aktuālākie priekšā: vispirms ar redzamu darbību, tad pēc jaunākā datētā pierādījuma */
+export const guides = [...profiles].sort(
+  (a, b) =>
+    Number(b.activity.status === "redzama") - Number(a.activity.status === "redzama") ||
+    b.activity.lastSeen.localeCompare(a.activity.lastSeen),
+);
+
+const rank = new Map(guides.map((g, i) => [g.slug, i]));
+
+/** Braucieni tādā pašā secībā kā gidi */
+export const rankedTrips = [...trips].sort((a, b) => (rank.get(a.guide) ?? 99) - (rank.get(b.guide) ?? 99));
 
 export function getGuide(slug: string) {
   return guides.find((g) => g.slug === slug);

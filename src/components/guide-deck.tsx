@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import type { Guide } from "@/data/types";
-import { initials } from "@/lib/site";
+import { GuideMark } from "./guide-mark";
 
 // Kārtis guļ kaudzē; augšējā ir aktīvā, pārējās sagrieztas zem tās
 const tilt = [0, -5, 4, -2];
@@ -43,9 +43,7 @@ export function GuideDeck({
               }}
             >
               <div className="flex items-center gap-5">
-                <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-linear-to-br from-[#e6e6e6] to-[#7c7c7c] font-display text-2xl font-black text-[#151515]">
-                  {initials(guide.name)}
-                </div>
+                <GuideMark guide={guide} className={guide.logo ? "h-20 w-32" : "h-20 w-20 text-2xl"} />
                 <div className="min-w-0">
                   <h3 className="font-display text-2xl font-black uppercase leading-none text-ink [font-variation-settings:'wdth'_110]">
                     {guide.name.split(" ").map((part) => (

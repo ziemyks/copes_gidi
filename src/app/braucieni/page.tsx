@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { TripExplorer, TripGrid } from "@/components/explorers";
 import { Container, PageHeader } from "@/components/ui";
-import { trips } from "@/data/trips";
+import { rankedTrips as trips } from "@/data/guides";
 
 export const metadata: Metadata = {
   title: "Makšķerēšanas braucieni ar gidu",

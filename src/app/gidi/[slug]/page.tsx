@@ -254,7 +254,7 @@ export default async function GuidePage({ params }: PageProps<"/gidi/[slug]">) {
                   className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${guide.activity.status === "redzama" ? "bg-patina" : "bg-vermilion"}`}
                 />
                 <span>
-                  Darbība 2026. gadā: {guide.activity.note}
+                  Jaunākā datētā publiskā aktivitāte: {formatDate(guide.activity.lastSeen)} — {guide.activity.note}
                   {guide.activity.url && (
                     <>
                       {" "}
@@ -267,11 +267,18 @@ export default async function GuidePage({ params }: PageProps<"/gidi/[slug]">) {
               </p>
             </section>
 
-            <SourceList sources={guide.sources} checked={guide.checked} />
+            <SourceList
+              sources={
+                guide.logo
+                  ? [...guide.sources, { url: guide.logo.source, title: "Logotips — gida mājaslapa", supports: "logotips" }]
+                  : guide.sources
+              }
+              checked={guide.checked}
+            />
           </div>
 
           <aside className="relative z-[45] space-y-4 lg:sticky lg:top-28 lg:self-start">
-            <ContactPanel contacts={guide.contacts} />
+            <ContactPanel contacts={guide.contacts} title={guide.contactTitle} />
             <PublicDataNotice checked={guide.checked} />
           </aside>
         </div>

@@ -92,6 +92,14 @@ export const species: Species[] = [
     best: [7, 8],
   },
   {
+    slug: "karpa",
+    name: "Karpa",
+    latin: "Cyprinus carpio",
+    description: "Trofeju karpas Latvijas dīķos un ezeros — pacietības un barošanas taktikas cope, parasti noķer un atlaid.",
+    good: [5, 9],
+    best: [6, 7, 8],
+  },
+  {
     slug: "menca",
     name: "Menca",
     latin: "Gadus morhua",

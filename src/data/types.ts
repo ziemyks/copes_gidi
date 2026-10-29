@@ -59,6 +59,8 @@ export type Mention = {
 /** Publiskās darbības pazīmes 2026. gadā */
 export type Activity = {
   status: "redzama" | "neskaidra";
+  /** Jaunākais datētais publiskais pierādījums: YYYY-MM-DD, YYYY-MM vai YYYY */
+  lastSeen: string;
   note: string;
   url?: string;
 };
@@ -90,7 +92,11 @@ export type Guide = {
   notIncluded: string[];
   catchPolicy?: string;
   booking: string[];
+  /** Logotips no gida mājaslapas (public/logos); bg — uz kāda fona tas ir paredzēts */
+  logo?: { src: string; source: string; bg: "light" | "dark" };
   contacts: Contacts;
+  /** Ja kontakti nav gida personīgie (piem. veikals), kontaktu bloka virsraksts to pasaka */
+  contactTitle?: string;
   reviews: Review[];
   mentions: Mention[];
   activity: Activity;

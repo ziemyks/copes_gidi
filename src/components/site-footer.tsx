@@ -32,7 +32,6 @@ export function SiteFooter() {
       links: [
         { href: "/#buj", label: "Biežākie jautājumi" },
         { href: "/privatums", label: "Privātuma politika" },
-        { href: site.instagram, label: "Instagram" },
       ],
     },
   ];

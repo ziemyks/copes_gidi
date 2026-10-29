@@ -1,10 +1,10 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { allLanguages, guides } from "@/data/guides";
+import { allLanguages, guides, rankedTrips } from "@/data/guides";
 import { regions } from "@/data/regions";
 import { species } from "@/data/species";
-import { tripTypes, trips } from "@/data/trips";
+import { tripTypes } from "@/data/trips";
 import type { TripType } from "@/data/types";
 import { GuideCard, TripCard } from "./ui";
 
@@ -80,7 +80,7 @@ function Empty() {
 const regionOptions = regions.map((r) => ({ value: r.slug, label: r.name }));
 const speciesOptions = species.map((s) => ({ value: s.slug, label: s.name }));
 
-export function TripGrid({ items }: { items: typeof trips }) {
+export function TripGrid({ items }: { items: typeof rankedTrips }) {
   if (!items.length) return <Empty />;
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -98,7 +98,7 @@ export function TripExplorer() {
   const type = f.get("veids");
   const sort = f.get("kartot");
 
-  const results = trips
+  const results = rankedTrips
     .filter((t) => !region || t.region === region)
     .filter((t) => !fish || t.species.includes(fish))
     .filter((t) => !type || t.type === type)

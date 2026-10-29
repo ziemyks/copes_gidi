@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ArrowLink, Chip, Container, Eyebrow, Figure, GuideCard, PageHeader, SectionHeading, TripCard } from "@/components/ui";
-import { guides } from "@/data/guides";
+import { guides, rankedTrips } from "@/data/guides";
 import { getRegion, regions } from "@/data/regions";
 import { speciesNames } from "@/data/species";
-import { tripsByRegion } from "@/data/trips";
 
 export function generateStaticParams() {
   return regions.map((r) => ({ slug: r.slug }));
@@ -25,7 +24,7 @@ export default async function RegionPage({ params }: PageProps<"/regioni/[slug]"
   const region = getRegion(slug);
   if (!region) notFound();
 
-  const regionTrips = tripsByRegion(region.slug);
+  const regionTrips = rankedTrips.filter((t) => t.region === region.slug);
   const regionGuides = guides.filter((g) => g.region === region.slug);
 
   return (
