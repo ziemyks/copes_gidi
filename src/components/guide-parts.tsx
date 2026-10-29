@@ -91,17 +91,17 @@ export function PublicDataNotice({ checked }: { checked: string }) {
   );
 }
 
-/** Aktīvs = gida pakalpojumam ir neseni publiski pierādījumi; datumu apzināti nerādām */
+/** Aktīvs = gida pakalpojumam ir neseni publiski pierādījumi; pārējiem iesakām sazināties personīgi. Datumu apzināti nerādām */
 export function ActivityBadge({ activity, className = "" }: { activity: Activity; className?: string }) {
   const active = activity.status === "redzama";
   return (
     <span
       className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-[0.72rem] font-bold uppercase ${
-        active ? "border-patina/40 text-patina" : "border-white/15 text-muted"
+        active ? "border-patina/40 text-patina" : "border-amber-300/40 text-amber-300"
       } ${className}`}
     >
-      <span className={`h-1.5 w-1.5 rounded-full ${active ? "bg-patina" : "bg-vermilion"}`} />
-      {active ? "Aktīvs" : "Neaktīvs"}
+      <span className={`h-1.5 w-1.5 rounded-full ${active ? "bg-patina" : "bg-amber-300"}`} />
+      {active ? "Aktīvs" : "Sazinies personīgi"}
     </span>
   );
 }
