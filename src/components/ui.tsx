@@ -1,10 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getGuide, type Guide } from "@/data/guides";
+import { getGuide, guideFrom, kindLabels } from "@/data/guides";
 import { getRegion } from "@/data/regions";
 import { speciesNames } from "@/data/species";
-import { tripTypes, type Trip } from "@/data/trips";
-import { formatPrice } from "@/lib/site";
+import { durationLabel, tripTypes } from "@/data/trips";
+import type { Guide, Trip } from "@/data/types";
+import { formatPrice, initials } from "@/lib/site";
 import { Scene, type SceneVariant } from "./scene";
 
 export function Container({ children, className = "" }: { children: React.ReactNode; className?: string }) {
@@ -115,27 +116,31 @@ export function Figure({
   );
 }
 
+// Fotogrāfijas nerādām, kamēr gids nav devis atļauju — tikai iniciāļi
 export function Avatar({ guide, size = "md" }: { guide: Guide; size?: "md" | "lg" }) {
   const dims = size === "lg" ? "h-24 w-24 text-4xl" : "h-12 w-12 text-xl";
-  const initials = guide.name
-    .split(" ")
-    .map((p) => p[0])
-    .join("");
   return (
     <div className={`relative shrink-0 overflow-hidden rounded-full bg-instrument font-display text-instrument-text ${dims}`}>
-      {guide.photo ? (
-        <Image src={guide.photo} alt={guide.name} fill sizes="96px" className="object-cover" />
-      ) : (
-        <span className="absolute inset-0 flex items-center justify-center tracking-wider">{initials}</span>
-      )}
+      <span className="absolute inset-0 flex items-center justify-center tracking-wider">{initials(guide.name)}</span>
     </div>
+  );
+}
+
+/** "no 150 € / par braucienu" vai "Cena pēc pieprasījuma" */
+export function PriceTag({ trip, className = "" }: { trip: Trip; className?: string }) {
+  if (trip.priceFrom === undefined) return <p className={`text-sm text-muted ${className}`}>Cena pēc pieprasījuma</p>;
+  return (
+    <p className={`text-sm text-muted ${className}`}>
+      no <span className="font-display text-lg font-black text-ink">{formatPrice(trip.priceFrom)}</span>
+      {trip.priceBasis && <> / {trip.priceBasis}</>}
+    </p>
   );
 }
 
 function CardFooter({ children }: { children: React.ReactNode }) {
   return (
     <div className="mt-auto pt-5">
-      <div className="flex items-baseline justify-between border-t border-rule pt-4">{children}</div>
+      <div className="flex items-baseline justify-between gap-3 border-t border-rule pr-7 pt-4">{children}</div>
     </div>
   );
 }
@@ -144,25 +149,22 @@ export function TripCard({ trip }: { trip: Trip }) {
   const guide = getGuide(trip.guide);
   const region = getRegion(trip.region);
   return (
-    <Link href={`/braucieni/${trip.slug}`} className="card dogear group flex h-full flex-col overflow-hidden">
+    <Link href={`/braucieni/${trip.slug}`} className="card dogear group flex h-full min-w-0 flex-col overflow-hidden">
       <div className="relative aspect-[4/3] overflow-hidden border-b border-rule">
         <Photo alt={trip.title} scene={trip.scene} seed={trip.slug} />
         <div className="absolute left-3 top-3 flex flex-wrap gap-1.5">
           <Chip tone="dark">{tripTypes[trip.type]}</Chip>
-          {trip.familyFriendly && <Chip tone="dark">Ģimenēm</Chip>}
         </div>
       </div>
       <div className="flex flex-1 flex-col p-5">
         <p className="eyebrow">
-          {region?.name} · {trip.water}
+          {region?.name ?? "Visa Latvija"} · {trip.waters[0]}
         </p>
         <h3 className="title mt-2">{trip.title}</h3>
-        <p className="mt-1 text-sm text-muted">Gids: {guide?.name}</p>
+        <p className="mt-1 text-sm text-muted">{guide?.name}</p>
         <CardFooter>
-          <p className="text-sm text-muted">
-            no <span className="font-display text-lg font-black text-ink">{formatPrice(trip.priceFrom)}</span> / {trip.priceUnit}
-          </p>
-          <span className="eyebrow">{trip.hours} h</span>
+          <PriceTag trip={trip} />
+          <span className="eyebrow shrink-0 pl-3">{durationLabel(trip)}</span>
         </CardFooter>
       </div>
     </Link>
@@ -172,18 +174,19 @@ export function TripCard({ trip }: { trip: Trip }) {
 export function GuideCard({ guide, showBio = false }: { guide: Guide; showBio?: boolean }) {
   const region = getRegion(guide.region);
   const names = speciesNames(guide.species);
+  const from = guideFrom(guide.slug);
   return (
-    <Link href={`/gidi/${guide.slug}`} className="card dogear group flex h-full flex-col p-6">
+    <Link href={`/gidi/${guide.slug}`} className="card dogear group flex h-full min-w-0 flex-col p-6">
       <div className="flex items-center gap-4">
         <Avatar guide={guide} />
         <div className="min-w-0">
           <h3 className="title">{guide.name}</h3>
           <p className="eyebrow mt-1 truncate">
-            {guide.base} · {region?.name}
+            {kindLabels[guide.kind]} · {region?.name ?? "Visa Latvija"}
           </p>
         </div>
       </div>
-      {showBio && <p className="mt-4 line-clamp-3 text-sm text-muted">{guide.bio}</p>}
+      {showBio && <p className="mt-4 line-clamp-3 text-sm text-muted">{guide.summary}</p>}
       <div className="mt-4 flex flex-wrap gap-1.5">
         {names.slice(0, 3).map((n) => (
           <Chip key={n}>{n}</Chip>
@@ -191,9 +194,7 @@ export function GuideCard({ guide, showBio = false }: { guide: Guide; showBio?: 
         {names.length > 3 && <Chip>+{names.length - 3}</Chip>}
       </div>
       <CardFooter>
-        <span className="eyebrow">
-          {guide.yearsExperience} g. · {guide.languages.length} valodas
-        </span>
+        <span className="eyebrow">{from !== undefined ? `Copes brauciens no ${formatPrice(from)}` : "Cena pēc pieprasījuma"}</span>
         <span className="font-mono text-xs font-bold uppercase text-accent">
           Profils →
         </span>

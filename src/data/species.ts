@@ -91,6 +91,31 @@ export const species: Species[] = [
     good: [5, 6, 9],
     best: [7, 8],
   },
+  {
+    slug: "menca",
+    name: "Menca",
+    latin: "Gadus morhua",
+    description:
+      "Baltijas jūras menca — no Liepājas mola un pludmales vēlā rudenī un ziemā, jūrā sezonāli. Pirms copes pārbaudi aktuālos mencu ierobežojumus.",
+    good: [1, 2, 3, 10],
+    best: [11, 12],
+  },
+  {
+    slug: "bute",
+    name: "Bute",
+    latin: "Platichthys flesus",
+    description: "Plekste, ko Kurzemes krastā ķer ar grunts makšķerēm no pludmales un moliem.",
+    good: [4, 5, 6, 11],
+    best: [9, 10],
+  },
+  {
+    slug: "vejzivs",
+    name: "Vējzivs",
+    latin: "Belone belone",
+    description: "Zaļkaulainā jūras zivs, kas maija beigās un jūnija sākumā pienāk pie Kurzemes krasta.",
+    good: [7],
+    best: [5, 6],
+  },
 ];
 
 export function getSpecies(slug: string) {

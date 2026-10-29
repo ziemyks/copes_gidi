@@ -1,32 +1,34 @@
 import Link from "next/link";
 import { GuideDeck } from "@/components/guide-deck";
+import { formatDate } from "@/components/guide-parts";
 import { Scene } from "@/components/scene";
 import { Bobber, Fish, Hook, Lure, Sparkle } from "@/components/stickers";
 import { Container, Photo } from "@/components/ui";
-import { guides } from "@/data/guides";
+import { guides, kindLabels } from "@/data/guides";
 import { getRegion, regions } from "@/data/regions";
 import { species } from "@/data/species";
-import { tripTypes, trips, tripsByRegion, type Trip, type TripType } from "@/data/trips";
-import { formatPrice } from "@/lib/site";
+import { tripTypes, trips, tripsByRegion } from "@/data/trips";
+import type { Trip, TripType } from "@/data/types";
+import { formatPrice, site } from "@/lib/site";
 
 const months = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jūn", "Jūl", "Aug", "Sep", "Okt", "Nov", "Dec"];
 
 const steps = [
   {
-    title: "Izvēlies braucienu",
-    text: "Nekādu “garantēta loma” solījumu. Reģions, zivs, cena — salīdzini un izvēlies pats.",
+    title: "Salīdzini",
+    text: "Cenas, ilgumi, laivas un ūdeņi no gidu pašu lapām. Pie katra fakta — avots. Nekādu “garantēta loma” solījumu.",
   },
   {
-    title: "Nosūti pieprasījumu",
-    text: "Datumi, cilvēku skaits, tava pieredze. Bez maksas un bez saistībām.",
+    title: "Sazinies tieši",
+    text: "Tālrunis, WhatsApp vai e-pasts — tie, ko gids pats publicējis. Mēs neesam starpnieks un neņemam komisiju.",
   },
   {
-    title: "Gids apstiprina",
-    text: "Atbild īsts cilvēks 24–48 stundu laikā. Priekšapmaksa tikai pēc apstiprinājuma.",
+    title: "Precizē noteikumus",
+    text: "Brīvos datumus, gala cenu, PVN, licences un atcelšanu apstiprina gids. Publiski tie bieži nav norādīti.",
   },
   {
     title: "Uz ūdens",
-    text: "Tu copē, gids zina kur. Lineāls zivju mērīšanai — iekļauts.",
+    text: "Tu copē, gids zina kur. Lineālu zivju mērīšanai — ņem līdzi.",
   },
 ];
 
@@ -36,20 +38,24 @@ const faq = [
     a: "Jā. Latvijā makšķerēšanas karte parasti nepieciešama makšķerniekiem no 16 līdz 65 gadu vecumam, un to var iegādāties tiešsaistē. Licencētajos ūdeņos (piemēram, lašu posmos Ventā un Salacā) papildus vajag licenci. Gids pastāstīs, kas tieši nepieciešams, bet pirms brauciena pārbaudi aktuālos noteikumus.",
   },
   {
+    q: "No kurienes šī informācija?",
+    a: `No gidu pašu mājaslapām, sociālajiem tīkliem, tūrisma katalogiem un uzņēmumu reģistra datiem. Avoti pārbaudīti ${formatDate(site.checked)} Katrā profilā ir avotu saraksts, un gida paša apgalvojumi ir atzīmēti. Gidi nav mūsu partneri, un ar viņiem neesam sazinājušies.`,
+  },
+  {
     q: "Kā notiek apmaksa?",
-    a: "Pieprasījuma nosūtīšana ir bezmaksas. Kad gids apstiprina datumus, tu veic priekšapmaksu tieši gidam. Atlikumu parasti maksā brauciena dienā.",
+    a: "Copes Gidi maksājumus nepieņem. Cenu, priekšapmaksu un atlikuma samaksu saskaņo tieši ar gidu. Pievērs uzmanību, vai cena ir par visu braucienu vai par katru personu — to profilos norādām atsevišķi.",
   },
   {
     q: "Vai varu braukt bez pieredzes?",
-    a: "Protams. Daudzi braucieni ir paredzēti iesācējiem un ģimenēm, un aprīkojums ir iekļauts. Braucienu sarakstā vari atlasīt piemērotākos.",
+    a: "Jā. Vairāki gidi piedāvā iesācēju vai ģimenes braucienus, un makšķerēšanas inventārs bieži ir iekļauts. Ko tieši cena ietver, redzams katra brauciena aprakstā.",
   },
   {
     q: "Kas notiek, ja ir slikts laiks?",
-    a: "Drošība ir pirmajā vietā. Ja gids uzskata, ka laikapstākļi ir bīstami, brauciens tiek pārcelts uz citu datumu vai nauda tiek atmaksāta.",
+    a: "To nosaka katrs gids. Lielākā daļa atcelšanas noteikumus publiski nav aprakstījuši, tāpēc vienojies par tiem pirms priekšapmaksas.",
   },
   {
     q: "Vai drīkst paturēt zivis?",
-    a: "Atbilstoši Latvijas noteikumiem par izmēriem un lomu limitiem — jā. Daudzi gidi lielās zivis (īpaši samus un lašus) iesaka atlaist pēc fotografēšanas.",
+    a: "Atbilstoši Latvijas noteikumiem par izmēriem un lomu limitiem — parasti jā. Vairāki gidi publiski raksta, ka trofejas zivis atlaiž. Gida nostāja redzama profilā, ja tā ir publicēta.",
   },
 ];
 
@@ -89,7 +95,7 @@ export default function Home() {
             </span>
           </h1>
           <p className="mx-auto mt-8 max-w-md font-mono text-sm text-muted sm:text-base">
-            Īsti gidi. Īsti ūdeņi. Īstas zivis. Jo stāsti par “tik lielu” mums arī ir apnikuši.
+            Īsti gidi. Publicētas cenas. Avots pie katra fakta. Jo stāsti par “tik lielu” mums arī ir apnikuši.
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-3">
             <Link href="/braucieni" className="btn btn-primary">
@@ -114,7 +120,7 @@ export default function Home() {
             <div data-reveal>
               <p className="eyebrow text-ink">Braucieni</p>
               <p className="mt-5 max-w-sm font-mono text-sm text-muted">
-                Stāsti ir lēti. Zivis — nē. Apskati braucienus, kuros gidi pierāda abus.
+                Stāsti ir lēti. Zivis — nē. Cenas un ilgumi no gidu pašu cenrāžiem — salīdzini pats.
               </p>
             </div>
           </div>
@@ -183,7 +189,7 @@ export default function Home() {
               </span>
             </h2>
             <p className="mt-8 max-w-sm font-mono text-sm text-muted">
-              Bez reģistrācijas un bez komisijas. Tu runā tieši ar gidu — mēs tikai palīdzam jums satikties.
+              Bez reģistrācijas un bez komisijas. Tu runā tieši ar gidu — mēs tikai apkopojam, kas par viņu publiski zināms.
             </p>
           </div>
 
@@ -237,7 +243,7 @@ export default function Home() {
                     <Scene variant={r.scene} seed={`region-${r.slug}`} className="h-full w-full" />
                   </span>
                   <span className="hidden text-right font-mono text-xs uppercase leading-relaxed text-muted md:block">
-                    {tripsByRegion(r.slug).length} braucieni
+                    {tripsByRegion(r.slug).length || "Pagaidām nav"} braucieni
                     <br />
                     {r.waters.slice(0, 3).join(" · ")}
                   </span>
@@ -252,9 +258,9 @@ export default function Home() {
       <section className="section overflow-hidden">
         <Container>
           <h2 className="mega text-center">
-            <span className="sr-only">Mūsu gidi</span>
+            <span className="sr-only">Īsti gidi</span>
             <span aria-hidden="true">
-              Mūsu
+              Īsti
               <span className="sticker w-[0.6em] [&>svg]:h-[1em] [&>svg]:w-[1.7em]">
                 <Lure />
               </span>
@@ -263,10 +269,10 @@ export default function Home() {
             </span>
           </h2>
           <p className="mx-auto mt-6 max-w-md text-center font-mono text-sm text-muted">
-            Neatkarīgi gidi ar savām laivām un saviem ūdeņiem. Pāršķir un iepazīsties.
+            Neatkarīgi gidi ar savām laivām un saviem ūdeņiem. Viņi nav mūsu partneri — pāršķir un sazinies tieši.
           </p>
           <div className="mt-20">
-            <GuideDeck guides={guides} regionNames={regionNames} />
+            <GuideDeck guides={guides} regionNames={regionNames} kindNames={kindLabels} />
           </div>
           <div className="mt-14 text-center">
             <Link href="/gidi" className="btn btn-secondary">
@@ -380,14 +386,14 @@ function ShowcaseCard({ trip, tall }: { trip: Trip; tall: boolean }) {
           <div className="absolute inset-x-5 bottom-6 flex flex-col items-start gap-3 pr-6 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
             <div>
               <p className="eyebrow text-ink/75">
-                {region?.name} · {trip.water}
+                {region?.name ?? "Visa Latvija"} · {trip.waters[0]}
               </p>
               <h3 className="mt-2 font-display text-xl font-black uppercase leading-tight text-ink [font-variation-settings:'wdth'_110] sm:text-2xl">
                 {trip.title}
               </h3>
             </div>
             <span className="shrink-0 rounded-full bg-black/80 px-3 py-1.5 font-mono text-xs font-bold text-ink">
-              no {formatPrice(trip.priceFrom)}
+              {trip.priceFrom !== undefined ? `no ${formatPrice(trip.priceFrom)}` : "Cena pēc pieprasījuma"}
             </span>
           </div>
         </div>
@@ -456,7 +462,7 @@ function ServiceCard({ type, index }: { type: TripType; index: number }) {
             >
               {t.title}
               <span className="rounded-full bg-black px-2.5 py-1 font-mono text-[0.7rem] font-bold text-ink">
-                no {formatPrice(t.priceFrom)}
+                {t.priceFrom !== undefined ? `no ${formatPrice(t.priceFrom)}` : "pēc piepr."}
               </span>
             </Link>
           </li>

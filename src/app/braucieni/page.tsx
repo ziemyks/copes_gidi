@@ -6,7 +6,7 @@ import { trips } from "@/data/trips";
 
 export const metadata: Metadata = {
   title: "Makšķerēšanas braucieni ar gidu",
-  description: "Visi makšķerēšanas braucieni ar vietējiem gidiem Latvijā — lasis, līdaka, zandarts, sams un zemledus cope.",
+  description: "Makšķerēšanas braucieni ar gidu Latvijā — publicētās cenas, ilgumi un iekļautais no gidu pašu cenrāžiem.",
 };
 
 export default function TripsPage() {
@@ -15,7 +15,7 @@ export default function TripsPage() {
       <PageHeader
         eyebrow={`${trips.length} braucieni`}
         title="Visi braucieni"
-        intro="Atlasi pēc reģiona, zivs vai brauciena veida. Pieprasījuma nosūtīšana ir bez maksas."
+        intro="Cenas un ilgumi no gidu pašu cenrāžiem. Pievērs uzmanību, vai cena ir par braucienu vai no personas — rezervē tieši pie gida."
       />
       <Container className="pb-24 pt-10">
         {/* Bez JS (un meklētājiem) rāda visu sarakstu; filtri ielādējas klienta pusē */}

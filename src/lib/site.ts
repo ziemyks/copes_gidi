@@ -2,11 +2,11 @@ export const site = {
   name: "Copes Gidi",
   tagline: "Neatkarīgi makšķerēšanas gidi visā Latvijā",
   description:
-    "Atrodi vietējo makšķerēšanas gidu Latvijā — lasis Ventā, līdakas Latgales ezeros, sami Daugavā. Sazinies tieši ar gidu un rezervē braucienu.",
+    "Latvijas makšķerēšanas gidi vienuviet — publicētās cenas, laivas un ūdeņi ar avotu pie katra fakta. Sazinies tieši ar gidu.",
   email: "info@copesgidi.lv",
   instagram: "https://www.instagram.com/",
-  // Kamēr lapā ir parauga gidi, kājenē rāda brīdinājumu. Nomaini uz false, kad dati ir īsti.
-  demoContent: true,
+  /** Datums, kad gidu publiskie avoti pēdējo reizi pārbaudīti */
+  checked: "2026-10-29",
 };
 
 export function siteUrl() {
@@ -22,4 +22,14 @@ export function formatPrice(amount: number) {
     currency: "EUR",
     maximumFractionDigits: 0,
   }).format(amount);
+}
+
+/** "Kaspars Holms" → "KH", "WHITELAKE ADVENTURE" → "WA" */
+export function initials(name: string) {
+  return name
+    .split(/\s+/)
+    .filter((w) => /^\p{L}/u.test(w))
+    .slice(0, 2)
+    .map((w) => w[0].toUpperCase())
+    .join("");
 }

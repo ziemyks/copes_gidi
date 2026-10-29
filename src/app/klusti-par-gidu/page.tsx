@@ -5,13 +5,13 @@ import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Kļūsti par gidu",
-  description: `Esi makšķerēšanas gids Latvijā? Pievienojies ${site.name} un saņem pieprasījumus tieši no makšķerniekiem.`,
+  description: `Esi makšķerēšanas gids Latvijā? Pievienojies ${site.name} vai labo savu profilu.`,
 };
 
 const benefits = [
-  { title: "Tieši pieprasījumi", text: "Makšķernieki raksta tieši tev. Tu pats apstiprini datumus un saņem apmaksu." },
-  { title: "Bez komisijas sākumā", text: "Pirmajā sezonā profils un pieprasījumi ir bez maksas." },
-  { title: "Tavs profils, tavs stāsts", text: "Palīdzēsim sagatavot aprakstu, fotogrāfijas un braucienu piedāvājumu." },
+  { title: "Tieši kontakti", text: "Profilā ir tavi tālrunis, WhatsApp un e-pasts. Makšķernieki zvana un raksta tieši tev." },
+  { title: "Bez komisijas", text: "Mēs neesam starpnieks — rezervācijas un apmaksa paliek starp tevi un klientu." },
+  { title: "Tavs profils tavās rokās", text: "Pievieno fotogrāfijas, valodas un atcelšanas noteikumus vai labo to, ko esam apkopojuši." },
 ];
 
 export default function BecomeGuidePage() {
@@ -20,7 +20,7 @@ export default function BecomeGuidePage() {
       <PageHeader
         eyebrow="Gidiem"
         title="Vadi braucienus?"
-        intro="Ļauj makšķerniekiem tevi atrast. Mēs meklējam neatkarīgus gidus visā Latvijā, kuriem rūp droša, godīga un kvalitatīva cope."
+        intro="Ļauj makšķerniekiem tevi atrast. Ja tavs profils jau ir lapā, tas apkopots no publiskiem avotiem — palīdzi to papildināt vai labot."
       />
       <Container className="grid items-start gap-12 pb-24 pt-14 lg:grid-cols-[1fr_1.6fr] lg:gap-20">
         <div>
@@ -34,7 +34,7 @@ export default function BecomeGuidePage() {
             ))}
           </ol>
           <p className="mt-6 text-sm text-muted">
-            Pēc pieteikuma mēs sazvanīsimies, lai iepazītos un izrunātu sezonu, cenas, drošību un atsauksmes.
+            Vēlies profilu labot vai dzēst? Raksti uz {site.email} — izdarīsim to bez liekiem jautājumiem.
           </p>
         </div>
         <div className="card p-6 shadow-lift-1 sm:p-8">

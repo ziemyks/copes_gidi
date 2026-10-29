@@ -4,7 +4,8 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { allLanguages, guides } from "@/data/guides";
 import { regions } from "@/data/regions";
 import { species } from "@/data/species";
-import { tripTypes, trips, type TripType } from "@/data/trips";
+import { tripTypes, trips } from "@/data/trips";
+import type { TripType } from "@/data/types";
 import { GuideCard, TripCard } from "./ui";
 
 type Option = { value: string; label: string };
@@ -101,7 +102,8 @@ export function TripExplorer() {
     .filter((t) => !region || t.region === region)
     .filter((t) => !fish || t.species.includes(fish))
     .filter((t) => !type || t.type === type)
-    .sort((a, b) => (sort === "cena" ? a.priceFrom - b.priceFrom : 0));
+    // Bez publicētas cenas — saraksta beigās
+    .sort((a, b) => (sort === "cena" ? (a.priceFrom ?? Infinity) - (b.priceFrom ?? Infinity) : 0));
 
   return (
     <>
@@ -117,7 +119,7 @@ export function TripExplorer() {
         <Select
           label="Kārtot"
           value={sort}
-          options={[{ value: "cena", label: "Pēc cenas" }]}
+          options={[{ value: "cena", label: "Pēc zemākās cenas" }]}
           onChange={(v) => f.set("kartot", v)}
         />
       </FilterBar>

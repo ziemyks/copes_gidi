@@ -2,6 +2,7 @@ import Link from "next/link";
 import { regions } from "@/data/regions";
 import { site } from "@/lib/site";
 import { Wordmark } from "./chrome";
+import { formatDate } from "./guide-parts";
 import { Bobber } from "./stickers";
 
 export function SiteFooter() {
@@ -12,7 +13,7 @@ export function SiteFooter() {
         { href: "/braucieni", label: "Visi braucieni" },
         { href: "/gidi", label: "Gidi" },
         { href: "/braucieni?suga=lasis", label: "Lašu makšķerēšana" },
-        { href: "/braucieni?veids=ledus", label: "Zemledus cope" },
+        { href: "/braucieni?veids=ledus", label: "Ziemas cope" },
       ],
     },
     {
@@ -78,7 +79,9 @@ export function SiteFooter() {
         </div>
         <div className="eyebrow mt-14 flex flex-col gap-2 font-normal normal-case sm:flex-row sm:justify-between">
           <p>© 2026 {site.name}</p>
-          {site.demoContent && <p>Parauga gidi un braucieni — tie nav īsti piedāvājumi.</p>}
+          <p>
+            Profili apkopoti no publiskiem avotiem, pārbaudīti {formatDate(site.checked)} Gidi nav {site.name} partneri.
+          </p>
         </div>
       </div>
     </footer>

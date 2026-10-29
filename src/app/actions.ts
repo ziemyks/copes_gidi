@@ -1,8 +1,5 @@
 "use server";
 
-import { getGuide } from "@/data/guides";
-import { getTrip } from "@/data/trips";
-
 export type FormState = {
   status: "idle" | "ok" | "error";
   message?: string;
@@ -25,7 +22,7 @@ async function deliver(subject: string, lines: [string, string][], replyTo: stri
   const to = process.env.INQUIRY_TO_EMAIL;
 
   if (!apiKey || !to) {
-    console.info(`[pieprasījums] ${subject}\n${body}`);
+    console.info(`[pieteikums] ${subject}\n${body}`);
     return true;
   }
 
@@ -49,41 +46,6 @@ function validateContact(name: string, email: string) {
   if (name.length < 2) errors.name = "Lūdzu, ievadi savu vārdu.";
   if (!emailPattern.test(email)) errors.email = "Lūdzu, ievadi derīgu e-pasta adresi.";
   return errors;
-}
-
-export async function sendInquiry(_prev: FormState, formData: FormData): Promise<FormState> {
-  // Slazds robotiem — cilvēki šo lauku neredz
-  if (text(formData, "company")) return { status: "ok" };
-
-  const name = text(formData, "name");
-  const email = text(formData, "email");
-  const message = text(formData, "message");
-  const errors = validateContact(name, email);
-  if (message.length < 10) errors.message = "Pastāsti nedaudz vairāk (vismaz 10 rakstzīmes).";
-  if (Object.keys(errors).length) return { status: "error", errors };
-
-  const trip = getTrip(text(formData, "trip"));
-  const guide = getGuide(text(formData, "guide"));
-  const subject = `Pieprasījums: ${trip?.title ?? guide?.name ?? "vispārīgs"}`;
-
-  const ok = await deliver(
-    subject,
-    [
-      ["Brauciens", trip?.title ?? ""],
-      ["Gids", guide?.name ?? ""],
-      ["Vārds", name],
-      ["E-pasts", email],
-      ["Tālrunis", text(formData, "phone")],
-      ["Vēlamais datums", text(formData, "date")],
-      ["Personas", text(formData, "guests")],
-      ["Ziņa", message],
-    ],
-    email,
-  );
-
-  return ok
-    ? { status: "ok", message: "Paldies! Gids ar tevi sazināsies 24–48 stundu laikā." }
-    : { status: "error", message: "Neizdevās nosūtīt. Lūdzu, mēģini vēlreiz vai raksti mums e-pastu." };
 }
 
 export async function sendGuideApplication(_prev: FormState, formData: FormData): Promise<FormState> {
