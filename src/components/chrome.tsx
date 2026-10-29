@@ -56,7 +56,7 @@ export function Chrome() {
           <button
             type="button"
             onClick={() => setOpen(true)}
-            className="flex h-9 items-center gap-2 rounded-full bg-[#262626] px-3.5 font-mono text-[0.7rem] font-bold uppercase text-ink transition hover:bg-[#333]"
+            className="flex h-10 items-center gap-2 rounded-full bg-[#262626] px-4 font-mono text-xs font-bold uppercase text-ink transition hover:bg-[#333]"
           >
             <svg viewBox="0 0 16 16" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M2 5h12M2 11h12" />
@@ -69,7 +69,7 @@ export function Chrome() {
             aria-pressed={motionOff}
             aria-label={motionOff ? "Ieslēgt animācijas" : "Izslēgt animācijas"}
             title={motionOff ? "Ieslēgt animācijas" : "Izslēgt animācijas"}
-            className="flex h-9 w-12 items-center justify-center rounded-full bg-[#262626] text-ink transition hover:bg-[#333]"
+            className="flex h-10 w-12 items-center justify-center rounded-full bg-[#262626] text-ink transition hover:bg-[#333]"
           >
             <svg viewBox="0 0 28 12" className="h-3 w-6" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
               {motionOff ? <path d="M2 6h24" /> : <path d="M2 6c3-5 6-5 8 0s5 5 8 0 5-5 8 0" />}
@@ -79,7 +79,7 @@ export function Chrome() {
 
         <CatchMeter />
 
-        <div className="flex h-9 items-center">
+        <div className="flex h-10 items-center">
           <Wordmark />
         </div>
       </div>
@@ -87,7 +87,7 @@ export function Chrome() {
       {/* Lielā oranžā poga */}
       <Link
         href="/braucieni"
-        className="fixed bottom-5 right-5 z-40 flex h-20 w-20 items-center justify-center rounded-full bg-accent text-center font-mono text-[0.62rem] font-bold uppercase leading-tight text-on-accent shadow-lift-2 transition hover:scale-105 hover:bg-accent-rich sm:bottom-8 sm:right-8 sm:h-24 sm:w-24 sm:text-[0.7rem]"
+        className="fixed bottom-4 right-4 z-40 flex h-[4.75rem] w-[4.75rem] items-center justify-center rounded-full bg-accent text-center font-mono text-[0.7rem] font-bold uppercase leading-tight text-on-accent shadow-lift-2 transition hover:scale-105 hover:bg-accent-rich sm:bottom-8 sm:right-8 sm:h-24 sm:w-24 sm:text-xs"
       >
         Atrast
         <br />
@@ -100,7 +100,7 @@ export function Chrome() {
           <button
             type="button"
             onClick={() => setOpen(false)}
-            className="absolute left-4 top-4 flex h-9 items-center rounded-full bg-accent px-4 font-mono text-[0.7rem] font-bold uppercase text-on-accent sm:left-7 sm:top-6"
+            className="absolute left-4 top-4 flex h-10 items-center rounded-full bg-accent px-4 font-mono text-xs font-bold uppercase text-on-accent sm:left-7 sm:top-6"
           >
             Aizvērt ✕
           </button>

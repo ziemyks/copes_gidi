@@ -42,7 +42,7 @@ export function GuideDeck({ guides, regionNames }: { guides: Guide[]; regionName
                   <div className="flex h-20 w-20 items-center justify-center rounded-full bg-linear-to-br from-[#e6e6e6] to-[#7c7c7c] font-display text-2xl font-black text-[#151515]">
                     {initials}
                   </div>
-                  <span className="absolute -left-3 -top-2 flex h-11 w-11 items-center justify-center rounded-full bg-accent font-mono text-[0.68rem] font-bold text-on-accent">
+                  <span className="absolute -left-3 -top-2 flex h-11 w-11 items-center justify-center rounded-full bg-accent font-mono text-[0.72rem] font-bold text-on-accent">
                     {guide.yearsExperience} g.
                   </span>
                 </div>

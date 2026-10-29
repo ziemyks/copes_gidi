@@ -7,7 +7,8 @@ export type TripType = "laiva" | "krasts" | "musa" | "ledus";
 export const tripTypes: Record<TripType, string> = {
   laiva: "No laivas",
   krasts: "No krasta",
-  musa: "Mušiņmakšķerēšana",
+  // Mīkstā defise ļauj garo vārdu pārnest šaurā ekrānā
+  musa: "Mušiņ­makšķerēšana",
   ledus: "Zemledus",
 };
 

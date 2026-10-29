@@ -41,12 +41,12 @@ export default async function TripPage({ params }: PageProps<"/braucieni/[slug]"
   return (
     <>
       <Container className="pb-24 pt-32 sm:pt-40">
-        <nav className="eyebrow flex gap-2">
-          <Link href="/braucieni" className="hover:text-ink">
+        <nav className="eyebrow flex items-center gap-2">
+          <Link href="/braucieni" className="py-2 hover:text-ink">
             Braucieni
           </Link>
           <span className="text-faint">/</span>
-          <Link href={`/regioni/${trip.region}`} className="hover:text-ink">
+          <Link href={`/regioni/${trip.region}`} className="py-2 hover:text-ink">
             {region?.name}
           </Link>
         </nav>

@@ -86,6 +86,7 @@ body {
   .display,
   .headline,
   .mega {
+    overflow-wrap: anywhere;
     font-family: var(--font-display);
     font-weight: 900;
     font-variation-settings: "wdth" 125;
@@ -95,16 +96,28 @@ body {
     text-wrap: balance;
   }
   .mega {
-    font-size: clamp(3.4rem, 11.5vw, 10.5rem);
+    font-size: clamp(2.5rem, 11.5vw, 10.5rem);
     line-height: 0.98;
   }
   .display {
-    font-size: clamp(2.8rem, 7.5vw, 6.8rem);
+    font-size: clamp(2.2rem, 7.5vw, 6.8rem);
     line-height: 1.12;
   }
   .headline {
-    font-size: clamp(2.2rem, 5.6vw, 5rem);
+    font-size: clamp(1.9rem, 5.6vw, 5rem);
     line-height: 1.12;
+  }
+
+  /* Šaurā ekrānā platais šrifts kļūst šaurāks, lai vārdi nelūztu */
+  @media (max-width: 639px) {
+    .display,
+    .headline,
+    .mega {
+      font-variation-settings: "wdth" 104;
+    }
+    .mega {
+      font-size: 13.5vw;
+    }
   }
 
   .title {

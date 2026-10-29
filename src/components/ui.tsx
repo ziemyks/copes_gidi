@@ -52,7 +52,7 @@ export function SectionHeading({
 
 export function ArrowLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
-    <Link href={href} className="link shrink-0 text-[0.9375rem] font-medium">
+    <Link href={href} className="link inline-block shrink-0 py-2 text-[0.9375rem] font-medium">
       {children} →
     </Link>
   );
@@ -63,7 +63,7 @@ export function Chip({ children, tone = "light" }: { children: React.ReactNode; 
     tone === "dark"
       ? "bg-black/75 text-ink backdrop-blur"
       : "border border-rule bg-black/40 text-text";
-  return <span className={`inline-block rounded-full px-3 py-1 font-mono text-[0.68rem] font-bold uppercase ${styles}`}>{children}</span>;
+  return <span className={`inline-block rounded-full px-3 py-1 font-mono text-[0.72rem] font-bold uppercase ${styles}`}>{children}</span>;
 }
 
 /** Fotogrāfija, ja tāda ir, citādi ilustrēta ainava. */

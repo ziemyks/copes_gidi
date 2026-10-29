@@ -64,10 +64,10 @@ export function SiteFooter() {
           {columns.map((col) => (
             <div key={col.title}>
               <h3 className="eyebrow mb-4 text-accent">{col.title}</h3>
-              <ul className="space-y-2 text-sm">
+              <ul className="space-y-1 text-sm">
                 {col.links.map((l) => (
                   <li key={l.href}>
-                    <Link href={l.href} className="text-text transition-colors hover:text-accent">
+                    <Link href={l.href} className="inline-block py-1.5 text-text transition-colors hover:text-accent">
                       {l.label}
                     </Link>
                   </li>

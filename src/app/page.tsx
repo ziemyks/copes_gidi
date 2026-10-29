@@ -200,8 +200,8 @@ export default function Home() {
                   aria-hidden="true"
                   className="absolute -left-[34px] top-3 h-3 w-3 rounded-full bg-accent sm:-left-[42px]"
                 />
-                <h3 className="flex items-baseline gap-4 font-display text-3xl font-black uppercase leading-none text-ink [font-variation-settings:'wdth'_115] sm:text-4xl">
-                  <span className="slashed font-mono text-xl text-accent">{String(i + 1).padStart(2, "0")}</span>
+                <h3 className="flex items-baseline gap-3 font-display text-xl font-black uppercase leading-tight text-ink [font-variation-settings:'wdth'_115] sm:gap-4 sm:text-4xl sm:leading-none">
+                  <span className="slashed font-mono text-base text-accent sm:text-xl">{String(i + 1).padStart(2, "0")}</span>
                   {s.title}
                 </h3>
                 <p className="mt-4 max-w-md font-mono text-sm text-muted">{s.text}</p>
@@ -306,7 +306,7 @@ export default function Home() {
                   {species.map((s) => (
                     <tr key={s.slug} className="border-t border-white/[0.07]">
                       <td className="px-4 py-2.5">
-                        <Link href={`/braucieni?suga=${s.slug}`} className="font-medium text-ink hover:text-accent">
+                        <Link href={`/braucieni?suga=${s.slug}`} className="inline-block py-1 font-medium text-ink hover:text-accent">
                           {s.name}
                         </Link>
                       </td>
@@ -376,8 +376,8 @@ function ShowcaseCard({ trip, tall }: { trip: Trip; tall: boolean }) {
           <div className="absolute inset-0 transition duration-700 group-hover:scale-105">
             <Photo alt={trip.title} scene={trip.scene} seed={trip.slug} sizes="(min-width: 640px) 45vw, 100vw" />
           </div>
-          <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/10 to-transparent" />
-          <div className="absolute inset-x-5 bottom-6 flex items-end justify-between gap-4 pr-6">
+          <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/45 to-transparent" />
+          <div className="absolute inset-x-5 bottom-6 flex flex-col items-start gap-3 pr-6 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
             <div>
               <p className="eyebrow text-ink/75">
                 {region?.name} · {trip.water}
@@ -455,7 +455,7 @@ function ServiceCard({ type, index }: { type: TripType; index: number }) {
               className={`inline-flex items-center gap-3 rounded-full border py-1.5 pl-4 pr-1.5 text-sm transition ${style.pill}`}
             >
               {t.title}
-              <span className="rounded-full bg-black px-2.5 py-1 font-mono text-[0.65rem] font-bold text-ink">
+              <span className="rounded-full bg-black px-2.5 py-1 font-mono text-[0.7rem] font-bold text-ink">
                 no {formatPrice(t.priceFrom)}
               </span>
             </Link>
@@ -463,17 +463,17 @@ function ServiceCard({ type, index }: { type: TripType; index: number }) {
         ))}
         {list.length > 4 && (
           <li>
-            <Link href={`/braucieni?veids=${type}`} className="font-mono text-xs font-bold uppercase underline underline-offset-4">
+            <Link href={`/braucieni?veids=${type}`} className="inline-block py-2 font-mono text-xs font-bold uppercase underline underline-offset-4">
               +{list.length - 4} vairāk
             </Link>
           </li>
         )}
       </ul>
-      <h3 className="mt-auto flex items-center gap-3 pt-10 font-display text-2xl font-black uppercase leading-none [font-variation-settings:'wdth'_115] sm:text-3xl">
+      <h3 className="mt-auto flex items-center gap-3 pt-10 font-display text-xl font-black uppercase leading-tight [font-variation-settings:'wdth'_115] sm:text-3xl sm:leading-none">
         <span aria-hidden="true" className={style.arrow}>
           ↘
         </span>
-        <Link href={`/braucieni?veids=${type}`} className="hover:underline hover:underline-offset-4">
+        <Link href={`/braucieni?veids=${type}`} className="py-1 hover:underline hover:underline-offset-4">
           {tripTypes[type]}
         </Link>
       </h3>

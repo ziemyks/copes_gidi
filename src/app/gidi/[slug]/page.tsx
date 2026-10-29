@@ -45,12 +45,12 @@ export default async function GuidePage({ params }: PageProps<"/gidi/[slug]">) {
 
       <section className="border-b border-rule">
         <Container className="pb-12 pt-32 sm:pt-40">
-          <nav className="eyebrow flex gap-2">
-            <Link href="/gidi" className="hover:text-ink">
+          <nav className="eyebrow flex items-center gap-2">
+            <Link href="/gidi" className="py-2 hover:text-ink">
               Gidi
             </Link>
             <span className="text-faint">/</span>
-            <Link href={`/regioni/${guide.region}`} className="hover:text-ink">
+            <Link href={`/regioni/${guide.region}`} className="py-2 hover:text-ink">
               {region?.name}
             </Link>
           </nav>
