@@ -11,43 +11,44 @@ type Palette = {
   shore?: string;
 };
 
+// Neitrālas debesis, patinas ūdens un zelta saule — saskaņā ar lapas krāsām
 const palettes: Record<SceneVariant, Palette> = {
   lake: {
-    sky: ["#9cc2c6", "#f4d9a9"],
-    sun: "#fbe7bd",
-    far: "#3c6168",
-    near: "#1b3439",
-    water: ["#4b8590", "#163840"],
+    sky: ["oklch(88% 0.02 200)", "oklch(95% 0.03 85)"],
+    sun: "oklch(86% 0.13 82)",
+    far: "oklch(45% 0.03 200)",
+    near: "oklch(24% 0.015 200)",
+    water: ["oklch(55% 0.07 195)", "oklch(26% 0.04 200)"],
   },
   river: {
-    sky: ["#c4dccf", "#f2ead0"],
-    sun: "#fff3d1",
-    far: "#4d6f55",
-    near: "#203a2b",
-    water: ["#5b9590", "#1b4245"],
+    sky: ["oklch(90% 0.015 160)", "oklch(96% 0.02 90)"],
+    sun: "oklch(89% 0.1 86)",
+    far: "oklch(50% 0.04 160)",
+    near: "oklch(27% 0.02 160)",
+    water: ["oklch(60% 0.07 190)", "oklch(30% 0.05 195)"],
   },
   forest: {
-    sky: ["#d9cfb5", "#f6eedc"],
-    sun: "#fff1cf",
-    far: "#5a6f4a",
-    near: "#26392a",
-    water: ["#4d7f73", "#1d3d38"],
-    shore: "#c27a4c",
+    sky: ["oklch(91% 0.02 90)", "oklch(97% 0.015 90)"],
+    sun: "oklch(86% 0.12 84)",
+    far: "oklch(52% 0.04 140)",
+    near: "oklch(28% 0.02 150)",
+    water: ["oklch(56% 0.06 180)", "oklch(29% 0.04 185)"],
+    shore: "oklch(62% 0.11 50)",
   },
   sea: {
-    sky: ["#b4d3de", "#eef2ea"],
-    sun: "#fff8e1",
-    far: "#5d7f72",
-    near: "#2b4a43",
-    water: ["#4f93a6", "#173f4f"],
-    shore: "#e4d1a3",
+    sky: ["oklch(88% 0.025 220)", "oklch(96% 0.01 100)"],
+    sun: "oklch(90% 0.1 88)",
+    far: "oklch(55% 0.035 170)",
+    near: "oklch(33% 0.025 175)",
+    water: ["oklch(62% 0.08 210)", "oklch(31% 0.05 215)"],
+    shore: "oklch(87% 0.06 85)",
   },
   ice: {
-    sky: ["#bccbd9", "#eef1f4"],
-    sun: "#ffffff",
-    far: "#6d8090",
-    near: "#33444f",
-    water: ["#f3f6f9", "#d6e1ea"],
+    sky: ["oklch(86% 0.012 240)", "oklch(96% 0.005 240)"],
+    sun: "oklch(98% 0.02 90)",
+    far: "oklch(55% 0.02 240)",
+    near: "oklch(32% 0.015 240)",
+    water: ["oklch(97% 0.004 240)", "oklch(89% 0.015 230)"],
   },
 };
 
@@ -123,14 +124,14 @@ export function Scene({
           <stop offset="1" stopColor={p.water[1]} />
         </linearGradient>
         <radialGradient id={`${id}-sun`}>
-          <stop offset="0" stopColor={p.sun} stopOpacity="1" />
+          <stop offset="0" stopColor={p.sun} stopOpacity="0.45" />
           <stop offset="1" stopColor={p.sun} stopOpacity="0" />
         </radialGradient>
       </defs>
 
       <rect width="800" height="500" fill={`url(#${id}-sky)`} />
-      <circle cx={sunX} cy={sunY} r="120" fill={`url(#${id}-sun)`} />
-      <circle cx={sunX} cy={sunY} r="28" fill={p.sun} opacity="0.9" />
+      <circle cx={sunX} cy={sunY} r="90" fill={`url(#${id}-sun)`} />
+      <circle cx={sunX} cy={sunY} r="22" fill={p.sun} opacity="0.85" />
 
       <path d={far} fill={p.far} opacity="0.75" />
       {variant === "forest" && p.shore && (
@@ -189,7 +190,7 @@ export function Scene({
       )}
 
       {variant === "sea" && (
-        <g fill="#3a4a4a" opacity="0.85">
+        <g fill="oklch(36% 0.01 200)" opacity="0.85">
           <ellipse cx="610" cy="440" rx="40" ry="16" />
           <ellipse cx="690" cy="465" rx="55" ry="20" />
           <ellipse cx="560" cy="480" rx="28" ry="11" />
@@ -198,11 +199,11 @@ export function Scene({
 
       {variant === "ice" && (
         <g>
-          <ellipse cx={sunX} cy={horizon + 120} rx="34" ry="10" fill="#28404d" />
-          <path d={`M${sunX + 70} ${horizon + 120} l 40 -60 l 40 60 Z`} fill="#c0503a" />
-          <path d={`M${sunX + 110} ${horizon + 60} l 0 60`} stroke="#8a3626" strokeWidth="2" />
-          <ellipse cx={sunX - 160} cy={horizon + 80} rx="18" ry="5" fill="#28404d" opacity="0.7" />
-          <ellipse cx={sunX + 240} cy={horizon + 160} rx="22" ry="6" fill="#28404d" opacity="0.8" />
+          <ellipse cx={sunX} cy={horizon + 120} rx="34" ry="10" fill="oklch(30% 0.03 230)" />
+          <path d={`M${sunX + 70} ${horizon + 120} l 40 -60 l 40 60 Z`} fill="oklch(52% 0.16 35)" />
+          <path d={`M${sunX + 110} ${horizon + 60} l 0 60`} stroke="oklch(38% 0.12 35)" strokeWidth="2" />
+          <ellipse cx={sunX - 160} cy={horizon + 80} rx="18" ry="5" fill="oklch(30% 0.03 230)" opacity="0.7" />
+          <ellipse cx={sunX + 240} cy={horizon + 160} rx="22" ry="6" fill="oklch(30% 0.03 230)" opacity="0.8" />
         </g>
       )}
     </svg>

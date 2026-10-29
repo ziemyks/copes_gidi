@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { GuideExplorer, GuideGrid } from "@/components/explorers";
 import { SiteHeader } from "@/components/site-header";
-import { Container, PageHero } from "@/components/ui";
+import { Container, PageHeader } from "@/components/ui";
 import { allLanguages, guides } from "@/data/guides";
 import { regions } from "@/data/regions";
 
@@ -15,14 +15,12 @@ export default function GuidesPage() {
   return (
     <>
       <SiteHeader />
-      <PageHero
+      <PageHeader
         eyebrow="Mūsu gidi"
         title="Gidi, kas pazīst katru bedri."
         intro={`${guides.length} gidi · ${regions.length} reģioni · ${allLanguages.length} valodas. Katrs gids ir sava biznesa īpašnieks.`}
-        scene="lake"
-        seed="guides-hero"
       />
-      <Container className="py-12">
+      <Container className="pb-24 pt-10">
         <Suspense fallback={<GuideGrid items={guides} />}>
           <GuideExplorer />
         </Suspense>

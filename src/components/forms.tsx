@@ -6,8 +6,7 @@ import { regions } from "@/data/regions";
 
 const initial: FormState = { status: "idle" };
 
-const inputClass =
-  "w-full rounded-xl border border-line bg-white px-4 py-3 text-sm text-ink outline-none transition focus:border-water focus:ring-2 focus:ring-water/20";
+const inputClass = "field";
 
 function Field({
   label,
@@ -20,9 +19,9 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="mb-1.5 block text-sm font-medium text-ink">{label}</span>
+      <span className="mb-2 block text-[0.8125rem] font-medium text-ink">{label}</span>
       {children}
-      {error && <span className="mt-1 block text-xs text-red-700">{error}</span>}
+      {error && <span className="mt-1.5 block text-xs text-vermilion">{error}</span>}
     </label>
   );
 }
@@ -35,8 +34,9 @@ function Honeypot() {
 
 function Success({ message }: { message?: string }) {
   return (
-    <div className="rounded-2xl bg-mist p-6 text-center">
-      <p className="font-display text-xl font-semibold text-deep">Pieprasījums nosūtīts</p>
+    <div className="rounded-lg border border-rule bg-paper-deep p-6">
+      <p className="eyebrow mb-2 text-patina-deep">Nosūtīts</p>
+      <p className="title">Paldies — pieprasījums ir ceļā.</p>
       <p className="mt-2 text-sm text-muted">{message}</p>
     </div>
   );
@@ -90,14 +90,14 @@ export function InquiryForm({
           placeholder="Pastāsti par savu pieredzi, vēlamajām zivīm un datumiem…"
         />
       </Field>
-      {state.message && <p className="text-sm text-red-700">{state.message}</p>}
+      {state.message && <p className="text-sm text-vermilion">{state.message}</p>}
       <button
         disabled={pending}
-        className="w-full rounded-full bg-amber px-6 py-3.5 font-semibold text-white transition hover:bg-amber-dark disabled:opacity-60"
+        className="btn btn-primary w-full"
       >
         {pending ? "Sūta…" : "Nosūtīt pieprasījumu"}
       </button>
-      <p className="text-center text-xs text-muted">
+      <p className="text-xs text-muted">
         Bez maksas un bez saistībām. Maksā tikai pēc tam, kad gids apstiprina datumus.
       </p>
     </form>
@@ -145,11 +145,11 @@ export function GuideApplicationForm() {
           <textarea name="message" rows={5} className={inputClass} />
         </Field>
       </div>
-      {state.message && <p className="text-sm text-red-700 sm:col-span-2">{state.message}</p>}
+      {state.message && <p className="text-sm text-vermilion sm:col-span-2">{state.message}</p>}
       <div className="sm:col-span-2">
         <button
           disabled={pending}
-          className="rounded-full bg-amber px-8 py-3.5 font-semibold text-white transition hover:bg-amber-dark disabled:opacity-60"
+          className="btn btn-primary"
         >
           {pending ? "Sūta…" : "Pieteikties"}
         </button>

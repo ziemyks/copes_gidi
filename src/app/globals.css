@@ -1,22 +1,49 @@
 @import "tailwindcss";
 
+/* Krāsas un tipogrāfija pēc impeccable.style "Kinpaku" sistēmas */
 @theme {
-  --color-ink: #0e2a31;
-  --color-deep: #134652;
-  --color-water: #2e7c87;
-  --color-mist: #dde9e6;
-  --color-reed: #6f7f3c;
-  --color-sand: #f3ede1;
-  --color-paper: #fbf8f2;
-  --color-amber: #d9822b;
-  --color-amber-dark: #b86a1c;
-  --color-muted: #5a6a6e;
-  --color-line: #e5ddcc;
+  --color-paper: oklch(97.8% 0 0);
+  --color-raised: oklch(99.5% 0 0);
+  --color-paper-deep: oklch(95% 0 0);
+  --color-gray: oklch(92% 0 0);
+  --color-ink: oklch(13% 0 0);
+  --color-text: oklch(22% 0 0);
+  --color-muted: oklch(46% 0 0);
+  --color-faint: oklch(66% 0 0);
+  --color-rule: oklch(13% 0 0 / 0.08);
+  --color-edge: oklch(13% 0 0 / 0.45);
+
+  --color-gold: oklch(84% 0.19 80.46);
+  --color-gold-pale: oklch(86% 0.07 84);
+  --color-gold-rich: oklch(77% 0.13 82);
+  --color-gold-deep: oklch(61% 0.085 78);
+  --color-on-gold: oklch(14% 0.018 95);
+
+  --color-patina: oklch(70% 0.12 188);
+  --color-patina-pale: oklch(82% 0.07 188);
+  --color-patina-deep: oklch(45% 0.1 190);
+
+  --color-vermilion: oklch(52% 0.16 35);
+
+  --color-instrument: oklch(24% 0 0);
+  --color-instrument-deep: oklch(17% 0 0);
+  --color-instrument-raised: oklch(31% 0 0);
+  --color-instrument-text: oklch(93% 0 0);
+  --color-instrument-muted: oklch(68% 0 0);
+  --color-instrument-rule: oklch(100% 0 0 / 0.12);
+
+  --shadow-lift-1: 0 1px 1px oklch(13% 0 0 / 0.05), 0 2px 3px oklch(13% 0 0 / 0.04), 0 6px 12px oklch(13% 0 0 / 0.05);
+  --shadow-lift-2: 0 1px 1px oklch(13% 0 0 / 0.04), 0 3px 5px oklch(13% 0 0 / 0.05), 0 12px 20px oklch(13% 0 0 / 0.06),
+    0 32px 48px oklch(13% 0 0 / 0.07);
+  --shadow-led: 0 0 0 1px oklch(13% 0 0 / 0.12), 0 0 4px oklch(84% 0.19 80 / 0.6);
+
+  --ease-ks: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 @theme inline {
-  --font-sans: var(--font-inter);
-  --font-display: var(--font-serif-display);
+  --font-sans: var(--font-albert), "Avenir Next", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --font-display: var(--font-alumni), var(--font-albert), Arial, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, Menlo, monospace;
 }
 
 html {
@@ -25,7 +52,151 @@ html {
 
 body {
   background: var(--color-paper);
-  color: var(--color-ink);
+  color: var(--color-text);
+  line-height: 1.65;
+}
+
+@layer components {
+  .section {
+    padding-block: clamp(72px, 8vw, 120px);
+  }
+
+  /* Mazs mono virsraksts virs sadaļas, piem. "01 — Braucieni" */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    line-height: 1.4;
+  }
+
+  .display {
+    font-family: var(--font-display);
+    font-weight: 200;
+    font-size: clamp(3.2rem, 6.2vw, 5.6rem);
+    line-height: 1;
+    color: var(--color-ink);
+    text-wrap: balance;
+  }
+
+  .headline {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(2.4rem, 3.6vw, 3.4rem);
+    line-height: 1.04;
+    color: var(--color-ink);
+    text-wrap: balance;
+  }
+
+  .title {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--color-ink);
+  }
+
+  .btn {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 0 22px;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    cursor: pointer;
+    transition:
+      background-color 0.12s var(--ease-ks),
+      border-color 0.12s var(--ease-ks),
+      color 0.12s var(--ease-ks);
+  }
+  .btn:active {
+    transform: scale(0.98);
+  }
+  .btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+  .btn-primary {
+    background: var(--color-ink);
+    border-color: var(--color-ink);
+    color: var(--color-raised);
+  }
+  .btn-primary:hover {
+    background: var(--color-text);
+    border-color: var(--color-text);
+  }
+  .btn-secondary {
+    background: var(--color-raised);
+    border-color: var(--color-edge);
+    color: var(--color-ink);
+  }
+  .btn-secondary:hover {
+    border-color: var(--color-ink);
+  }
+  .btn-gold {
+    background: var(--color-gold);
+    border-color: var(--color-gold);
+    color: var(--color-on-gold);
+  }
+  .btn-gold:hover {
+    background: var(--color-gold-rich);
+    border-color: var(--color-gold-rich);
+  }
+
+  .card {
+    background: var(--color-raised);
+    border: 1px solid var(--color-rule);
+    border-radius: 8px;
+    transition:
+      box-shadow 0.2s var(--ease-ks),
+      transform 0.15s var(--ease-ks),
+      border-color 0.2s var(--ease-ks);
+  }
+  a.card:hover {
+    box-shadow: var(--shadow-lift-2);
+    border-color: transparent;
+    transform: translateY(-1px);
+  }
+
+  /* Saite ar plānu pasvītrojumu, kas uz hover kļūst zelta */
+  .link {
+    color: var(--color-ink);
+    text-decoration: underline;
+    text-decoration-color: oklch(13% 0 0 / 0.28);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    transition: text-decoration-color 0.12s var(--ease-ks);
+  }
+  .link:hover {
+    text-decoration-color: var(--color-gold);
+  }
+
+  .field {
+    width: 100%;
+    min-height: 44px;
+    border-radius: 8px;
+    border: 1px solid oklch(13% 0 0 / 0.16);
+    background: var(--color-raised);
+    padding: 10px 14px;
+    font-size: 0.9375rem;
+    color: var(--color-ink);
+    outline: none;
+    transition: border-color 0.12s var(--ease-ks), box-shadow 0.12s var(--ease-ks);
+  }
+  .field:focus {
+    border-color: var(--color-patina-deep);
+    box-shadow: 0 0 0 3px oklch(45% 0.1 190 / 0.15);
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-patina-deep);
+  outline-offset: 2px;
 }
 
 .no-scrollbar {
@@ -40,4 +211,15 @@ details > summary {
 }
 details > summary::-webkit-details-marker {
   display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
 }

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Carousel, CarouselItem } from "@/components/carousel";
 import { Scene } from "@/components/scene";
 import { SiteHeader } from "@/components/site-header";
-import { Container, GuideCard, SectionHeading, TripCard } from "@/components/ui";
+import { ArrowLink, Container, Eyebrow, Figure, GuideCard, SectionHeading, TripCard } from "@/components/ui";
 import { guides } from "@/data/guides";
 import { regions } from "@/data/regions";
 import { species } from "@/data/species";
@@ -49,117 +49,131 @@ const faq = [
   },
 ];
 
+const darkSelect =
+  "min-h-11 flex-1 rounded-[3px] border border-instrument-rule bg-instrument-raised px-3 text-[0.9375rem] text-instrument-text outline-none focus:border-gold";
+
 export default function Home() {
   const featuredTrips = trips.slice(0, 8);
   const featuredGuides = guides.slice(0, 6);
 
   return (
     <>
-      <SiteHeader overlay />
+      <SiteHeader />
 
       {/* Hero */}
-      <section className="relative flex h-[92svh] min-h-[640px] max-h-[960px] items-end overflow-hidden bg-ink text-white">
-        <Scene variant="lake" seed="hero-latgale" className="absolute inset-0 h-full w-full" />
-        <div className="absolute inset-0 bg-linear-to-t from-ink via-ink/40 to-ink/20" />
-        <Container className="relative w-full pb-16 pt-32 sm:pb-24">
-          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-white/80">
-            Neatkarīgi gidi · visa Latvija
-          </p>
-          <h1 className="max-w-4xl font-display text-5xl font-semibold leading-[1.05] tracking-tight sm:text-7xl">
-            Noķer savas dzīves zivi.
+      <section className="border-b border-rule">
+        <Container className="pb-12 pt-16 sm:pb-16 sm:pt-24">
+          <Eyebrow>
+            {guides.length} gidi · {regions.length} reģioni · {trips.length} braucieni
+          </Eyebrow>
+          <h1 className="display mt-6 max-w-5xl">
+            Noķer savas dzīves zivi.{" "}
+            <span className="text-muted">Kopā ar kādu, kas šos ūdeņus pazīst.</span>
           </h1>
-          <p className="mt-3 font-display text-2xl text-white/90 sm:text-3xl">
-            Kopā ar kādu, kas šos ūdeņus pazīst.
+          <p className="mt-8 max-w-xl text-lg text-muted">
+            Artūrs zina katru Ventas bedri. Jānis 18 gadus ķer līdakas Rāznā. Māris naktīs medī samus Daugavā. Tu
+            maksā tikai pēc tam, kad gids apstiprina datumus.
           </p>
-          <p className="mt-6 max-w-xl text-lg text-white/80">
-            Artūrs zina katru Ventas bedri. Jānis 18 gadus ķer līdakas Rāznā. Māris naktīs medī samus Daugavā.
-            Tu maksā tikai pēc tam, kad gids apstiprina datumus.
-          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link href="/braucieni" className="btn btn-primary">
+              Atrast braucienu
+            </Link>
+            <Link href="#ka-tas-strada" className="btn btn-secondary">
+              Kā tas strādā
+            </Link>
+          </div>
+        </Container>
 
-          <form
-            action="/braucieni"
-            className="mt-10 flex max-w-3xl flex-col gap-3 rounded-3xl bg-white/95 p-3 text-ink shadow-2xl sm:flex-row"
-          >
-            <select name="regions" className="flex-1 rounded-2xl bg-transparent px-4 py-3 text-sm outline-none">
-              <option value="">Jebkurš reģions</option>
-              {regions.map((r) => (
-                <option key={r.slug} value={r.slug}>
-                  {r.name}
-                </option>
-              ))}
-            </select>
-            <select name="suga" className="flex-1 rounded-2xl bg-transparent px-4 py-3 text-sm outline-none">
-              <option value="">Jebkura zivs</option>
-              {species.map((s) => (
-                <option key={s.slug} value={s.slug}>
-                  {s.name}
-                </option>
-              ))}
-            </select>
-            <button className="rounded-2xl bg-amber px-6 py-3 font-semibold text-white transition hover:bg-amber-dark">
-              Meklēt braucienus →
-            </button>
-          </form>
+        <Container className="pb-16 sm:pb-24">
+          <div className="relative">
+            <Figure
+              scene="lake"
+              seed="hero-latgale"
+              caption="Rāzna, Latgale — rītausma"
+              meta="56.3° N · 27.5° E"
+              className="aspect-[4/3] sm:aspect-[21/9]"
+            />
+            <form
+              action="/braucieni"
+              className="relative mt-4 flex flex-col gap-2 rounded-lg bg-instrument p-2 shadow-lift-2 sm:flex-row lg:absolute lg:bottom-14 lg:left-6 lg:mt-0 lg:w-[640px]"
+            >
+              <select name="regions" aria-label="Reģions" className={darkSelect}>
+                <option value="">Jebkurš reģions</option>
+                {regions.map((r) => (
+                  <option key={r.slug} value={r.slug}>
+                    {r.name}
+                  </option>
+                ))}
+              </select>
+              <select name="suga" aria-label="Zivs" className={darkSelect}>
+                <option value="">Jebkura zivs</option>
+                {species.map((s) => (
+                  <option key={s.slug} value={s.slug}>
+                    {s.name}
+                  </option>
+                ))}
+              </select>
+              <button className="btn btn-gold min-h-11">Meklēt</button>
+            </form>
+          </div>
         </Container>
       </section>
 
       {/* Stats */}
-      <section className="border-b border-line bg-sand">
-        <Container className="grid gap-8 py-12 sm:grid-cols-3">
+      <section className="border-b border-rule">
+        <Container className="grid grid-cols-3 divide-x divide-rule">
           {[
             { value: `${guides.length}+`, label: "Vietējie gidi", text: "Katru gidu esam satikuši un pārbaudījuši personīgi." },
             { value: `${regions.length}`, label: "Reģioni", text: "No Kurzemes jūras krasta līdz Latgales ezeriem." },
-            { value: "24 h", label: "Personīga atbilde", text: "Uz katru pieprasījumu atbild īsts cilvēks, nevis robots." },
+            { value: "24 h", label: "Personīga atbilde", text: "Uz katru pieprasījumu atbild īsts cilvēks." },
           ].map((s) => (
-            <div key={s.label}>
-              <p className="font-display text-5xl font-semibold text-deep">{s.value}</p>
-              <p className="mt-2 font-semibold text-ink">{s.label}</p>
-              <p className="mt-1 text-sm text-muted">{s.text}</p>
+            <div key={s.label} className="py-8 pl-4 first:pl-0 sm:py-10 sm:pl-8">
+              <p className="font-display text-5xl font-extralight leading-none text-ink sm:text-7xl">{s.value}</p>
+              <p className="eyebrow mt-4">{s.label}</p>
+              <p className="mt-2 hidden text-sm text-muted sm:block">{s.text}</p>
             </div>
           ))}
         </Container>
       </section>
 
       {/* Story */}
-      <section className="py-20 sm:py-28">
-        <Container className="grid items-center gap-12 lg:grid-cols-2">
+      <section className="section">
+        <Container className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
           <div>
-            <SectionHeading eyebrow="Par mums" title="Mēs neesam ceļojumu aģentūra." />
-            <div className="-mt-4 space-y-4 text-lg text-muted">
-              <p className="font-display text-2xl text-ink">Esam makšķernieki, kas atrada savējos.</p>
+            <Eyebrow index="01" className="mb-5">
+              Par mums
+            </Eyebrow>
+            <h2 className="headline">Mēs neesam ceļojumu aģentūra.</h2>
+            <div className="mt-6 space-y-4 text-lg text-muted">
+              <p className="text-ink">Esam makšķernieki, kas atrada savējos.</p>
               <p>
                 Latvijā ir vairāk nekā 12 000 upju un 2 000 ezeru, bet labākās vietas zina tikai vietējie. Mēs
                 izveidojām {site.name}, lai tos vietējos būtu viegli atrast.
               </p>
               <p>
                 Katrs gids šeit ir neatkarīgs — tas ir viņa paša bizness, viņa laiva un viņa ūdeņi. Pirms gids
-                parādās lapā, mēs ar viņu izrunājam sezonu, cenas, drošību un atsauksmes. Nekādu paketes ceļojumu,
-                nekādu starpnieku uzcenojumu.
+                parādās lapā, mēs izrunājam sezonu, cenas, drošību un atsauksmes. Nekādu paketes ceļojumu, nekādu
+                starpnieku uzcenojumu.
               </p>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <div className="relative aspect-[3/4] overflow-hidden rounded-3xl">
-              <Scene variant="river" seed="story-venta" className="absolute inset-0 h-full w-full" />
-            </div>
-            <div className="relative mt-12 aspect-[3/4] overflow-hidden rounded-3xl">
-              <Scene variant="forest" seed="story-gauja" className="absolute inset-0 h-full w-full" />
+            <Figure scene="river" seed="story-venta" caption="Venta" className="aspect-[3/4]" />
+            <div className="pt-16">
+              <Figure scene="forest" seed="story-gauja" caption="Gauja" className="aspect-[3/4]" />
             </div>
           </div>
         </Container>
       </section>
 
       {/* Trips carousel */}
-      <section className="bg-sand py-20 sm:py-24">
+      <section className="section border-t border-rule bg-paper-deep">
         <Container>
           <SectionHeading
+            index="02"
             eyebrow="Braucieni"
             title="Braucieni, ko vari rezervēt."
-            action={
-              <Link href="/braucieni" className="font-semibold text-deep hover:underline">
-                Visi braucieni →
-              </Link>
-            }
+            action={<ArrowLink href="/braucieni">Visi braucieni</ArrowLink>}
           />
           <Carousel>
             {featuredTrips.map((t) => (
@@ -172,27 +186,25 @@ export default function Home() {
       </section>
 
       {/* How it works */}
-      <section className="py-20 sm:py-28">
+      <section id="ka-tas-strada" className="section scroll-mt-16 border-t border-rule">
         <Container>
           <SectionHeading
+            index="03"
             eyebrow="Kā tas strādā"
             title="Vienkāršāk nekā meklēt pašam."
             intro="Bez reģistrācijas un bez komisijas. Tu runā tieši ar gidu."
           />
-          <ol className="grid gap-6 md:grid-cols-3">
+          <ol className="grid border-t border-rule md:grid-cols-3 md:divide-x md:divide-rule">
             {steps.map((s, i) => (
-              <li key={s.title} className="rounded-3xl border border-line bg-white p-8">
-                <span className="font-display text-5xl font-semibold text-amber">{String(i + 1).padStart(2, "0")}</span>
-                <h3 className="mt-4 font-display text-xl font-semibold">{s.title}</h3>
+              <li key={s.title} className="py-8 md:px-8 md:first:pl-0">
+                <span className="font-mono text-sm text-gold-deep">{String(i + 1).padStart(2, "0")}</span>
+                <h3 className="title mt-4 text-xl">{s.title}</h3>
                 <p className="mt-2 text-muted">{s.text}</p>
               </li>
             ))}
           </ol>
-          <div className="mt-10 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
-            <Link
-              href="/braucieni"
-              className="rounded-full bg-ink px-6 py-3 font-semibold text-white transition hover:bg-deep"
-            >
+          <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+            <Link href="/braucieni" className="btn btn-primary">
               Apskatīt braucienus
             </Link>
             <p className="text-sm text-muted">Pārlūkot un sūtīt pieprasījumus var bez maksas.</p>
@@ -201,57 +213,44 @@ export default function Home() {
       </section>
 
       {/* Regions */}
-      <section id="regioni" className="scroll-mt-20 bg-ink py-20 text-white sm:py-28">
+      <section id="regioni" className="section scroll-mt-16 border-t border-rule">
         <Container>
-          <div className="mb-10 max-w-2xl">
-            <p className="mb-3 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-white/70">
-              <span className="h-px w-8 bg-white/70" />
-              Reģioni
-            </p>
-            <h2 className="font-display text-3xl font-semibold tracking-tight sm:text-4xl">
-              Pieci reģioni. Tūkstošiem ezeru.
-            </h2>
-          </div>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {regions.map((r, i) => (
-              <Link
-                key={r.slug}
-                href={`/regioni/${r.slug}`}
-                className={`group relative flex min-h-80 flex-col justify-end overflow-hidden rounded-3xl p-6 ${i === 0 ? "lg:row-span-2" : ""}`}
-              >
-                <Scene
-                  variant={r.scene}
-                  seed={`region-${r.slug}`}
-                  className="absolute inset-0 h-full w-full transition duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-linear-to-t from-ink/90 via-ink/30 to-transparent" />
-                <div className="relative">
-                  <h3 className="font-display text-2xl font-semibold">{r.name}</h3>
-                  <p className="mt-1 text-white/85">{r.tagline}</p>
-                  <p className="mt-3 text-xs text-white/70">
-                    {tripsByRegion(r.slug).length} braucieni · {r.season}
+          <SectionHeading index="04" eyebrow="Reģioni" title="Pieci reģioni. Tūkstošiem ezeru." />
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {regions.map((r) => (
+              <Link key={r.slug} href={`/regioni/${r.slug}`} className="card group flex flex-col overflow-hidden">
+                <div className="relative aspect-[16/10] overflow-hidden border-b border-rule">
+                  <Scene variant={r.scene} seed={`region-${r.slug}`} className="absolute inset-0 h-full w-full" />
+                </div>
+                <div className="flex flex-1 flex-col p-5">
+                  <h3 className="font-display text-3xl font-light text-ink">{r.name}</h3>
+                  <p className="mt-1 text-muted">{r.tagline}</p>
+                  <p className="eyebrow mt-auto pt-5">
+                    {tripsByRegion(r.slug).length} braucieni · {r.waters.slice(0, 3).join(", ")}
                   </p>
-                  <span className="mt-4 inline-block text-sm font-semibold">Atklāt →</span>
                 </div>
               </Link>
             ))}
+            <div className="flex flex-col justify-between rounded-lg border border-dashed border-edge/40 p-6">
+              <p className="text-muted">Nezini, kur braukt? Pastāsti, ko gribi noķert, un mēs ieteiksim gidu.</p>
+              <a href={`mailto:${site.email}`} className="link mt-6 self-start font-medium">
+                {site.email}
+              </a>
+            </div>
           </div>
         </Container>
       </section>
 
       {/* Guides */}
-      <section className="py-20 sm:py-28">
+      <section className="section border-t border-rule bg-paper-deep">
         <Container>
           <SectionHeading
+            index="05"
             eyebrow="Gidi"
             title="Cilvēki, ar kuriem copēsi."
-            action={
-              <Link href="/gidi" className="font-semibold text-deep hover:underline">
-                Visi gidi →
-              </Link>
-            }
+            action={<ArrowLink href="/gidi">Visi gidi</ArrowLink>}
           />
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {featuredGuides.map((g) => (
               <GuideCard key={g.slug} guide={g} />
             ))}
@@ -260,132 +259,136 @@ export default function Home() {
       </section>
 
       {/* Species */}
-      <section className="bg-sand py-20 sm:py-28">
+      <section className="section border-t border-rule">
         <Container>
-          <SectionHeading eyebrow="Zivis" title="Ko tu gribi noķert?" />
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
+          <SectionHeading index="06" eyebrow="Zivis" title="Ko tu gribi noķert?" />
+          <div className="grid grid-cols-2 border-l border-t border-rule md:grid-cols-3 lg:grid-cols-5">
             {species.map((s) => (
               <Link
                 key={s.slug}
                 href={`/braucieni?suga=${s.slug}`}
-                className="group rounded-3xl border border-line bg-white p-5 transition hover:-translate-y-1 hover:shadow-lg"
+                className="group border-b border-r border-rule p-5 transition-colors hover:bg-raised"
               >
-                <FishIcon className="h-10 w-16 text-water transition group-hover:text-amber" />
-                <h3 className="mt-4 font-display text-lg font-semibold">{s.name}</h3>
-                <p className="text-xs italic text-muted">{s.latin}</p>
-                <p className="mt-3 text-sm font-medium text-deep">{tripsBySpecies(s.slug).length} braucieni</p>
+                <FishIcon className="h-6 w-12 text-faint transition-colors group-hover:text-gold" />
+                <h3 className="title mt-5">{s.name}</h3>
+                <p className="text-sm italic text-muted">{s.latin}</p>
+                <p className="eyebrow mt-4">{tripsBySpecies(s.slug).length} braucieni →</p>
               </Link>
             ))}
+            <div className="hidden border-b border-r border-rule bg-paper-deep lg:block" />
           </div>
         </Container>
       </section>
 
       {/* Season calendar */}
-      <section className="py-20 sm:py-28">
+      <section className="section border-t border-rule">
         <Container>
           <SectionHeading
+            index="07"
             eyebrow="Sezonas"
             title="Kad ko ķert."
             intro="Aptuvens kalendārs. Pirms brauciena pārbaudi aktuālos makšķerēšanas noteikumus un liegumus."
           />
-          <div className="overflow-x-auto rounded-3xl border border-line bg-white">
-            <table className="w-full min-w-[720px] text-sm">
-              <thead>
-                <tr className="border-b border-line text-muted">
-                  <th className="px-5 py-4 text-left font-medium">Zivs</th>
-                  {months.map((m) => (
-                    <th key={m} className="px-1 py-4 text-center font-medium">
-                      {m}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {species.map((s) => (
-                  <tr key={s.slug} className="border-b border-line last:border-0">
-                    <td className="px-5 py-3 font-medium">
-                      <Link href={`/braucieni?suga=${s.slug}`} className="hover:text-water">
-                        {s.name}
-                      </Link>
-                    </td>
-                    {months.map((m, i) => {
-                      const month = i + 1;
-                      const cls = s.best.includes(month)
-                        ? "bg-deep"
-                        : s.good.includes(month)
-                          ? "bg-water/35"
-                          : "bg-sand";
-                      return (
-                        <td key={m} className="px-1 py-3">
-                          <div className={`mx-auto h-6 rounded-md ${cls}`} />
-                        </td>
-                      );
-                    })}
+          <div className="overflow-hidden rounded-lg bg-instrument shadow-lift-2">
+            <div className="overflow-x-auto p-2 sm:p-4">
+              <table className="w-full min-w-[720px] text-sm text-instrument-text">
+                <thead>
+                  <tr className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-instrument-muted">
+                    <th className="px-4 py-3 text-left font-normal">Zivs</th>
+                    {months.map((m) => (
+                      <th key={m} className="px-1 py-3 text-center font-normal">
+                        {m}
+                      </th>
+                    ))}
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <div className="mt-4 flex gap-6 text-xs text-muted">
-            <span className="flex items-center gap-2">
-              <span className="h-3 w-3 rounded bg-deep" /> Labākais laiks
-            </span>
-            <span className="flex items-center gap-2">
-              <span className="h-3 w-3 rounded bg-water/35" /> Labs laiks
-            </span>
+                </thead>
+                <tbody>
+                  {species.map((s) => (
+                    <tr key={s.slug} className="border-t border-instrument-rule">
+                      <td className="px-4 py-2.5">
+                        <Link href={`/braucieni?suga=${s.slug}`} className="hover:text-gold">
+                          {s.name}
+                        </Link>
+                      </td>
+                      {months.map((m, i) => {
+                        const month = i + 1;
+                        const cls = s.best.includes(month)
+                          ? "bg-gold shadow-led"
+                          : s.good.includes(month)
+                            ? "bg-gold/30"
+                            : "bg-instrument-raised";
+                        return (
+                          <td key={m} className="px-1 py-2.5">
+                            <div className={`mx-auto h-4 w-full max-w-9 rounded-[2px] ${cls}`} />
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="flex gap-6 border-t border-instrument-rule px-6 py-4 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-instrument-muted">
+              <span className="flex items-center gap-2">
+                <span className="h-2.5 w-2.5 rounded-[2px] bg-gold shadow-led" /> Labākais laiks
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="h-2.5 w-2.5 rounded-[2px] bg-gold/30" /> Labs laiks
+              </span>
+            </div>
           </div>
         </Container>
       </section>
 
       {/* FAQ */}
-      <section id="buj" className="scroll-mt-20 bg-sand py-20 sm:py-28">
+      <section id="buj" className="section scroll-mt-16 border-t border-rule bg-paper-deep">
         <Container className="grid items-start gap-12 lg:grid-cols-[1fr_1.6fr]">
-          <SectionHeading eyebrow="BUJ" title="Biežākie jautājumi." />
-          <div className="divide-y divide-line rounded-3xl border border-line bg-white">
+          <div>
+            <Eyebrow index="08" className="mb-5">
+              BUJ
+            </Eyebrow>
+            <h2 className="headline">Biežākie jautājumi.</h2>
+          </div>
+          <div className="border-t border-rule">
             {faq.map((item) => (
-              <details key={item.q} className="group p-6">
-                <summary className="flex cursor-pointer items-center justify-between gap-4 font-display text-lg font-semibold">
+              <details key={item.q} className="group border-b border-rule py-5">
+                <summary className="flex cursor-pointer items-center justify-between gap-4 text-lg font-medium text-ink">
                   {item.q}
-                  <span className="text-2xl text-water transition group-open:rotate-45">+</span>
+                  <span className="font-mono text-faint transition-transform group-open:rotate-45">+</span>
                 </summary>
-                <p className="mt-3 text-muted">{item.a}</p>
+                <p className="mt-3 max-w-2xl text-muted">{item.a}</p>
               </details>
             ))}
           </div>
         </Container>
       </section>
 
-      {/* Season CTA */}
-      <section className="relative overflow-hidden bg-ink text-white">
-        <Scene variant="ice" seed="cta-ziema" className="absolute inset-0 h-full w-full opacity-50" />
-        <div className="absolute inset-0 bg-linear-to-r from-ink via-ink/80 to-ink/30" />
-        <Container className="relative grid gap-10 py-20 sm:py-28 lg:grid-cols-2">
+      {/* CTA */}
+      <section className="bg-instrument-deep text-instrument-text">
+        <Container className="grid gap-12 py-20 sm:py-28 lg:grid-cols-[1.4fr_1fr] lg:items-end">
           <div>
-            <h2 className="font-display text-4xl font-semibold tracking-tight sm:text-5xl">
-              Rudens plēsēji. Ziemā — ledus.
-            </h2>
-            <p className="mt-4 max-w-lg text-lg text-white/80">
+            <p className="eyebrow mb-5 text-instrument-muted">Sezona 2026/27</p>
+            <h2 className="display text-instrument-text">Rudens plēsēji. Ziemā — ledus.</h2>
+            <p className="mt-6 max-w-lg text-lg text-instrument-muted">
               Labākās nedēļas aizpildās ātri. Raksti gidam jau tagad, un viņš ieteiks piemērotāko laiku.
             </p>
-            <Link
-              href="/braucieni"
-              className="mt-8 inline-block rounded-full bg-amber px-6 py-3 font-semibold text-white transition hover:bg-amber-dark"
-            >
-              Atrast braucienu →
+            <Link href="/braucieni" className="btn btn-gold mt-8">
+              Atrast braucienu
             </Link>
           </div>
-          <div className="rounded-3xl bg-white/10 p-8 backdrop-blur">
-            <h3 className="font-display text-2xl font-semibold">Runā ar mums</h3>
-            <p className="mt-2 text-white/80">
-              Nezini, kuru gidu izvēlēties? Uzraksti, un mēs ieteiksim. Atbildam 24 stundu laikā latviešu, angļu vai
-              krievu valodā.
-            </p>
-            <a href={`mailto:${site.email}`} className="mt-6 inline-block font-semibold underline underline-offset-4">
-              {site.email}
-            </a>
-            <div className="mt-8 border-t border-white/15 pt-6">
-              <p className="text-sm text-white/80">Esi makšķerēšanas gids?</p>
-              <Link href="/klusti-par-gidu" className="font-semibold hover:underline">
+          <div className="space-y-8 border-t border-instrument-rule pt-8 lg:border-l lg:border-t-0 lg:pl-10 lg:pt-0">
+            <div>
+              <h3 className="title text-instrument-text">Runā ar mums</h3>
+              <p className="mt-2 text-sm text-instrument-muted">
+                Nezini, kuru gidu izvēlēties? Atbildam 24 stundu laikā latviešu, angļu vai krievu valodā.
+              </p>
+              <a href={`mailto:${site.email}`} className="mt-3 inline-block text-instrument-text underline decoration-gold underline-offset-4">
+                {site.email}
+              </a>
+            </div>
+            <div>
+              <h3 className="title text-instrument-text">Esi makšķerēšanas gids?</h3>
+              <Link href="/klusti-par-gidu" className="mt-2 inline-block text-instrument-text underline decoration-instrument-rule underline-offset-4 hover:decoration-gold">
                 Pievienojies {site.name} →
               </Link>
             </div>
@@ -400,7 +403,6 @@ function FishIcon({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 64 32" className={className} fill="currentColor" aria-hidden="true">
       <path d="M4 16c8-11 26-13 40-4l12-8v24l-12-8C30 29 12 27 4 16z" />
-      <circle cx="14" cy="14" r="2" fill="#fff" />
     </svg>
   );
 }

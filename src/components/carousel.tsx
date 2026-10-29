@@ -14,18 +14,18 @@ export function Carousel({ children }: { children: React.ReactNode }) {
     <div className="relative">
       <div
         ref={track}
-        className="no-scrollbar -mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
+        className="no-scrollbar -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-6 pt-1 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
       >
         {children}
       </div>
-      <div className="mt-4 flex justify-end gap-2">
+      <div className="mt-2 flex justify-end gap-1.5">
         {([-1, 1] as const).map((dir) => (
           <button
             key={dir}
             type="button"
             onClick={() => scroll(dir)}
             aria-label={dir === -1 ? "Iepriekšējie" : "Nākamie"}
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-line bg-white text-ink transition hover:bg-sand"
+            className="btn btn-secondary h-10 min-h-10 w-10 px-0"
           >
             {dir === -1 ? "←" : "→"}
           </button>
@@ -36,5 +36,5 @@ export function Carousel({ children }: { children: React.ReactNode }) {
 }
 
 export function CarouselItem({ children }: { children: React.ReactNode }) {
-  return <div className="w-[80%] shrink-0 snap-start sm:w-[45%] lg:w-[30%] xl:w-[23%]">{children}</div>;
+  return <div className="w-[80%] shrink-0 snap-start sm:w-[45%] lg:w-[30%] xl:w-[23.5%]">{children}</div>;
 }

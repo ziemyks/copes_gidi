@@ -10,8 +10,8 @@ export default function PrivacyPage() {
   return (
     <>
       <SiteHeader />
-      <Container className="max-w-3xl py-16">
-        <h1 className="font-display text-4xl font-semibold">Privātuma politika</h1>
+      <Container className="max-w-3xl pb-24 pt-16">
+        <h1 className="headline">Privātuma politika</h1>
         <div className="mt-8 space-y-5 text-muted">
           <p>
             Kad tu nosūti pieprasījumu caur {site.name}, mēs saņemam tavu vārdu, e-pastu, tālruni (ja norādīts) un
@@ -24,7 +24,7 @@ export default function PrivacyPage() {
           </p>
           <p>
             Tev ir tiesības pieprasīt savu datu kopiju, labošanu vai dzēšanu. Raksti mums:{" "}
-            <a href={`mailto:${site.email}`} className="text-deep underline">
+            <a href={`mailto:${site.email}`} className="link">
               {site.email}
             </a>
             .

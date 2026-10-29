@@ -1,17 +1,23 @@
 import type { Metadata } from "next";
-import { Inter, Source_Serif_4 } from "next/font/google";
+import { Albert_Sans, Alumni_Sans, JetBrains_Mono } from "next/font/google";
 import { SiteFooter } from "@/components/site-footer";
 import { site, siteUrl } from "@/lib/site";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
+const albert = Albert_Sans({
+  variable: "--font-albert",
   subsets: ["latin", "latin-ext"],
 });
 
-const serif = Source_Serif_4({
-  variable: "--font-serif-display",
+const alumni = Alumni_Sans({
+  variable: "--font-alumni",
   subsets: ["latin", "latin-ext"],
+});
+
+const jetbrains = JetBrains_Mono({
+  variable: "--font-jetbrains",
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {
@@ -30,7 +36,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="lv" className={`${inter.variable} ${serif.variable} h-full antialiased`}>
+    <html
+      lang="lv"
+      className={`${albert.variable} ${alumni.variable} ${jetbrains.variable} h-full antialiased`}
+    >
       <body className="flex min-h-full flex-col font-sans">
         <div className="flex-1">{children}</div>
         <SiteFooter />

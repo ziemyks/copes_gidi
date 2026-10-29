@@ -37,13 +37,10 @@ function Select({
   onChange: (value: string) => void;
 }) {
   return (
-    <label className="flex flex-col gap-1">
-      <span className="text-xs font-semibold uppercase tracking-wider text-muted">{label}</span>
-      <select
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="min-w-44 rounded-xl border border-line bg-white px-4 py-2.5 text-sm text-ink outline-none focus:border-water"
-      >
+    <label className="flex flex-col gap-2">
+      <span className="eyebrow">{label}</span>
+      <select value={value} onChange={(e) => onChange(e.target.value)} className="field min-w-44 py-0">
+
         <option value="">Visi</option>
         {options.map((o) => (
           <option key={o.value} value={o.value}>
@@ -57,13 +54,13 @@ function Select({
 
 function FilterBar({ children, count, noun, onClear }: { children: React.ReactNode; count: number; noun: string; onClear: () => void }) {
   return (
-    <div className="mb-8 flex flex-col gap-4 rounded-3xl border border-line bg-white p-5 lg:flex-row lg:items-end lg:justify-between">
+    <div className="mb-10 flex flex-col gap-5 border-b border-rule pb-8 lg:flex-row lg:items-end lg:justify-between">
       <div className="flex flex-wrap gap-4">{children}</div>
-      <div className="flex items-center gap-4 text-sm">
-        <span className="text-muted">
-          Atrasti <strong className="text-ink">{count}</strong> {noun}
+      <div className="flex items-center gap-5">
+        <span className="eyebrow">
+          <span className="text-ink">{count}</span> {noun}
         </span>
-        <button type="button" onClick={onClear} className="font-medium text-deep hover:underline">
+        <button type="button" onClick={onClear} className="btn btn-secondary min-h-9 px-4 text-[0.8125rem]">
           Notīrīt
         </button>
       </div>
@@ -73,7 +70,7 @@ function FilterBar({ children, count, noun, onClear }: { children: React.ReactNo
 
 function Empty() {
   return (
-    <p className="rounded-3xl border border-dashed border-line p-12 text-center text-muted">
+    <p className="rounded-lg border border-dashed border-edge/40 p-12 text-center text-muted">
       Pēc šiem kritērijiem nekas netika atrasts. Pamēģini mainīt filtrus.
     </p>
   );
@@ -85,7 +82,7 @@ const speciesOptions = species.map((s) => ({ value: s.slug, label: s.name }));
 export function TripGrid({ items }: { items: typeof trips }) {
   if (!items.length) return <Empty />;
   return (
-    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {items.map((t) => (
         <TripCard key={t.slug} trip={t} />
       ))}
@@ -132,7 +129,7 @@ export function TripExplorer() {
 export function GuideGrid({ items }: { items: typeof guides }) {
   if (!items.length) return <Empty />;
   return (
-    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {items.map((g) => (
         <GuideCard key={g.slug} guide={g} showBio />
       ))}
