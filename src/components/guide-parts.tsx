@@ -1,4 +1,4 @@
-import type { Contacts, Source } from "@/data/types";
+import type { Activity, Contacts, Source } from "@/data/types";
 
 function formatPhone(phone: string) {
   const digits = phone.replace(/[^\d+]/g, "");
@@ -88,5 +88,20 @@ export function PublicDataNotice({ checked }: { checked: string }) {
       Informācija apkopota no gida publiskajiem avotiem un pārbaudīta {formatDate(checked)}. Copes Gidi ar gidu nav
       sazinājies un neapstiprina pieejamību, gala cenu, PVN vai atcelšanas noteikumus — precizē tos pirms rezervācijas.
     </p>
+  );
+}
+
+/** Aktīvs = gida pakalpojumam ir neseni publiski pierādījumi; datumu apzināti nerādām */
+export function ActivityBadge({ activity, className = "" }: { activity: Activity; className?: string }) {
+  const active = activity.status === "redzama";
+  return (
+    <span
+      className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-[0.72rem] font-bold uppercase ${
+        active ? "border-patina/40 text-patina" : "border-white/15 text-muted"
+      } ${className}`}
+    >
+      <span className={`h-1.5 w-1.5 rounded-full ${active ? "bg-patina" : "bg-vermilion"}`} />
+      {active ? "Aktīvs" : "Neaktīvs"}
+    </span>
   );
 }

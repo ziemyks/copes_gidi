@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ContactPanel, PublicDataNotice, SourceList, formatDate } from "@/components/guide-parts";
+import { ActivityBadge, ContactPanel, PublicDataNotice, SourceList, formatDate } from "@/components/guide-parts";
 import { Avatar, Chip, Container, Eyebrow, TripCard } from "@/components/ui";
 import { getGuide, guideFrom, guides, kindLabels } from "@/data/guides";
 import { getRegion } from "@/data/regions";
@@ -90,6 +90,7 @@ export default async function GuidePage({ params }: PageProps<"/gidi/[slug]">) {
             </div>
           </div>
           <p className="mt-8 max-w-3xl text-xl text-ink">{guide.tagline}</p>
+          <ActivityBadge activity={guide.activity} className="mt-6" />
         </Container>
       </section>
 
@@ -249,22 +250,6 @@ export default async function GuidePage({ params }: PageProps<"/gidi/[slug]">) {
             <section className="border-t border-rule pt-10">
               <Eyebrow className="mb-4">Pirms rezervācijas precizē</Eyebrow>
               <List items={guide.caveats} mark="?" muted />
-              <p className="mt-6 flex items-start gap-2 text-sm text-muted">
-                <span
-                  className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${guide.activity.status === "redzama" ? "bg-patina" : "bg-vermilion"}`}
-                />
-                <span>
-                  Jaunākā datētā publiskā aktivitāte: {formatDate(guide.activity.lastSeen)} — {guide.activity.note}
-                  {guide.activity.url && (
-                    <>
-                      {" "}
-                      <a href={guide.activity.url} target="_blank" rel="noopener noreferrer" className="link">
-                        avots
-                      </a>
-                    </>
-                  )}
-                </span>
-              </p>
             </section>
 
             <SourceList

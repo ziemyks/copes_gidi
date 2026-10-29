@@ -6,7 +6,7 @@ import { speciesNames } from "@/data/species";
 import { durationLabel, tripTypes } from "@/data/trips";
 import type { Guide, Trip } from "@/data/types";
 import { formatPrice } from "@/lib/site";
-import { formatDate } from "./guide-parts";
+import { ActivityBadge } from "./guide-parts";
 import { GuideMark } from "./guide-mark";
 import { Scene, type SceneVariant } from "./scene";
 
@@ -197,12 +197,7 @@ export function GuideCard({ guide, showBio = false }: { guide: Guide; showBio?: 
         ))}
         {names.length > 3 && <Chip>+{names.length - 3}</Chip>}
       </div>
-      <p className="mt-4 flex items-center gap-2 text-xs text-muted">
-        <span
-          className={`h-1.5 w-1.5 shrink-0 rounded-full ${guide.activity.status === "redzama" ? "bg-patina" : "bg-vermilion"}`}
-        />
-        Pēdējā publiskā aktivitāte: {formatDate(guide.activity.lastSeen)}
-      </p>
+      <ActivityBadge activity={guide.activity} className="mt-4 self-start" />
       <CardFooter>
         <span className="eyebrow">{from !== undefined ? `Copes brauciens no ${formatPrice(from)}` : "Cena pēc pieprasījuma"}</span>
         <span className="shrink-0 whitespace-nowrap font-mono text-xs font-bold uppercase text-accent">
