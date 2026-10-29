@@ -16,6 +16,11 @@ export default function PrivacyPage() {
             {site.name} nepieņem rezervācijas un maksājumus. Kad zvani vai raksti gidam, tu sazinies ar viņu tieši —
             mēs šos datus nesaņemam.
           </p>
+          <h2 className="title text-ink">Apmeklējuma statistika</h2>
+          <p>
+            Lapas apmeklējumu skaitīšanai izmantojam Vercel Web Analytics. Tas nelieto sīkdatnes un neveido
+            apmeklētāju profilus — redzam tikai apkopotus skaitļus, piemēram, cik reizes atvērta kāda lapa.
+          </p>
           <h2 className="title text-ink">Gidiem</h2>
           <p>
             Gidu profili ir apkopoti tikai no publiskiem avotiem: gidu pašu mājaslapām, sociālajiem tīkliem, tūrisma

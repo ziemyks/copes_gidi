@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { Archivo, Space_Grotesk, Space_Mono } from "next/font/google";
 import { Chrome } from "@/components/chrome";
@@ -5,6 +6,7 @@ import { Loader, loaderScript } from "@/components/loader";
 import { ScrollFx } from "@/components/scroll-fx";
 import { SiteFooter } from "@/components/site-footer";
 import { site, siteUrl } from "@/lib/site";
+import { Suspense } from "react";
 import "./globals.css";
 
 const archivo = Archivo({
@@ -54,6 +56,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <ScrollFx />
         <main className="flex-1">{children}</main>
         <SiteFooter />
+        {/* Analytics lasa URL parametrus, tāpēc ar Cache Components tam vajag Suspense robežu */}
+        <Suspense fallback={null}>
+          <Analytics />
+        </Suspense>
       </body>
     </html>
   );
