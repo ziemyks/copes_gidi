@@ -254,7 +254,7 @@ export default async function GuidePage({ params }: PageProps<"/gidi/[slug]">) {
 
             <SourceList
               sources={
-                guide.logo
+                guide.logo?.source
                   ? [...guide.sources, { url: guide.logo.source, title: "Logotips — gida mājaslapa", supports: "logotips" }]
                   : guide.sources
               }

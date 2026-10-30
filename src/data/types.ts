@@ -92,8 +92,8 @@ export type Guide = {
   notIncluded: string[];
   catchPolicy?: string;
   booking: string[];
-  /** Logotips no gida mājaslapas (public/logos); bg — uz kāda fona tas ir paredzēts */
-  logo?: { src: string; source: string; bg: "light" | "dark" };
+  /** Logotips (public/logos); source — lapa, no kuras ņemts, ja tas nav saņemts tieši; bg — paredzētais fons */
+  logo?: { src: string; source?: string; bg: "light" | "dark" };
   contacts: Contacts;
   /** Ja kontakti nav gida personīgie (piem. veikals), kontaktu bloka virsraksts to pasaka */
   contactTitle?: string;

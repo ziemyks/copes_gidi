@@ -77,6 +77,7 @@ const profiles: Guide[] = [
     included: ["Gids un apmācība (vietas, mezgli, metieni, tehnikas)", "Laiva", "Makšķerēšanas inventārs, ja nav sava"],
     notIncluded: ["Makšķerēšanas karte — klients iegādājas pats"],
     booking: ["rezervācijas forma vietnē", "tālrunis", "e-pasts", "FishingBooker"],
+    logo: { src: "/logos/rigafishing.webp", bg: "light" },
     contacts: {
       phones: ["+37120609002", "+37122432780"],
       emails: ["TomsKlabis@gmail.com"],
