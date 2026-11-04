@@ -14,13 +14,13 @@ export function Container({ children, className = "" }: { children: React.ReactN
   return <div className={`mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 ${className}`}>{children}</div>;
 }
 
-export function Eyebrow({ index, children, className = "" }: { index?: string; children: React.ReactNode; className?: string }) {
+export function Eyebrow({ index, children, className = "", as: Tag = "p" }: { index?: string; children: React.ReactNode; className?: string; as?: "p" | "h2" | "h3" }) {
   return (
-    <p className={`eyebrow flex items-center gap-3 ${className}`}>
+    <Tag className={`eyebrow flex items-center gap-3 ${className}`}>
       {index && <span className="text-accent-deep">{index}</span>}
       {index && <span className="h-px w-6 bg-current opacity-40" />}
       {children}
-    </p>
+    </Tag>
   );
 }
 
@@ -223,7 +223,7 @@ export function PageHeader({
     <section className="border-b border-rule">
       <Container className="pb-16 pt-32 sm:pt-44">
         <Eyebrow className="mb-6">{eyebrow}</Eyebrow>
-        <h1 className="display max-w-4xl">{title}</h1>
+        <h1 className="display max-w-4xl break-words text-balance [hyphens:auto]">{title}</h1>
         {intro && <p className="mt-6 max-w-2xl text-lg text-muted">{intro}</p>}
         {children}
       </Container>

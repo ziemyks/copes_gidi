@@ -1,0 +1,481 @@
+{
+  "audit_date": "2026-11-04",
+  "timezone": "Europe/Riga",
+  "repository_commit": "0615144",
+  "production_origin": "https://www.copesgidi.lv",
+  "sitemap_url": "https://www.copesgidi.lv/sitemap.xml",
+  "method": "HTTP GET crawl, initial HTML parser, static source inspection, public-search samples and decoded asset fetches; no browser rendering or Search Console access",
+  "scope": {
+    "sitemap_pages": 63,
+    "additional_public_pages": 1,
+    "query_variants": 3,
+    "nonexistent_paths": 4,
+    "guide_website_destinations": 15,
+    "profile_source_urls_total": 97,
+    "all_profile_source_urls_checked": false
+  },
+  "sitemap_page_checks": {
+    "all_final_www_pages_200": true,
+    "nonempty_unique_titles": true,
+    "nonempty_unique_descriptions": true,
+    "single_h1_pages": 63,
+    "lv_lang_pages": 63,
+    "canonical_pages": 0,
+    "jsonld_pages": 0,
+    "og_image_pages": 0,
+    "og_url_pages": 0,
+    "twitter_metadata_pages": 63,
+    "titles_over_65_characters": 17,
+    "descriptions_over_170_characters": 20,
+    "guide_title_range_characters": [
+      81,
+      129
+    ],
+    "guide_description_range_characters": [
+      284,
+      484
+    ],
+    "img_missing_alt_attributes": 0
+  },
+  "internal_graph": {
+    "pages": 64,
+    "unknown_internal_paths": [],
+    "unreachable_paths": [],
+    "click_depth_counts": {
+      "0": 1,
+      "1": 33,
+      "2": 30
+    }
+  },
+  "filter_initial_main_text_matches_base": {
+    "/braucieni?suga=lasis": true,
+    "/braucieni?suga=not-a-species": true,
+    "/gidi?regions=kurzeme": true
+  },
+  "probes": [
+    {
+      "url": "https://www.copesgidi.lv/braucieni?suga=lasis",
+      "status": "200",
+      "title": "Makšķerēšanas braucieni ar gidu · Copes Gidi",
+      "robots": "",
+      "canonicals": [],
+      "main_sha256": "9238127bc3086c407bec14e675f21607e307fe83f2b4b01629e5daf9596e1f88",
+      "response_status_chain": [
+        "200"
+      ]
+    },
+    {
+      "url": "https://www.copesgidi.lv/braucieni?suga=not-a-species",
+      "status": "200",
+      "title": "Makšķerēšanas braucieni ar gidu · Copes Gidi",
+      "robots": "",
+      "canonicals": [],
+      "main_sha256": "9238127bc3086c407bec14e675f21607e307fe83f2b4b01629e5daf9596e1f88",
+      "response_status_chain": [
+        "200"
+      ]
+    },
+    {
+      "url": "https://www.copesgidi.lv/gidi?regions=kurzeme",
+      "status": "200",
+      "title": "Makšķerēšanas gidi Latvijā · Copes Gidi",
+      "robots": "",
+      "canonicals": [],
+      "main_sha256": "95db926ba7aee811f111e58923bae66856e7071c0dcce699210e922153c3d06f",
+      "response_status_chain": [
+        "200"
+      ]
+    },
+    {
+      "url": "https://www.copesgidi.lv/seo-audit-nonexistent",
+      "status": "404",
+      "title": "Copes Gidi — makšķerēšanas gidi Latvijā",
+      "robots": "noindex",
+      "canonicals": [],
+      "main_sha256": "ae2dff60972e52540b27bec7014a130e4955f64af6ac121f386cb6d18dbd385a",
+      "response_status_chain": [
+        "404"
+      ]
+    },
+    {
+      "url": "https://www.copesgidi.lv/gidi/seo-audit-nonexistent",
+      "status": "404",
+      "title": "",
+      "robots": "noindex",
+      "canonicals": [],
+      "main_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "response_status_chain": [
+        "404"
+      ]
+    },
+    {
+      "url": "https://www.copesgidi.lv/braucieni/seo-audit-nonexistent",
+      "status": "404",
+      "title": "",
+      "robots": "noindex",
+      "canonicals": [],
+      "main_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "response_status_chain": [
+        "404"
+      ]
+    },
+    {
+      "url": "https://www.copesgidi.lv/regioni/seo-audit-nonexistent",
+      "status": "404",
+      "title": "",
+      "robots": "noindex",
+      "canonicals": [],
+      "main_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "response_status_chain": [
+        "404"
+      ]
+    },
+    {
+      "url": "http://copesgidi.lv/",
+      "status": "200",
+      "title": "Copes Gidi — makšķerēšanas gidi Latvijā",
+      "robots": "",
+      "canonicals": [],
+      "main_sha256": "116a08a874e746f10620b8456d7f516cc4dee69b99f8cd7aa006a52203463bd9",
+      "response_status_chain": [
+        "308",
+        "308",
+        "200"
+      ]
+    },
+    {
+      "url": "http://www.copesgidi.lv/",
+      "status": "200",
+      "title": "Copes Gidi — makšķerēšanas gidi Latvijā",
+      "robots": "",
+      "canonicals": [],
+      "main_sha256": "116a08a874e746f10620b8456d7f516cc4dee69b99f8cd7aa006a52203463bd9",
+      "response_status_chain": [
+        "308",
+        "200"
+      ]
+    },
+    {
+      "url": "https://www.copesgidi.lv/gidi/",
+      "status": "200",
+      "title": "Makšķerēšanas gidi Latvijā · Copes Gidi",
+      "robots": "",
+      "canonicals": [],
+      "main_sha256": "95db926ba7aee811f111e58923bae66856e7071c0dcce699210e922153c3d06f",
+      "response_status_chain": [
+        "308",
+        "200"
+      ]
+    }
+  ],
+  "apex_https_probes": {
+    "/": {
+      "status": 308,
+      "location": "https://www.copesgidi.lv/"
+    },
+    "/gidi": {
+      "status": 308,
+      "location": "https://www.copesgidi.lv/gidi"
+    }
+  },
+  "googlebot_user_agent_probe": {
+    "url": "https://www.copesgidi.lv/braucieni",
+    "status": 200,
+    "initial_trip_links": 37,
+    "actual_google_url_inspection": false
+  },
+  "payloads": [
+    {
+      "url": "https://www.copesgidi.lv",
+      "html_decoded_bytes": 443858,
+      "html_gzip_estimate_bytes": 94287,
+      "initial_linked_js_files": 8,
+      "initial_linked_js_decoded_bytes": 607329,
+      "initial_linked_js_gzip_estimate_bytes": 188772,
+      "css_decoded_bytes": 55231
+    },
+    {
+      "url": "https://www.copesgidi.lv/braucieni",
+      "html_decoded_bytes": 378147,
+      "html_gzip_estimate_bytes": 89970,
+      "initial_linked_js_files": 9,
+      "initial_linked_js_decoded_bytes": 718567,
+      "initial_linked_js_gzip_estimate_bytes": 219984,
+      "css_decoded_bytes": 55231
+    },
+    {
+      "url": "https://www.copesgidi.lv/gidi",
+      "html_decoded_bytes": 140215,
+      "html_gzip_estimate_bytes": 31328,
+      "initial_linked_js_files": 9,
+      "initial_linked_js_decoded_bytes": 718567,
+      "initial_linked_js_gzip_estimate_bytes": 219984,
+      "css_decoded_bytes": 55231
+    },
+    {
+      "url": "https://www.copesgidi.lv/regioni/riga",
+      "html_decoded_bytes": 414054,
+      "html_gzip_estimate_bytes": 90338,
+      "initial_linked_js_files": 8,
+      "initial_linked_js_decoded_bytes": 604073,
+      "initial_linked_js_gzip_estimate_bytes": 187458,
+      "css_decoded_bytes": 55231
+    }
+  ],
+  "payload_notes": "Decoded fetch sizes. Gzip values are locally calculated estimates, not measured browser transfers. Initial linked scripts only; excludes subsequent dynamic requests/prefetches.",
+  "home_preloaded_fonts": {
+    "woff2_count": 8,
+    "woff2_total_bytes": 255696
+  },
+  "catalog_client_chunk": {
+    "path": "/_next/static/immutable/chunks/3a8v-sqj6es3q.js",
+    "decoded_bytes": 111488,
+    "contains_full_profile_sources_claims_company_data": true
+  },
+  "data_counts": {
+    "guides": 17,
+    "trips": 37,
+    "regions": 5,
+    "species": 13
+  },
+  "region_inventory": [
+    {
+      "region": "kurzeme",
+      "guides": 2,
+      "trips": 5,
+      "description_words": 32
+    },
+    {
+      "region": "vidzeme",
+      "guides": 1,
+      "trips": 6,
+      "description_words": 18
+    },
+    {
+      "region": "latgale",
+      "guides": 2,
+      "trips": 3,
+      "description_words": 19
+    },
+    {
+      "region": "zemgale",
+      "guides": 1,
+      "trips": 2,
+      "description_words": 19
+    },
+    {
+      "region": "riga",
+      "guides": 8,
+      "trips": 17,
+      "description_words": 25
+    }
+  ],
+  "species_inventory": [
+    {
+      "slug": "lidaka",
+      "name": "Līdaka",
+      "trips": 19
+    },
+    {
+      "slug": "zandarts",
+      "name": "Zandarts",
+      "trips": 16
+    },
+    {
+      "slug": "asaris",
+      "name": "Asaris",
+      "trips": 15
+    },
+    {
+      "slug": "sams",
+      "name": "Sams",
+      "trips": 3
+    },
+    {
+      "slug": "lasis",
+      "name": "Lasis",
+      "trips": 2
+    },
+    {
+      "slug": "taimins",
+      "name": "Taimiņš",
+      "trips": 1
+    },
+    {
+      "slug": "forele",
+      "name": "Strauta forele",
+      "trips": 2
+    },
+    {
+      "slug": "vimba",
+      "name": "Vimba",
+      "trips": 0
+    },
+    {
+      "slug": "plaudis",
+      "name": "Plaudis",
+      "trips": 2
+    },
+    {
+      "slug": "karpa",
+      "name": "Karpa",
+      "trips": 1
+    },
+    {
+      "slug": "menca",
+      "name": "Menca",
+      "trips": 2
+    },
+    {
+      "slug": "bute",
+      "name": "Bute",
+      "trips": 1
+    },
+    {
+      "slug": "vejzivs",
+      "name": "Vējzivs",
+      "trips": 1
+    }
+  ],
+  "trip_type_inventory": [
+    {
+      "type": "laiva",
+      "count": 23
+    },
+    {
+      "type": "apmaciba",
+      "count": 6
+    },
+    {
+      "type": "ledus",
+      "count": 3
+    },
+    {
+      "type": "krasts",
+      "count": 4
+    },
+    {
+      "type": "musa",
+      "count": 1
+    }
+  ],
+  "data_model_note": "The three guides and four trips with empty region values use an intentional unspecified/nationwide fallback; they are not proof of corrupt records. Single-region filtering omits these records.",
+  "guide_website_checks": [
+    {
+      "url": "http://www.uac.lv/makskeresana-liepaja/",
+      "response_status_chain": [
+        "200"
+      ],
+      "result": "final_200"
+    },
+    {
+      "url": "https://balticprofishing.com/",
+      "response_status_chain": [
+        "200"
+      ],
+      "result": "final_200"
+    },
+    {
+      "url": "https://fishdentist.eu/lv",
+      "response_status_chain": [
+        "200"
+      ],
+      "result": "final_200"
+    },
+    {
+      "url": "https://fishguidebaltic.com/lv",
+      "response_status_chain": [
+        "200"
+      ],
+      "result": "final_200"
+    },
+    {
+      "url": "https://laivu-gids.lvgroup.lv/",
+      "response_status_chain": [
+        "200"
+      ],
+      "result": "final_200"
+    },
+    {
+      "url": "https://ngt.lv/",
+      "response_status_chain": [
+        "103",
+        "200"
+      ],
+      "result": "final_200"
+    },
+    {
+      "url": "https://predatorfishinglv.com/",
+      "response_status_chain": [],
+      "result": "unverified_local_tls_chain_error"
+    },
+    {
+      "url": "https://restboat.lv/",
+      "response_status_chain": [
+        "200"
+      ],
+      "result": "final_200"
+    },
+    {
+      "url": "https://rezeknesnovads.lv/viesiem/aktiva-atputa/raznas-breksi-copes-gids/",
+      "response_status_chain": [
+        "200"
+      ],
+      "result": "final_200"
+    },
+    {
+      "url": "https://www.fishingguidelatvia.com/",
+      "response_status_chain": [
+        "200"
+      ],
+      "result": "final_200"
+    },
+    {
+      "url": "https://www.fishinginlatvia.com/",
+      "response_status_chain": [
+        "302",
+        "200"
+      ],
+      "result": "final_200"
+    },
+    {
+      "url": "https://www.rigafishing.com/",
+      "response_status_chain": [
+        "200"
+      ],
+      "result": "final_200"
+    },
+    {
+      "url": "https://www.usmafishing.lv/",
+      "response_status_chain": [
+        "200"
+      ],
+      "result": "final_200"
+    },
+    {
+      "url": "https://www.visitpreili.lv/lv/gidi/",
+      "response_status_chain": [
+        "200"
+      ],
+      "result": "final_200"
+    },
+    {
+      "url": "https://www.whitelake-adventure.com/",
+      "response_status_chain": [
+        "200"
+      ],
+      "result": "final_200"
+    }
+  ],
+  "unavailable_measurements": {
+    "pagespeed_insights": {
+      "http_status": 429,
+      "reason": "API quota exhausted; no Lighthouse or Core Web Vitals result obtained"
+    },
+    "browser_host": "unavailable",
+    "search_console": "not accessed",
+    "actual_google_indexed_page_count": "unknown",
+    "organic_traffic_rankings_keyword_volumes_backlinks": "not measured"
+  },
+  "application_changes_made": false
+}

@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
 import { GuideApplicationForm } from "@/components/forms";
 import { Container, PageHeader } from "@/components/ui";
 import { site } from "@/lib/site";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Kļūsti par gidu",
   description: `Esi makšķerēšanas gids Latvijā? Pievienojies ${site.name} vai labo savu profilu.`,
-};
+  path: "/klusti-par-gidu",
+});
 
 const benefits = [
   { title: "Tieši kontakti", text: "Profilā ir tavi tālrunis, WhatsApp un e-pasts. Makšķernieki zvana un raksta tieši tev." },

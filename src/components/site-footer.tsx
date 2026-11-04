@@ -12,8 +12,10 @@ export function SiteFooter() {
       links: [
         { href: "/braucieni", label: "Visi braucieni" },
         { href: "/gidi", label: "Gidi" },
-        { href: "/braucieni?suga=lasis", label: "Lašu makšķerēšana" },
-        { href: "/braucieni?veids=ledus", label: "Ziemas cope" },
+        { href: "/zivis/lidaka", label: "Līdaku cope" },
+        { href: "/zivis/zandarts", label: "Zandartu cope" },
+        { href: "/zivis/sams", label: "Samu cope" },
+        { href: "/cope/ziemas-cope", label: "Ziemas cope" },
       ],
     },
     {
@@ -30,6 +32,7 @@ export function SiteFooter() {
     {
       title: "Info",
       links: [
+        { href: "/par-mums", label: "Par mums un avotiem" },
         { href: "/#buj", label: "Biežākie jautājumi" },
         { href: "/privatums", label: "Privātuma politika" },
       ],

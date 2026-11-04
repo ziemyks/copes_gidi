@@ -10,6 +10,10 @@ import { species } from "@/data/species";
 import { tripTypes, tripsByRegion } from "@/data/trips";
 import type { Trip, TripType } from "@/data/types";
 import { formatPrice, site } from "@/lib/site";
+import { fishingLandings, speciesLandingPath, tripTypePath } from "@/data/discovery";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata = pageMetadata({ title: "Makšķerēšanas gidi Latvijā — cenas un braucieni", description: site.description, path: "/" });
 
 const months = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jūn", "Jūl", "Aug", "Sep", "Okt", "Nov", "Dec"];
 
@@ -35,7 +39,7 @@ const steps = [
 const faq = [
   {
     q: "Vai man vajag makšķerēšanas karti?",
-    a: "Jā. Latvijā makšķerēšanas karte parasti nepieciešama makšķerniekiem no 16 līdz 65 gadu vecumam, un to var iegādāties tiešsaistē. Licencētajos ūdeņos (piemēram, lašu posmos Ventā un Salacā) papildus vajag licenci. Gids pastāstīs, kas tieši nepieciešams, bet pirms brauciena pārbaudi aktuālos noteikumus.",
+    a: "Atkarībā no makšķernieka, ūdens un brauciena var būt vajadzīga makšķerēšanas karte un atsevišķa licence. Pirms brauciena pārbaudi spēkā esošos noteikumus, atbrīvojumus un konkrētā ūdens nolikumu. Saite uz oficiālajiem noteikumiem ir pie sezonu kalendāra.",
   },
   {
     q: "No kurienes šī informācija?",
@@ -98,6 +102,7 @@ export default function Home() {
               </span>
             </span>
           </h1>
+          <p className="eyebrow mt-6 text-ink">Makšķerēšanas gidi un braucieni Latvijā</p>
           <p className="mx-auto mt-8 max-w-md font-mono text-sm text-muted sm:text-base">
             Īsti gidi. Publicētas cenas. Avots pie katra fakta. Jo stāsti par “tik lielu” mums arī ir apnikuši.
           </p>
@@ -276,7 +281,7 @@ export default function Home() {
             Neatkarīgi gidi ar savām laivām un saviem ūdeņiem. Viņi nav mūsu partneri — pāršķir un sazinies tieši.
           </p>
           <div className="mt-20">
-            <GuideDeck guides={guides} regionNames={regionNames} kindNames={kindLabels} />
+            <GuideDeck guides={guides.map(({ slug, name, brand, logo, kind, region, summary }) => ({ slug, name, brand, logo, kind, region, summary }))} regionNames={regionNames} kindNames={kindLabels} />
           </div>
           <div className="mt-14 text-center">
             <Link href="/gidi" className="btn btn-secondary">
@@ -296,12 +301,13 @@ export default function Home() {
               <span className="text-accent">ķert</span>
             </h2>
             <p className="max-w-xs font-mono text-xs text-muted">
-              Aptuvens kalendārs. Pirms brauciena pārbaudi aktuālos makšķerēšanas noteikumus un liegumus.
+              Aptuvena zivju aktivitāte, nevis atļauto sezonu saraksts. Konkrētā ūdens liegumi un licences jāpārbauda atsevišķi.
             </p>
           </div>
           <div className="mt-12 overflow-hidden rounded-[24px] bg-raised">
             <div className="overflow-x-auto p-3 sm:p-6">
               <table className="w-full min-w-[720px] text-sm">
+                <caption className="sr-only">Aptuvena zivju aktivitāte pa mēnešiem; tā neapstiprina makšķerēšanas atļauju konkrētā vietā.</caption>
                 <thead>
                   <tr className="font-mono text-[0.68rem] uppercase text-muted">
                     <th className="px-4 py-3 text-left font-bold">Zivs</th>
@@ -316,11 +322,11 @@ export default function Home() {
                   {species.map((s) => (
                     <tr key={s.slug} className="border-t border-white/[0.07]">
                       <td className="px-4 py-2.5">
-                        <Link href={`/braucieni?suga=${s.slug}`} className="inline-block py-1 font-medium text-ink hover:text-accent">
-                          {s.name}
-                        </Link>
+                        {rankedTrips.some((trip) => trip.species.includes(s.slug)) ? (
+                          <Link href={speciesLandingPath(s.slug)} className="inline-block py-1 font-medium text-ink hover:text-accent">{s.name}</Link>
+                        ) : <span className="inline-block py-1 font-medium text-ink">{s.name}</span>}
                       </td>
-                      {months.map((m, i) => {
+                      {s.seasonNote ? <td colSpan={12} className="px-4 py-3 text-xs text-muted">{s.seasonNote}</td> : months.map((m, i) => {
                         const month = i + 1;
                         const cls = s.best.includes(month)
                           ? "bg-accent shadow-led"
@@ -347,6 +353,14 @@ export default function Home() {
               </span>
             </div>
           </div>
+          <p className="mt-6 max-w-3xl text-sm text-muted">
+            Makšķerēšanas atļaujas un liegumi atšķiras pa ūdeņiem un sugām.
+            Pirms rezervācijas apskati <a className="link" href="https://likumi.lv/ta/id/279205-makskeresanas-vezosanas-un-zemudens-medibu-noteikumi" target="_blank" rel="noopener noreferrer">oficiālos makšķerēšanas noteikumus</a> un <a className="link" href="https://www.manacope.lv/calendar" target="_blank" rel="noopener noreferrer">Mana Cope kalendāru</a>.
+          </p>
+          <nav aria-label="Cope pēc zivju sugas" className="mt-8 flex flex-wrap gap-3">
+            {fishingLandings.map((landing) => <Link key={landing.slug} href={`/zivis/${landing.slug}`} className="btn btn-secondary">{landing.name} →</Link>)}
+            <Link href="/cope/ziemas-cope" className="btn btn-secondary">Ziemas cope →</Link>
+          </nav>
         </Container>
       </section>
 
@@ -473,7 +487,7 @@ function ServiceCard({ type, index }: { type: TripType; index: number }) {
         ))}
         {list.length > 4 && (
           <li>
-            <Link href={`/braucieni?veids=${type}`} className="inline-block py-2 font-mono text-xs font-bold uppercase underline underline-offset-4">
+            <Link href={tripTypePath(type)} className="inline-block py-2 font-mono text-xs font-bold uppercase underline underline-offset-4">
               +{list.length - 4} vairāk
             </Link>
           </li>
@@ -483,7 +497,7 @@ function ServiceCard({ type, index }: { type: TripType; index: number }) {
         <span aria-hidden="true" className={style.arrow}>
           ↘
         </span>
-        <Link href={`/braucieni?veids=${type}`} className="py-1 hover:underline hover:underline-offset-4">
+        <Link href={tripTypePath(type)} className="py-1 hover:underline hover:underline-offset-4">
           {tripTypes[type]}
         </Link>
       </h3>

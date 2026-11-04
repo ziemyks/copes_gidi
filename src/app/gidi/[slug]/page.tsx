@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ActivityBadge, ContactPanel, PublicDataNotice, SourceList, formatDate } from "@/components/guide-parts";
 import { Avatar, Chip, Container, Eyebrow, TripCard } from "@/components/ui";
@@ -8,6 +7,10 @@ import { getRegion } from "@/data/regions";
 import { speciesNames } from "@/data/species";
 import { tripsByGuide } from "@/data/trips";
 import { formatPrice } from "@/lib/site";
+import { Breadcrumbs, JsonLd } from "@/components/seo";
+import { guideSearchCopy } from "@/data/search-copy";
+import { pageMetadata } from "@/lib/seo";
+import { guideProfileData } from "@/lib/structured-data";
 
 export function generateStaticParams() {
   return guides.map((g) => ({ slug: g.slug }));
@@ -16,8 +19,9 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps<"/gidi/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const guide = getGuide(slug);
-  if (!guide) return {};
-  return { title: `${guide.name} — ${guide.tagline}`, description: guide.summary };
+  if (!guide) notFound();
+  const copy = guideSearchCopy[guide.slug];
+  return pageMetadata({ title: copy?.title ?? `${guide.name} — cope ar gidu`, description: copy?.description ?? guide.summary, path: `/gidi/${guide.slug}` });
 }
 
 function List({ items, mark, muted }: { items: string[]; mark: string; muted?: boolean }) {
@@ -64,21 +68,10 @@ export default async function GuidePage({ params }: PageProps<"/gidi/[slug]">) {
 
   return (
     <>
+      <JsonLd data={guideProfileData(guide)} />
       <section className="border-b border-rule">
         <Container className="pb-12 pt-32 sm:pt-40">
-          <nav className="eyebrow flex items-center gap-2">
-            <Link href="/gidi" className="py-2 hover:text-ink">
-              Gidi
-            </Link>
-            {region && (
-              <>
-                <span className="text-faint">/</span>
-                <Link href={`/regioni/${region.slug}`} className="py-2 hover:text-ink">
-                  {region.name}
-                </Link>
-              </>
-            )}
-          </nav>
+          <Breadcrumbs items={[{ name: "Sākums", path: "/" }, { name: "Gidi", path: "/gidi" }, { name: guide.name, path: `/gidi/${guide.slug}` }]} />
           <div className="mt-10 flex flex-col gap-6 sm:flex-row sm:items-center">
             <Avatar guide={guide} size="lg" />
             <div>
@@ -107,7 +100,7 @@ export default async function GuidePage({ params }: PageProps<"/gidi/[slug]">) {
             </dl>
 
             <section>
-              <Eyebrow className="mb-4">Kopsavilkums</Eyebrow>
+              <Eyebrow as="h2" className="mb-4">Kopsavilkums</Eyebrow>
               <p className="text-xl leading-relaxed text-ink">{guide.summary}</p>
               {guide.people.length > 0 && (
                 <ul className="mt-6 flex flex-wrap gap-2">
@@ -122,7 +115,7 @@ export default async function GuidePage({ params }: PageProps<"/gidi/[slug]">) {
             </section>
 
             <section className="border-t border-rule pt-10">
-              <Eyebrow className="mb-4">Zivis</Eyebrow>
+              <Eyebrow as="h2" className="mb-4">Zivis</Eyebrow>
               <div className="flex flex-wrap gap-1.5">
                 {speciesNames(guide.species).map((n) => (
                   <Chip key={n}>{n}</Chip>
@@ -140,7 +133,7 @@ export default async function GuidePage({ params }: PageProps<"/gidi/[slug]">) {
 
             {guide.claims.length > 0 && (
               <section className="border-t border-rule pt-10">
-                <Eyebrow className="mb-2">Pieredze un sasniegumi</Eyebrow>
+                <Eyebrow as="h2" className="mb-2">Pieredze un sasniegumi</Eyebrow>
                 <p className="mb-6 text-sm text-muted">
                   Atzīme “paša teiktais” nozīmē, ka fakts ņemts no gida publikācijām un nav neatkarīgi pārbaudīts.
                 </p>
@@ -165,7 +158,7 @@ export default async function GuidePage({ params }: PageProps<"/gidi/[slug]">) {
 
             {guide.boats.length > 0 && (
               <section className="border-t border-rule pt-10">
-                <Eyebrow className="mb-6">Laiva un aprīkojums</Eyebrow>
+                <Eyebrow as="h2" className="mb-6">Laiva un aprīkojums</Eyebrow>
                 <div className="grid gap-4 sm:grid-cols-2">
                   {guide.boats.map((b) => (
                     <div key={b.model} className="card p-5">
@@ -190,11 +183,11 @@ export default async function GuidePage({ params }: PageProps<"/gidi/[slug]">) {
             {(guide.included.length > 0 || guide.notIncluded.length > 0) && (
               <section className="grid gap-10 border-t border-rule pt-10 sm:grid-cols-2">
                 <div>
-                  <Eyebrow className="mb-4">Iekļauts</Eyebrow>
+                  <Eyebrow as="h2" className="mb-4">Iekļauts</Eyebrow>
                   {guide.included.length ? <List items={guide.included} mark="✓" /> : <p className="text-muted">Nav norādīts</p>}
                 </div>
                 <div>
-                  <Eyebrow className="mb-4">Nav iekļauts</Eyebrow>
+                  <Eyebrow as="h2" className="mb-4">Nav iekļauts</Eyebrow>
                   {guide.notIncluded.length ? (
                     <List items={guide.notIncluded} mark="—" muted />
                   ) : (
@@ -218,7 +211,7 @@ export default async function GuidePage({ params }: PageProps<"/gidi/[slug]">) {
 
             {(guide.mentions.length > 0 || guide.reviews.length > 0) && (
               <section className="border-t border-rule pt-10">
-                <Eyebrow className="mb-6">Citur internetā</Eyebrow>
+                <Eyebrow as="h2" className="mb-6">Citur internetā</Eyebrow>
                 <ul className="space-y-3">
                   {guide.mentions.map((m) => (
                     <li key={m.url}>
@@ -248,7 +241,7 @@ export default async function GuidePage({ params }: PageProps<"/gidi/[slug]">) {
             )}
 
             <section className="border-t border-rule pt-10">
-              <Eyebrow className="mb-4">Pirms rezervācijas precizē</Eyebrow>
+              <Eyebrow as="h2" className="mb-4">Pirms rezervācijas precizē</Eyebrow>
               <List items={guide.caveats} mark="?" muted />
             </section>
 
@@ -263,7 +256,7 @@ export default async function GuidePage({ params }: PageProps<"/gidi/[slug]">) {
           </div>
 
           <aside className="relative z-[45] space-y-4 lg:sticky lg:top-28 lg:self-start">
-            <ContactPanel contacts={guide.contacts} title={guide.contactTitle} />
+            <ContactPanel contacts={guide.contacts} guideSlug={guide.slug} title={guide.contactTitle} />
             <PublicDataNotice checked={guide.checked} />
           </aside>
         </div>

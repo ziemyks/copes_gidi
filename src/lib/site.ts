@@ -2,19 +2,25 @@ export const site = {
   name: "Copes Gidi",
   tagline: "Neatkarīgi makšķerēšanas gidi visā Latvijā",
   description:
-    "Latvijas makšķerēšanas gidi vienuviet — publicētās cenas, laivas un ūdeņi ar avotu pie katra fakta. Sazinies tieši ar gidu.",
-  url: "https://copesgidi.lv",
+    "Salīdzini makšķerēšanas gidus un braucienus Latvijā: publicētās cenas, ūdeņus, laivas un aprīkojumu. Sazinies tieši ar izvēlēto gidu.",
+  url: "https://www.copesgidi.lv",
   email: "info@copesgidi.lv",
   /** Datums, kad gidu publiskie avoti pēdējo reizi pārbaudīti */
   checked: "2026-10-29",
 };
 
 export function siteUrl() {
-  if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL;
-  if (process.env.VERCEL_ENV === "production") return site.url;
-  // Preview izvietojumi rāda paši savu adresi, lai saites neved uz produkciju
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
-  return "http://localhost:3000";
+  const url = new URL(process.env.NEXT_PUBLIC_SITE_URL || site.url);
+  if (!["https:", "http:"].includes(url.protocol)) throw new Error("NEXT_PUBLIC_SITE_URL must be an HTTP(S) URL");
+  // Vecais produkcijas mainīgais arī tiek normalizēts uz faktisko galamērķi.
+  if (url.hostname === "copesgidi.lv" || url.hostname === "www.copesgidi.lv") {
+    return site.url;
+  }
+  return url.origin;
+}
+
+export function isPreviewDeployment() {
+  return process.env.VERCEL_ENV === "preview" || process.env.VERCEL_ENV === "development";
 }
 
 export function formatPrice(amount: number) {

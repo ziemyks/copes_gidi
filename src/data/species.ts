@@ -7,6 +7,8 @@ export type Species = {
   good: number[];
   /** Mēneši (1–12), kas ir labākais laiks */
   best: number[];
+  /** Where a national month-by-month recommendation would be misleading. */
+  seasonNote?: string;
 };
 
 export const species: Species[] = [
@@ -51,9 +53,10 @@ export const species: Species[] = [
     name: "Lasis",
     latin: "Salmo salar",
     description:
-      "Venta, Salaca un Gauja — licencētā lašu makšķerēšana ar vienu no Baltijas labākajām populācijām.",
-    good: [4, 5, 9],
-    best: [10, 11],
+      "Lašu cope Latvijā ir atkarīga no konkrētā ūdens noteikumiem un licencēm; pirms brauciena pārbaudi aktuālos ierobežojumus.",
+    good: [],
+    best: [],
+    seasonNote: "Sezona atkarīga no ūdens, metodes un liegumiem. Pārbaudi konkrētā posma noteikumus un licenci.",
   },
   {
     slug: "taimins",
@@ -61,8 +64,9 @@ export const species: Species[] = [
     latin: "Salmo trutta trutta",
     description:
       "Jūras forele, ko ķer gan upēs, gan no Kurzemes un Vidzemes jūras krasta.",
-    good: [3, 4, 5, 9],
-    best: [10, 11],
+    good: [],
+    best: [],
+    seasonNote: "Upju un piekrastes noteikumi atšķiras. Pārbaudi konkrētās vietas sezonu, metodi un lomu ierobežojumus.",
   },
   {
     slug: "forele",
@@ -105,8 +109,9 @@ export const species: Species[] = [
     latin: "Gadus morhua",
     description:
       "Baltijas jūras menca — no Liepājas mola un pludmales vēlā rudenī un ziemā, jūrā sezonāli. Pirms copes pārbaudi aktuālos mencu ierobežojumus.",
-    good: [1, 2, 3, 10],
-    best: [11, 12],
+    good: [],
+    best: [],
+    seasonNote: "Pirms mencu copes pārbaudi aktuālos sugas un izvēlētās jūras teritorijas ierobežojumus.",
   },
   {
     slug: "bute",

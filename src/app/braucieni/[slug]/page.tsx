@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ContactPanel, PublicDataNotice } from "@/components/guide-parts";
 import { ArrowLink, Avatar, Chip, Container, Eyebrow, Photo, PriceTag, TripCard } from "@/components/ui";
@@ -8,6 +7,9 @@ import { getRegion } from "@/data/regions";
 import { speciesNames } from "@/data/species";
 import { durationLabel, getTrip, tripTypes, trips } from "@/data/trips";
 import { formatPrice } from "@/lib/site";
+import { Breadcrumbs, JsonLd } from "@/components/seo";
+import { pageMetadata } from "@/lib/seo";
+import { tripServiceData } from "@/lib/structured-data";
 
 export function generateStaticParams() {
   return trips.map((t) => ({ slug: t.slug }));
@@ -16,8 +18,8 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps<"/braucieni/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const trip = getTrip(slug);
-  if (!trip) return {};
-  return { title: trip.title, description: trip.summary };
+  if (!trip) notFound();
+  return pageMetadata({ title: trip.title, description: trip.summary, path: `/braucieni/${trip.slug}` });
 }
 
 export default async function TripPage({ params }: PageProps<"/braucieni/[slug]">) {
@@ -41,20 +43,9 @@ export default async function TripPage({ params }: PageProps<"/braucieni/[slug]"
 
   return (
     <>
+      <JsonLd data={tripServiceData(trip, guide)} />
       <Container className="pb-24 pt-32 sm:pt-40">
-        <nav className="eyebrow flex items-center gap-2">
-          <Link href="/braucieni" className="py-2 hover:text-ink">
-            Braucieni
-          </Link>
-          {region && (
-            <>
-              <span className="text-faint">/</span>
-              <Link href={`/regioni/${region.slug}`} className="py-2 hover:text-ink">
-                {region.name}
-              </Link>
-            </>
-          )}
-        </nav>
+        <Breadcrumbs items={[{ name: "Sākums", path: "/" }, { name: "Braucieni", path: "/braucieni" }, { name: trip.title, path: `/braucieni/${trip.slug}` }]} />
 
         <h1 className="headline mt-6 max-w-4xl sm:text-[3.6rem]">{trip.title}</h1>
         <div className="mt-5 flex flex-wrap items-center gap-1.5">
@@ -83,7 +74,7 @@ export default async function TripPage({ params }: PageProps<"/braucieni/[slug]"
             </dl>
 
             <section>
-              <Eyebrow className="mb-4">Par braucienu</Eyebrow>
+              <Eyebrow as="h2" className="mb-4">Par braucienu</Eyebrow>
               <p className="text-xl leading-relaxed text-ink">{trip.summary}</p>
               {trip.notes.length > 0 && (
                 <ul className="mt-6 space-y-3 text-muted">
@@ -97,7 +88,7 @@ export default async function TripPage({ params }: PageProps<"/braucieni/[slug]"
             </section>
 
             <section className="border-t border-rule pt-10">
-              <Eyebrow className="mb-6">Publicētās cenas</Eyebrow>
+              <Eyebrow as="h2" className="mb-6">Publicētās cenas</Eyebrow>
               {trip.prices.length ? (
                 <table className="w-full text-left">
                   <tbody>
@@ -128,7 +119,7 @@ export default async function TripPage({ params }: PageProps<"/braucieni/[slug]"
             {(trip.included.length > 0 || trip.notIncluded.length > 0) && (
               <section className="grid gap-10 border-t border-rule pt-10 sm:grid-cols-2">
                 <div>
-                  <Eyebrow className="mb-4">Iekļauts</Eyebrow>
+                  <Eyebrow as="h2" className="mb-4">Iekļauts</Eyebrow>
                   <ul className="space-y-2.5">
                     {trip.included.map((i) => (
                       <li key={i} className="flex gap-3">
@@ -139,7 +130,7 @@ export default async function TripPage({ params }: PageProps<"/braucieni/[slug]"
                   {!trip.included.length && <p className="text-muted">Nav norādīts</p>}
                 </div>
                 <div>
-                  <Eyebrow className="mb-4">Nav iekļauts</Eyebrow>
+                  <Eyebrow as="h2" className="mb-4">Nav iekļauts</Eyebrow>
                   <ul className="space-y-2.5 text-muted">
                     {trip.notIncluded.map((i) => (
                       <li key={i} className="flex gap-3">
@@ -154,7 +145,7 @@ export default async function TripPage({ params }: PageProps<"/braucieni/[slug]"
 
             {guide && (
               <section className="border-t border-rule pt-10">
-                <Eyebrow className="mb-5">Kas vada</Eyebrow>
+                <Eyebrow as="h2" className="mb-5">Kas vada</Eyebrow>
                 <div className="flex items-center gap-4">
                   <Avatar guide={guide} />
                   <div>
@@ -178,7 +169,7 @@ export default async function TripPage({ params }: PageProps<"/braucieni/[slug]"
               <p className="eyebrow">Cena</p>
               <PriceTag trip={trip} className="mt-1 [&>span]:text-4xl" />
             </div>
-            {guide && <ContactPanel contacts={guide.contacts} title={guide.contactTitle} />}
+            {guide && <ContactPanel contacts={guide.contacts} guideSlug={guide.slug} title={guide.contactTitle} />}
             <PublicDataNotice checked={guide?.checked ?? "2026-10-29"} />
           </aside>
         </div>

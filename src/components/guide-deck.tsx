@@ -8,12 +8,14 @@ import { GuideMark } from "./guide-mark";
 // Kārtis guļ kaudzē; augšējā ir aktīvā, pārējās sagrieztas zem tās
 const tilt = [0, -5, 4, -2];
 
+export type DeckGuide = Pick<Guide, "slug" | "name" | "brand" | "logo" | "kind" | "region" | "summary">;
+
 export function GuideDeck({
   guides,
   regionNames,
   kindNames,
 }: {
-  guides: Guide[];
+  guides: DeckGuide[];
   regionNames: Record<string, string>;
   kindNames: Record<string, string>;
 }) {

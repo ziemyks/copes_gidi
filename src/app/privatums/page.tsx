@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
 import { Container } from "@/components/ui";
 import { site } from "@/lib/site";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = { title: "Privātuma politika" };
+export const metadata = pageMetadata({ title: "Privātuma politika", path: "/privatums", description: "Kā Copes Gidi izmanto publisko gidu informāciju, pieteikumus un apkopotu apmeklējuma statistiku. Saziņa datu labošanai un dzēšanai." });
 
 // Šis ir sākuma teksts — pirms publicēšanas to vajadzētu pārskatīt juristam.
 export default function PrivacyPage() {
@@ -20,6 +20,9 @@ export default function PrivacyPage() {
           <p>
             Lapas apmeklējumu skaitīšanai izmantojam Vercel Web Analytics. Tas nelieto sīkdatnes un neveido
             apmeklētāju profilus — redzam tikai apkopotus skaitļus, piemēram, cik reizes atvērta kāda lapa.
+            Reģistrējam arī klikšķus uz gida saziņas saitēm un meklējumus bez rezultātiem, lai uzlabotu katalogu.
+            Šajos notikumos izmantojam profila identifikatoru, saites veidu un lapas ceļu; nenosūtām tālruņa
+            numuru, e-pasta adresi vai ziņas saturu.
           </p>
           <h2 className="title text-ink">Gidiem</h2>
           <p>

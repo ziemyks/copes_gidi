@@ -9,6 +9,7 @@ const nav = [
   { href: "/braucieni", label: "Braucieni" },
   { href: "/gidi", label: "Gidi" },
   { href: "/#regioni", label: "Reģioni" },
+  { href: "/par-mums", label: "Par mums" },
   { href: "/klusti-par-gidu", label: "Esi gids?" },
 ];
 

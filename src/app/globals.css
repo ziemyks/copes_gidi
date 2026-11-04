@@ -342,9 +342,14 @@ details > summary::-webkit-details-marker {
 html[data-js] [data-reveal] {
   opacity: 0;
   transform: translateY(40px);
+  /* Keep content visible if the client effects fail to initialize. */
+  animation: reveal-fallback 0s 3s forwards;
   transition:
     opacity 0.8s var(--ease-ks),
     transform 0.8s var(--ease-ks);
+}
+@keyframes reveal-fallback {
+  to { opacity: 1; transform: none; }
 }
 html[data-js] [data-reveal].is-in {
   opacity: 1;
@@ -368,49 +373,6 @@ html[data-js] [data-reveal].is-in {
   transition: rotate 0.25s var(--ease-ks);
 }
 
-/* ---------- Ielādes ekrāns (tikai CSS) ---------- */
-
-@property --pct {
-  syntax: "<integer>";
-  initial-value: 0;
-  inherits: false;
-}
-
-.loader {
-  animation: loader-out 0.7s 1.9s cubic-bezier(0.7, 0, 0.2, 1) forwards;
-}
-.loader-fill {
-  width: 0;
-  animation: loader-fill 1.7s cubic-bezier(0.55, 0, 0.25, 1) forwards;
-}
-.loader-count {
-  counter-reset: pct var(--pct);
-  animation: loader-count 1.7s cubic-bezier(0.55, 0, 0.25, 1) forwards;
-}
-.loader-count::after {
-  content: counter(pct) "%";
-}
-@keyframes loader-fill {
-  to {
-    width: 100%;
-  }
-}
-@keyframes loader-count {
-  to {
-    --pct: 100;
-  }
-}
-@keyframes loader-out {
-  to {
-    transform: translateY(-105%);
-    visibility: hidden;
-    pointer-events: none;
-  }
-}
-html[data-loaded] .loader {
-  display: none;
-}
-
 /* Lietotājs izslēdzis kustību (vai sistēmas iestatījums) */
 html[data-motion="off"] *,
 html[data-motion="off"] *::before,
@@ -418,9 +380,6 @@ html[data-motion="off"] *::after {
   animation-duration: 0s !important;
   animation-delay: 0s !important;
   transition-duration: 0s !important;
-}
-html[data-motion="off"] .loader {
-  display: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -433,9 +392,6 @@ html[data-motion="off"] .loader {
     animation-duration: 0s !important;
     animation-delay: 0s !important;
     transition-duration: 0s !important;
-  }
-  .loader {
-    display: none;
   }
   html[data-js] [data-reveal] {
     opacity: 1;

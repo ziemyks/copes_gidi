@@ -1,26 +1,30 @@
-import type { Metadata } from "next";
 import { Suspense } from "react";
-import { GuideExplorer, GuideGrid } from "@/components/explorers";
+import { GuideGrid } from "@/components/catalog-grids";
+import { GuideResults } from "@/components/catalog-results";
 import { Container, PageHeader } from "@/components/ui";
 import { guides } from "@/data/guides";
 import { trips } from "@/data/trips";
+import { hasCatalogFacets, pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Makšķerēšanas gidi Latvijā",
-  description: "Latvijas makšķerēšanas gidi ar publiski pieejamu piedāvājumu — cenas, laivas, ūdeņi un tiešie kontakti ar avotiem.",
-};
+export async function generateMetadata({ searchParams }: PageProps<"/gidi">) {
+  return pageMetadata({
+    title: "Makšķerēšanas gidi Latvijā", path: "/gidi",
+    description: "Salīdzini Latvijas makšķerēšanas gidus: publicētās cenas, laivas, ūdeņus un aprīkojumu. Profili ar avotiem un tiešajiem kontaktiem.",
+    noindex: hasCatalogFacets(await searchParams, ["regions", "suga", "valoda"]),
+  });
+}
 
-export default function GuidesPage() {
+export default function GuidesPage({ searchParams }: PageProps<"/gidi">) {
   return (
     <>
       <PageHeader
         eyebrow={`${guides.length} profili · ${trips.length} piedāvājumi`}
-        title="Gidi"
+        title="Makšķerēšanas gidi Latvijā"
         intro="Visi gidi un komandas, kuru piedāvājums ir publiski pieejams. Katrs ir sava biznesa īpašnieks un nav mūsu partneris — sazinies ar viņiem tieši."
       />
       <Container className="pb-24 pt-10">
         <Suspense fallback={<GuideGrid items={guides} />}>
-          <GuideExplorer />
+          <GuideResults searchParams={searchParams} />
         </Suspense>
       </Container>
     </>

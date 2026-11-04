@@ -572,6 +572,7 @@ export const trips: Trip[] = [
     type: "laiva",
     region: "vidzeme",
     waters: ["Alūksnes ezers", "Dagdas ezeri", "Burtnieks"],
+    regions: ["vidzeme", "latgale"],
     species: ["lidaka", "zandarts", "asaris"],
     prices: [],
     included: ["Gids", "Laiva ar aprīkojumu un rīkiem", "Ūdens, kafija vai uzkodas"],

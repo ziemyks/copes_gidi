@@ -1,26 +1,30 @@
-import type { Metadata } from "next";
 import { Suspense } from "react";
-import { TripExplorer, TripGrid } from "@/components/explorers";
+import { TripGrid } from "@/components/catalog-grids";
+import { TripResults } from "@/components/catalog-results";
 import { Container, PageHeader } from "@/components/ui";
 import { rankedTrips as trips } from "@/data/guides";
+import { hasCatalogFacets, pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Makšķerēšanas braucieni ar gidu",
-  description: "Makšķerēšanas braucieni ar gidu Latvijā — publicētās cenas, ilgumi un iekļautais no gidu pašu cenrāžiem.",
-};
+export async function generateMetadata({ searchParams }: PageProps<"/braucieni">) {
+  return pageMetadata({
+    title: "Makšķerēšanas braucieni ar gidu Latvijā", path: "/braucieni",
+    description: "Salīdzini makšķerēšanas braucienus ar gidu Latvijā: publicētās cenas, ilgumu, ūdeņus un iekļauto inventāru. Sazinies un rezervē tieši pie gida.",
+    noindex: hasCatalogFacets(await searchParams, ["regions", "suga", "veids"]),
+  });
+}
 
-export default function TripsPage() {
+export default function TripsPage({ searchParams }: PageProps<"/braucieni">) {
   return (
     <>
       <PageHeader
         eyebrow={`${trips.length} braucieni`}
-        title="Visi braucieni"
+        title="Makšķerēšanas braucieni ar gidu Latvijā"
         intro="Cenas un ilgumi no gidu pašu cenrāžiem. Pievērs uzmanību, vai cena ir par braucienu vai no personas — rezervē tieši pie gida."
       />
       <Container className="pb-24 pt-10">
-        {/* Bez JS (un meklētājiem) rāda visu sarakstu; filtri ielādējas klienta pusē */}
+        {/* Pilnais saraksts ir statiskajā čaulā; atlasītie rezultāti tiek renderēti serverī. */}
         <Suspense fallback={<TripGrid items={trips} />}>
-          <TripExplorer />
+          <TripResults searchParams={searchParams} />
         </Suspense>
       </Container>
     </>

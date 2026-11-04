@@ -125,6 +125,8 @@ export type Trip = {
   summary: string;
   type: TripType;
   region: string;
+  /** Additional service regions explicitly named in the published offer. */
+  regions?: string[];
   waters: string[];
   species: string[];
   hours?: number;

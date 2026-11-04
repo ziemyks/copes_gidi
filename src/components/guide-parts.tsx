@@ -14,18 +14,18 @@ export function formatDate(iso: string) {
 const row = "flex items-center justify-between gap-4 rounded-2xl border border-white/10 px-4 py-3 transition hover:border-accent";
 
 /** Tiešie kontakti no gida publiskā piedāvājuma — Copes Gidi nav starpnieks */
-export function ContactPanel({ contacts, title = "Sazinies ar gidu tieši" }: { contacts: Contacts; title?: string }) {
-  const links: { label: string; value: string; href: string }[] = [
-    ...contacts.phones.map((p) => ({ label: "Tālrunis", value: formatPhone(p), href: `tel:${p.replace(/\s/g, "")}` })),
+export function ContactPanel({ contacts, guideSlug, title = "Sazinies ar gidu tieši" }: { contacts: Contacts; guideSlug: string; title?: string }) {
+  const links: { label: string; value: string; href: string; channel: string }[] = [
+    ...contacts.phones.map((p) => ({ label: "Tālrunis", channel: "phone", value: formatPhone(p), href: `tel:${p.replace(/\s/g, "")}` })),
     ...(contacts.whatsapp
-      ? [{ label: "WhatsApp", value: formatPhone(`+${contacts.whatsapp}`), href: `https://wa.me/${contacts.whatsapp}` }]
+      ? [{ label: "WhatsApp", channel: "whatsapp", value: formatPhone(`+${contacts.whatsapp}`), href: `https://wa.me/${contacts.whatsapp}` }]
       : []),
-    ...contacts.emails.map((e) => ({ label: "E-pasts", value: e, href: `mailto:${e}` })),
-    ...(contacts.website ? [{ label: "Mājaslapa", value: hostOf(contacts.website), href: contacts.website }] : []),
-    ...(contacts.facebook ? [{ label: "Facebook", value: "Atvērt profilu", href: contacts.facebook }] : []),
-    ...(contacts.instagram ? [{ label: "Instagram", value: "Atvērt profilu", href: contacts.instagram }] : []),
-    ...(contacts.youtube ? [{ label: "YouTube", value: "Atvērt kanālu", href: contacts.youtube }] : []),
-    ...(contacts.tiktok ? [{ label: "TikTok", value: "Atvērt profilu", href: contacts.tiktok }] : []),
+    ...contacts.emails.map((e) => ({ label: "E-pasts", channel: "email", value: e, href: `mailto:${e}` })),
+    ...(contacts.website ? [{ label: "Mājaslapa", channel: "website", value: hostOf(contacts.website), href: contacts.website }] : []),
+    ...(contacts.facebook ? [{ label: "Facebook", channel: "facebook", value: "Atvērt profilu", href: contacts.facebook }] : []),
+    ...(contacts.instagram ? [{ label: "Instagram", channel: "instagram", value: "Atvērt profilu", href: contacts.instagram }] : []),
+    ...(contacts.youtube ? [{ label: "YouTube", channel: "youtube", value: "Atvērt kanālu", href: contacts.youtube }] : []),
+    ...(contacts.tiktok ? [{ label: "TikTok", channel: "tiktok", value: "Atvērt profilu", href: contacts.tiktok }] : []),
   ];
 
   return (
@@ -39,6 +39,8 @@ export function ContactPanel({ contacts, title = "Sazinies ar gidu tieši" }: { 
           <li key={l.href}>
             <a
               href={l.href}
+              data-guide={guideSlug}
+              data-contact-type={l.channel}
               className={row}
               {...(l.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
             >
@@ -63,7 +65,7 @@ function hostOf(url: string) {
 export function SourceList({ sources, checked }: { sources: Source[]; checked: string }) {
   return (
     <section className="border-t border-rule pt-10">
-      <p className="eyebrow mb-2">Avoti</p>
+      <h2 className="eyebrow mb-2">Avoti</h2>
       <p className="mb-5 text-sm text-muted">Publiskie avoti pārbaudīti {formatDate(checked)}</p>
       <ol className="space-y-2">
         {sources.map((s, i) => (
