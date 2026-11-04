@@ -1,3 +1,4 @@
+import { getLocale, localize } from "@/i18n/server";
 import type { Activity, Contacts, Source } from "@/data/types";
 
 function formatPhone(phone: string) {
@@ -14,7 +15,8 @@ export function formatDate(iso: string) {
 const row = "flex items-center justify-between gap-4 rounded-2xl border border-white/10 px-4 py-3 transition hover:border-accent";
 
 /** Tiešie kontakti no gida publiskā piedāvājuma — Copes Gidi nav starpnieks */
-export function ContactPanel({ contacts, guideSlug, title = "Sazinies ar gidu tieši" }: { contacts: Contacts; guideSlug: string; title?: string }) {
+export async function ContactPanel({ contacts, guideSlug, title = "Sazinies ar gidu tieši" }: { contacts: Contacts; guideSlug: string; title?: string }) {
+  const locale = await getLocale();
   const links: { label: string; value: string; href: string; channel: string }[] = [
     ...contacts.phones.map((p) => ({ label: "Tālrunis", channel: "phone", value: formatPhone(p), href: `tel:${p.replace(/\s/g, "")}` })),
     ...(contacts.whatsapp
@@ -28,7 +30,7 @@ export function ContactPanel({ contacts, guideSlug, title = "Sazinies ar gidu ti
     ...(contacts.tiktok ? [{ label: "TikTok", channel: "tiktok", value: "Atvērt profilu", href: contacts.tiktok }] : []),
   ];
 
-  return (
+  return localize((
     <div className="card p-6 shadow-lift-1">
       <h2 className="title text-xl">{title}</h2>
       <p className="mb-5 mt-1 text-sm text-muted">
@@ -51,7 +53,7 @@ export function ContactPanel({ contacts, guideSlug, title = "Sazinies ar gidu ti
         ))}
       </ul>
     </div>
-  );
+  ), locale);
 }
 
 function hostOf(url: string) {
@@ -62,8 +64,9 @@ function hostOf(url: string) {
   }
 }
 
-export function SourceList({ sources, checked }: { sources: Source[]; checked: string }) {
-  return (
+export async function SourceList({ sources, checked }: { sources: Source[]; checked: string }) {
+  const locale = await getLocale();
+  return localize((
     <section className="border-t border-rule pt-10">
       <h2 className="eyebrow mb-2">Avoti</h2>
       <p className="mb-5 text-sm text-muted">Publiskie avoti pārbaudīti {formatDate(checked)}</p>
@@ -81,22 +84,24 @@ export function SourceList({ sources, checked }: { sources: Source[]; checked: s
         ))}
       </ol>
     </section>
-  );
+  ), locale);
 }
 
-export function PublicDataNotice({ checked }: { checked: string }) {
-  return (
+export async function PublicDataNotice({ checked }: { checked: string }) {
+  const locale = await getLocale();
+  return localize((
     <p className="rounded-2xl border border-white/10 bg-black/40 p-4 text-xs leading-relaxed text-muted">
       Informācija apkopota no gida publiskajiem avotiem un pārbaudīta {formatDate(checked)}. Copes Gidi ar gidu nav
       sazinājies un neapstiprina pieejamību, gala cenu, PVN vai atcelšanas noteikumus — precizē tos pirms rezervācijas.
     </p>
-  );
+  ), locale);
 }
 
 /** Aktīvs = gida pakalpojumam ir neseni publiski pierādījumi; pārējiem iesakām sazināties personīgi. Datumu apzināti nerādām */
-export function ActivityBadge({ activity, className = "" }: { activity: Activity; className?: string }) {
+export async function ActivityBadge({ activity, className = "" }: { activity: Activity; className?: string }) {
+  const locale = await getLocale();
   const active = activity.status === "redzama";
-  return (
+  return localize((
     <span
       className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-[0.72rem] font-bold uppercase ${
         active ? "border-patina/40 text-patina" : "border-amber-300/40 text-amber-300"
@@ -105,5 +110,5 @@ export function ActivityBadge({ activity, className = "" }: { activity: Activity
       <span className={`h-1.5 w-1.5 rounded-full ${active ? "bg-patina" : "bg-amber-300"}`} />
       {active ? "Aktīvs" : "Sazinies personīgi"}
     </span>
-  );
+  ), locale);
 }

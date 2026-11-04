@@ -1,3 +1,4 @@
+import { getLocale, localize } from "@/i18n/server";
 import { allLanguages } from "@/data/guides";
 import { regions } from "@/data/regions";
 import { species } from "@/data/species";
@@ -14,9 +15,10 @@ const commonFilters: CatalogFilter[] = [
 ];
 
 export async function TripResults({ searchParams }: { searchParams: Promise<CatalogQuery> }) {
+  const locale = await getLocale();
   const query = await searchParams;
   const results = filteredTrips(query);
-  return (
+  return localize((
     <div data-catalog="braucieni" data-result-count={results.length}>
       {!hasCatalogFacets(query, ["regions", "suga", "veids"]) && <JsonLd data={collectionData("/braucieni", "Makšķerēšanas braucieni ar gidu Latvijā", results.map((t) => ({ name: t.title, path: `/braucieni/${t.slug}` })))} />}
       <CatalogExplorer count={results.length} noun="braucieni" filters={[
@@ -27,13 +29,14 @@ export async function TripResults({ searchParams }: { searchParams: Promise<Cata
         <TripGrid items={results} />
       </CatalogExplorer>
     </div>
-  );
+  ), locale);
 }
 
 export async function GuideResults({ searchParams }: { searchParams: Promise<CatalogQuery> }) {
+  const locale = await getLocale();
   const query = await searchParams;
   const results = filteredGuides(query);
-  return (
+  return localize((
     <div data-catalog="gidi" data-result-count={results.length}>
       {!hasCatalogFacets(query, ["regions", "suga", "valoda"]) && <JsonLd data={collectionData("/gidi", "Makšķerēšanas gidi Latvijā", results.map((g) => ({ name: g.name, path: `/gidi/${g.slug}` })))} />}
       <CatalogExplorer count={results.length} noun="gidi" filters={[
@@ -43,5 +46,5 @@ export async function GuideResults({ searchParams }: { searchParams: Promise<Cat
         <GuideGrid items={results} />
       </CatalogExplorer>
     </div>
-  );
+  ), locale);
 }

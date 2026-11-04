@@ -2,7 +2,7 @@
 
 The canonical production origin is `https://www.copesgidi.lv`. `siteUrl()` normalizes the former apex origin, strips trailing paths, and never substitutes a Vercel preview hostname. `NEXT_PUBLIC_SITE_URL` should name the public production origin in every environment. The existing hosting redirect sends the apex hostname to `www`.
 
-All public page metadata is built with `src/lib/seo.ts`. Supply the real route path and a concise, distinct title/description. The root layout deliberately has no inherited homepage canonical. Full biographies remain in page content; `src/data/search-copy.ts` supplies shorter guide snippets. Metadata has page-specific canonical/Open Graph URLs and large-image Twitter cards. `src/app/opengraph-image.tsx` generates the shared social PNG at build time.
+All public page metadata is built with `src/lib/seo.ts`. Supply the real route path and a concise, distinct title/description. The root layout deliberately has no inherited homepage canonical. Full biographies remain in page content; `src/data/search-copy.ts` supplies shorter guide snippets. Metadata has page-specific canonical/Open Graph URLs and large-image Twitter cards. `src/lib/social-image.tsx` and `src/app/[lang]/opengraph-image/route.ts` generate a 1200×630 social PNG in the page language.
 
 **Indexing policy**
 
@@ -12,7 +12,7 @@ All public page metadata is built with `src/lib/seo.ts`. Supply the real route p
 - Catalog results are filtered on the server; the client receives only filter options and server-rendered children. The cached loading fallback contains the full catalog so discovery does not depend on filter JavaScript.
 - Curated search pages are `/zivis/lidaka`, `/zivis/zandarts`, `/zivis/sams`, and `/cope/ziemas-cope`. Add further pages only when real inventory and useful distinct content support them. Do not generate every filter combination.
 - Unknown guide, trip, region and species landing slugs must return a real 404 with noindex.
-- Metadata streaming is disabled (`htmlLimitedBots: /.*/`) because metadata only reads local catalog data. This keeps facet directives in the initial response and allows metadata existence checks to return a real 404 before a cached shell is streamed. Keep metadata resolution fast; do not add remote calls without revisiting this tradeoff.
+- Metadata streaming is disabled (`htmlLimitedBots: /.*/`) because metadata only reads local catalog data. This keeps facet directives in the initial response. Invalid-slug metadata is noindex and resolves normally; the page throws `notFound()` so the localized missing-page boundary can render. Keep metadata resolution fast; do not add remote calls without revisiting this tradeoff.
 - Vercel preview/development deployments set noindex metadata, omit the robots sitemap announcement, and return an empty sitemap. Crawling is allowed so the noindex can be read. Deployment access protection remains a separate hosting setting.
 
 **Content and structured data**
@@ -43,7 +43,7 @@ Google Search Console HTML-file ownership verification uses `public/googleb964ec
 ```bash
 npm run lint
 npm run build
-npm run start -- --hostname 127.0.0.1 --port 3100
+npm run start -- --hostname localhost --port 3100
 ```
 
 In a second terminal:
@@ -65,3 +65,19 @@ Follow the mandatory after-change SEO review in `AGENTS.md`. Update this documen
 - Isolated configuration checks confirm production indexing and preview/development noindex, sitemap omission and production canonical origin, including an old apex URL environment value.
 - The catalog first-load JavaScript in the local build is 510,114 uncompressed bytes versus 620,136 in the pre-change local build diagnostics. No client chunk contains the full profile source/claim fields. These are build measurements, not network transfer sizes or Core Web Vitals.
 - Live deployment, Search Console inspection/submission, browser mobile-layout checks, field performance and analytics delivery remain deployment/browser verification work; no rankings or traffic uplift is claimed.
+
+
+**Latvian and English — 4 November 2026**
+
+The existing 69 Latvian URLs remain public. The complete English edition has 69 matching pages under `/en`, bringing the sitemap to 138 URLs. Examples: `/gidi` ↔ `/en/guides`, `/braucieni` ↔ `/en/trips`, `/regioni/kurzeme` ↔ `/en/regions/kurzeme`, `/privatums` ↔ `/en/privacy`.
+
+`src/proxy.ts` rewrites public URLs to shared `app/[lang]` routes. Internal `/lv` aliases and untranslated English route aliases redirect permanently to the corresponding public URL. Static files, Next assets and the Google verification file bypass language routing. There is no automatic browser-language redirect.
+
+Each indexable page has a self canonical, reciprocal `lv` and `en` language alternates, and `x-default` pointing to the Latvian page. The sitemap includes the same alternates. Filter URLs remain noindex without canonical or language alternates; sorting-only URLs use the canonical base catalog in their own language. HTML language, Open Graph locale, descriptions, breadcrumbs and page/service schema follow the selected language. The publisher/WebSite identifiers remain stable.
+
+The LV/EN switch retains the matching page and query parameters. Internal navigation stays in the selected language. English guide biographies, trip details, regional planning advice, FAQs, application messages and privacy content are stored in reviewed dictionaries. Source dates and prices have not been changed. Proper names and legal business identities stay as published; guides’ stated spoken languages are translated as labels, not expanded.
+
+The catalog translation dictionary remains server-only; client controls receive the small UI dictionary, and the homepage deck receives only its existing projected guide summary fields. After changing Latvian copy, update its English key/value in the same change. `AGENTS.md` requires this alongside the SEO review.
+
+
+Bilingual implementation validation: lint, TypeScript/production build and the expanded 138-page HTTP crawl pass. The crawl checks matching language alternates, navigation that retains language, source-copy translation coverage, alias redirects, both filtered catalogs, localized structured data, both social PNGs and the unchanged Google verification file. Deliberately invalid local applications showed all three validation messages in each language without sending email. The English social image was visually inspected. Interactive browser/mobile layout checks could not be completed because the browser access host was unavailable; deployment and live Search Console verification are separate steps.

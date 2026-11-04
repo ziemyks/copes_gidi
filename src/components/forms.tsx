@@ -1,4 +1,5 @@
 "use client";
+import { useLocale, localize } from "@/i18n/client";
 
 import { useActionState } from "react";
 import { sendGuideApplication, type FormState } from "@/app/actions";
@@ -17,37 +18,41 @@ function Field({
   error?: string;
   children: React.ReactNode;
 }) {
-  return (
+  const locale = useLocale();
+  return localize((
     <label className="block">
       <span className="mb-2 block text-[0.8125rem] font-medium text-ink">{label}</span>
       {children}
       {error && <span className="mt-1.5 block text-xs text-vermilion">{error}</span>}
     </label>
-  );
+  ), locale);
 }
 
 function Honeypot() {
-  return (
+  const locale = useLocale();
+  return localize((
     <input type="text" name="company" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
-  );
+  ), locale);
 }
 
 function Success({ message }: { message?: string }) {
-  return (
+  const locale = useLocale();
+  return localize((
     <div className="rounded-lg border border-rule bg-paper-deep p-6">
       <p className="eyebrow mb-2 text-patina-deep">Nosūtīts</p>
       <p className="title">Paldies — pieteikums ir ceļā.</p>
       <p className="mt-2 text-sm text-muted">{message}</p>
     </div>
-  );
+  ), locale);
 }
 
 export function GuideApplicationForm() {
+  const locale = useLocale();
   const [state, action, pending] = useActionState(sendGuideApplication, initial);
 
-  if (state.status === "ok") return <Success message={state.message} />;
+  if (state.status === "ok") return localize(<Success message={state.message} />, locale);
 
-  return (
+  return localize((
     <form action={action} className="grid gap-4 sm:grid-cols-2">
       <Honeypot />
       <Field label="Vārds, uzvārds" error={state.errors?.name}>
@@ -93,5 +98,5 @@ export function GuideApplicationForm() {
         </button>
       </div>
     </form>
-  );
+  ), locale);
 }

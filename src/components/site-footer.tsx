@@ -1,3 +1,4 @@
+import { getLocale, localize } from "@/i18n/server";
 import Link from "next/link";
 import { regions } from "@/data/regions";
 import { site } from "@/lib/site";
@@ -5,7 +6,8 @@ import { Wordmark } from "./chrome";
 import { formatDate } from "./guide-parts";
 import { Bobber } from "./stickers";
 
-export function SiteFooter() {
+export async function SiteFooter() {
+  const locale = await getLocale();
   const columns = [
     {
       title: "Atklāj",
@@ -39,7 +41,7 @@ export function SiteFooter() {
     },
   ];
 
-  return (
+  return localize((
     <footer className="border-t border-rule">
       <div className="mx-auto max-w-7xl px-6 pb-28 pt-24 sm:px-10">
         <div className="flex flex-col items-start gap-8 border-b border-rule pb-16 lg:flex-row lg:items-end lg:justify-between">
@@ -87,5 +89,5 @@ export function SiteFooter() {
         </div>
       </div>
     </footer>
-  );
+  ), locale);
 }

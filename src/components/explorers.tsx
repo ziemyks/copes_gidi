@@ -1,4 +1,5 @@
 "use client";
+import { useLocale, localize } from "@/i18n/client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { track } from "@vercel/analytics";
@@ -14,6 +15,7 @@ export function CatalogExplorer({ filters, count, noun, children }: {
   noun: "gidi" | "braucieni";
   children: React.ReactNode;
 }) {
+  const locale = useLocale();
   const params = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -31,7 +33,7 @@ export function CatalogExplorer({ filters, count, noun, children }: {
     startTransition(() => router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false }));
   }
 
-  return (
+  return localize((
     <div aria-busy={pending} className={pending ? "opacity-60 transition-opacity" : "transition-opacity"}>
       <form action={pathname} className="mb-10 flex flex-col gap-5 border-b border-rule pb-8 lg:flex-row lg:items-end lg:justify-between">
         <div className="flex flex-wrap gap-4">
@@ -57,5 +59,5 @@ export function CatalogExplorer({ filters, count, noun, children }: {
       </form>
       {children}
     </div>
-  );
+  ), locale);
 }

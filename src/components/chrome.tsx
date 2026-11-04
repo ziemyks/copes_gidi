@@ -1,7 +1,9 @@
 "use client";
+import { useLocale, localize } from "@/i18n/client";
 
+import { LanguageSwitch } from "./language-switch";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { site } from "@/lib/site";
 
 const nav = [
@@ -14,15 +16,17 @@ const nav = [
 ];
 
 export function Wordmark() {
-  return (
+  const locale = useLocale();
+  return localize((
     <Link href="/" className="font-display text-lg font-extrabold lowercase tracking-tight text-ink [font-variation-settings:'wdth'_112]">
       {site.name}
     </Link>
-  );
+  ), locale);
 }
 
 /** Ekrāna rāmis, stūra ielocījums un fiksētās vadīklas */
 export function Chrome() {
+  const locale = useLocale();
   const [open, setOpen] = useState(false);
   const [motionOff, setMotionOff] = useState(false);
 
@@ -43,7 +47,7 @@ export function Chrome() {
     document.documentElement.dataset.motion = next ? "off" : "on";
   }
 
-  return (
+  return localize((
     <>
       {/* Rāmis — virs visa, nereaģē uz klikšķiem */}
       <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-[60]">
@@ -80,7 +84,10 @@ export function Chrome() {
 
         <CatchMeter />
 
-        <div className="flex h-10 items-center">
+        <div className="flex h-11 items-center gap-3">
+          <div className="absolute right-0 top-12 sm:static">
+            <Suspense fallback={null}><LanguageSwitch /></Suspense>
+          </div>
           <Wordmark />
         </div>
       </div>
@@ -122,14 +129,15 @@ export function Chrome() {
         </div>
       )}
     </>
-  );
+  ), locale);
 }
 
 /** Pusapaļš mērītājs augšā — adata kustas līdz ar ritināšanu */
 function CatchMeter() {
+  const locale = useLocale();
   const ticks = [0, 5, 10, 15, 20];
-  return (
-    <div aria-hidden="true" className="absolute left-1/2 top-[-12px] hidden -translate-x-1/2 sm:block">
+  return localize((
+    <div aria-hidden="true" className="absolute left-1/2 top-[-12px] hidden -translate-x-1/2 lg:block">
       <div className="relative h-[80px] w-[160px] overflow-hidden">
         <div className="absolute -top-[80px] left-0 h-[160px] w-[160px] rounded-full border-[5px] border-bezel bg-[#0b0b0b]">
           <svg viewBox="-80 -80 160 160" className="absolute inset-0 h-full w-full">
@@ -156,5 +164,5 @@ function CatchMeter() {
         </div>
       </div>
     </div>
-  );
+  ), locale);
 }

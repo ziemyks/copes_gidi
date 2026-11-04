@@ -1,3 +1,4 @@
+import { getLocale, localize } from "@/i18n/server";
 import Link from "next/link";
 import type { Trip } from "@/data/types";
 import { guides } from "@/data/guides";
@@ -7,12 +8,13 @@ import { GuideGrid, TripGrid } from "./catalog-grids";
 import { Container, PageHeader } from "./ui";
 import { collectionData } from "@/lib/seo";
 
-export function FishingLanding({ path, title, intro, tips, trips }: {
+export async function FishingLanding({ path, title, intro, tips, trips }: {
   path: string; title: string; intro: string; tips: { title: string; text: string }[]; trips: Trip[];
 }) {
+  const locale = await getLocale();
   const providers = guides.filter((guide) => trips.some((trip) => trip.guide === guide.slug));
   const destinations = regions.filter((region) => trips.some((trip) => trip.region === region.slug || trip.regions?.includes(region.slug)));
-  return (
+  return localize((
     <>
       <JsonLd data={collectionData(path, title, trips.map((trip) => ({ name: trip.title, path: `/braucieni/${trip.slug}` })))} />
       <PageHeader eyebrow={`${trips.length} publicēti piedāvājumi`} title={title} intro={intro}>
@@ -46,5 +48,5 @@ export function FishingLanding({ path, title, intro, tips, trips }: {
         </section>
       </Container>
     </>
-  );
+  ), locale);
 }

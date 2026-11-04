@@ -19,3 +19,14 @@ Every change to a webpage, its content, navigation, data, styling, or rendering 
 - Preserve crawlable links, meaningful image alt text, mobile usability, and loading performance. Keep full guide/source data out of client bundles when only a summary is needed.
 - Run `npm run lint`, `npm run build`, and `npm run test:seo` against the production server for changes affecting SEO or page rendering. For a content/style-only change, run the relevant checks and inspect the affected page's rendered metadata, headings, links, and layout. Report any checks that could not be completed.
 - Keep `docs/seo-implementation.md` current when changing SEO conventions or indexing policy. The dated SEO audit is a historical baseline; do not rewrite its observations as if they were new measurements.
+
+## Maintain both site languages
+
+Latvian remains the default at the existing URLs; English is available under `/en` with a matching page language switch. Every visible content change must update the English translation in the same change, including guide/trip data, forms, accessible labels, metadata and structured data.
+
+- Keep route mapping in `src/i18n/routing.ts`. Preserve Latvian URLs and add reciprocal `lv`, `en` and `x-default` alternates for indexable pages. Both versions belong in the sitemap.
+- Add English interface copy to `src/i18n/en/ui.json` and catalog/editorial copy to `src/i18n/en/catalog.json`. Keys match the Latvian source copy, including punctuation. New or edited source strings require matching English keys; remove obsolete translations when appropriate.
+- Server components use `getLocale()` and `localize()` from `src/i18n/server.tsx`; client components use `useLocale()` and `localize()` from `src/i18n/client.tsx`. The render helper translates text and navigation while preserving identifiers, form/filter values and external URLs. Add new human-readable string props to the helper when necessary.
+- Keep the full catalog dictionary on the server. Project only the fields a client component needs; translate joined lists before display where necessary. Do not store request locale in mutable module state.
+- Preserve guide names, business identities, prices, contacts, source URLs and verification dates. An English site interface does not imply that a guide speaks English.
+- Run the bilingual production SEO crawl after changes. Start the test server with `--hostname localhost` so Next.js local rewrite normalization matches the test origin.

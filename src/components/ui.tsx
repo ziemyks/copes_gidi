@@ -1,3 +1,4 @@
+import { getLocale, localize } from "@/i18n/server";
 import Image from "next/image";
 import Link from "next/link";
 import { getGuide, guideFrom, kindLabels } from "@/data/guides";
@@ -10,21 +11,23 @@ import { ActivityBadge } from "./guide-parts";
 import { GuideMark } from "./guide-mark";
 import { Scene, type SceneVariant } from "./scene";
 
-export function Container({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return <div className={`mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 ${className}`}>{children}</div>;
+export async function Container({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  const locale = await getLocale();
+  return localize(<div className={`mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 ${className}`}>{children}</div>, locale);
 }
 
-export function Eyebrow({ index, children, className = "", as: Tag = "p" }: { index?: string; children: React.ReactNode; className?: string; as?: "p" | "h2" | "h3" }) {
-  return (
+export async function Eyebrow({ index, children, className = "", as: Tag = "p" }: { index?: string; children: React.ReactNode; className?: string; as?: "p" | "h2" | "h3" }) {
+  const locale = await getLocale();
+  return localize((
     <Tag className={`eyebrow flex items-center gap-3 ${className}`}>
       {index && <span className="text-accent-deep">{index}</span>}
       {index && <span className="h-px w-6 bg-current opacity-40" />}
       {children}
     </Tag>
-  );
+  ), locale);
 }
 
-export function SectionHeading({
+export async function SectionHeading({
   index,
   eyebrow,
   title,
@@ -37,7 +40,8 @@ export function SectionHeading({
   intro?: string;
   action?: React.ReactNode;
 }) {
-  return (
+  const locale = await getLocale();
+  return localize((
     <div className="mb-12 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
       <div className="max-w-2xl">
         {eyebrow && (
@@ -50,27 +54,29 @@ export function SectionHeading({
       </div>
       {action}
     </div>
-  );
+  ), locale);
 }
 
-export function ArrowLink({ href, children }: { href: string; children: React.ReactNode }) {
-  return (
+export async function ArrowLink({ href, children }: { href: string; children: React.ReactNode }) {
+  const locale = await getLocale();
+  return localize((
     <Link href={href} className="link inline-block shrink-0 py-2 text-[0.9375rem] font-medium">
       {children} →
     </Link>
-  );
+  ), locale);
 }
 
-export function Chip({ children, tone = "light" }: { children: React.ReactNode; tone?: "light" | "dark" }) {
+export async function Chip({ children, tone = "light" }: { children: React.ReactNode; tone?: "light" | "dark" }) {
+  const locale = await getLocale();
   const styles =
     tone === "dark"
       ? "bg-black/75 text-ink backdrop-blur"
       : "border border-rule bg-black/40 text-text";
-  return <span className={`inline-block rounded-full px-3 py-1 font-mono text-[0.72rem] font-bold uppercase ${styles}`}>{children}</span>;
+  return localize(<span className={`inline-block rounded-full px-3 py-1 font-mono text-[0.72rem] font-bold uppercase ${styles}`}>{children}</span>, locale);
 }
 
 /** Fotogrāfija, ja tāda ir, citādi ilustrēta ainava. */
-export function Photo({
+export async function Photo({
   src,
   alt,
   scene,
@@ -85,14 +91,15 @@ export function Photo({
   sizes?: string;
   priority?: boolean;
 }) {
+  const locale = await getLocale();
   if (src) {
-    return <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className="object-cover" />;
+    return localize(<Image src={src} alt={alt} fill sizes={sizes} priority={priority} className="object-cover" />, locale);
   }
-  return <Scene variant={scene} seed={seed} className="absolute inset-0 h-full w-full" />;
+  return localize(<Scene variant={scene} seed={seed} className="absolute inset-0 h-full w-full" />, locale);
 }
 
 /** Ierāmēts attēls ar mono parakstu zem tā */
-export function Figure({
+export async function Figure({
   scene,
   seed,
   caption,
@@ -105,7 +112,8 @@ export function Figure({
   meta?: string;
   className?: string;
 }) {
-  return (
+  const locale = await getLocale();
+  return localize((
     <figure>
       <div className={`card dogear overflow-hidden ${className}`}>
         <Scene variant={scene} seed={seed} className="absolute inset-0 h-full w-full" />
@@ -115,10 +123,11 @@ export function Figure({
         {meta && <span className="text-faint">{meta}</span>}
       </figcaption>
     </figure>
-  );
+  ), locale);
 }
 
-export function Avatar({ guide, size = "md" }: { guide: Guide; size?: "md" | "lg" }) {
+export async function Avatar({ guide, size = "md" }: { guide: Guide; size?: "md" | "lg" }) {
+  const locale = await getLocale();
   // Logotipi parasti ir plati, tāpēc tiem taisnstūris; iniciāļiem — aplis
   const dims = guide.logo
     ? size === "lg"
@@ -127,32 +136,35 @@ export function Avatar({ guide, size = "md" }: { guide: Guide; size?: "md" | "lg
     : size === "lg"
       ? "h-24 w-24 text-3xl"
       : "h-14 w-14 text-xl";
-  return <GuideMark guide={guide} className={dims} />;
+  return localize(<GuideMark guide={{ name: guide.name, brand: guide.brand, logo: guide.logo }} className={dims} locale={locale} />, locale);
 }
 
 /** "no 150 € / par braucienu" vai "Cena pēc pieprasījuma" */
-export function PriceTag({ trip, className = "" }: { trip: Trip; className?: string }) {
-  if (trip.priceFrom === undefined) return <p className={`text-sm text-muted ${className}`}>Cena pēc pieprasījuma</p>;
-  return (
+export async function PriceTag({ trip, className = "" }: { trip: Trip; className?: string }) {
+  const locale = await getLocale();
+  if (trip.priceFrom === undefined) return localize(<p className={`text-sm text-muted ${className}`}>Cena pēc pieprasījuma</p>, locale);
+  return localize((
     <p className={`text-sm text-muted ${className}`}>
       no <span className="font-display text-lg font-black text-ink">{formatPrice(trip.priceFrom)}</span>
       {trip.priceBasis && <> / {trip.priceBasis}</>}
     </p>
-  );
+  ), locale);
 }
 
-function CardFooter({ children }: { children: React.ReactNode }) {
-  return (
+async function CardFooter({ children }: { children: React.ReactNode }) {
+  const locale = await getLocale();
+  return localize((
     <div className="mt-auto pt-5">
       <div className="flex items-baseline justify-between gap-3 border-t border-rule pr-7 pt-4">{children}</div>
     </div>
-  );
+  ), locale);
 }
 
-export function TripCard({ trip }: { trip: Trip }) {
+export async function TripCard({ trip }: { trip: Trip }) {
+  const locale = await getLocale();
   const guide = getGuide(trip.guide);
   const region = getRegion(trip.region);
-  return (
+  return localize((
     <Link href={`/braucieni/${trip.slug}`} className="card dogear group flex h-full min-w-0 flex-col overflow-hidden">
       <div className="relative aspect-[4/3] overflow-hidden border-b border-rule">
         <Photo alt={trip.title} scene={trip.scene} seed={trip.slug} />
@@ -172,14 +184,15 @@ export function TripCard({ trip }: { trip: Trip }) {
         </CardFooter>
       </div>
     </Link>
-  );
+  ), locale);
 }
 
-export function GuideCard({ guide, showBio = false }: { guide: Guide; showBio?: boolean }) {
+export async function GuideCard({ guide, showBio = false }: { guide: Guide; showBio?: boolean }) {
+  const locale = await getLocale();
   const region = getRegion(guide.region);
   const names = speciesNames(guide.species);
   const from = guideFrom(guide.slug);
-  return (
+  return localize((
     <Link href={`/gidi/${guide.slug}`} className="card dogear group flex h-full min-w-0 flex-col p-6">
       <div className="flex items-center gap-4">
         <Avatar guide={guide} />
@@ -205,10 +218,10 @@ export function GuideCard({ guide, showBio = false }: { guide: Guide; showBio?: 
         </span>
       </CardFooter>
     </Link>
-  );
+  ), locale);
 }
 
-export function PageHeader({
+export async function PageHeader({
   eyebrow,
   title,
   intro,
@@ -219,7 +232,8 @@ export function PageHeader({
   intro?: string;
   children?: React.ReactNode;
 }) {
-  return (
+  const locale = await getLocale();
+  return localize((
     <section className="border-b border-rule">
       <Container className="pb-16 pt-32 sm:pt-44">
         <Eyebrow className="mb-6">{eyebrow}</Eyebrow>
@@ -228,5 +242,5 @@ export function PageHeader({
         {children}
       </Container>
     </section>
-  );
+  ), locale);
 }

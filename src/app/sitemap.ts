@@ -6,6 +6,8 @@ import { isPreviewDeployment } from "@/lib/site";
 import { absoluteUrl } from "@/lib/seo";
 import { fishingLandings } from "@/data/discovery";
 
+import { localizedPath, locales } from "@/i18n/routing";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   if (isPreviewDeployment()) return [];
   const paths = [
@@ -21,5 +23,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...guides.map((g) => `/gidi/${g.slug}`),
     ...regions.map((r) => `/regioni/${r.slug}`),
   ];
-  return paths.map((path) => ({ url: absoluteUrl(path || "/") }));
+  return paths.flatMap((path) => locales.map((locale) => ({
+    url: absoluteUrl(localizedPath(path || "/", locale)),
+    alternates: { languages: { lv: absoluteUrl(localizedPath(path || "/", "lv")), en: absoluteUrl(localizedPath(path || "/", "en")), "x-default": absoluteUrl(localizedPath(path || "/", "lv")) } },
+  })));
 }

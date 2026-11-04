@@ -1,4 +1,5 @@
 "use client";
+import { useLocale, localize } from "@/i18n/client";
 
 import Link from "next/link";
 import { useState } from "react";
@@ -19,11 +20,12 @@ export function GuideDeck({
   regionNames: Record<string, string>;
   kindNames: Record<string, string>;
 }) {
+  const locale = useLocale();
   const [index, setIndex] = useState(0);
   const count = guides.length;
   const go = (step: number) => setIndex((i) => (i + step + count) % count);
 
-  return (
+  return localize((
     <div className="flex flex-col items-center gap-8 md:flex-row md:justify-center md:gap-14">
       <RoundButton label="Iepriekšējais gids" onClick={() => go(-1)} className="hidden md:flex">
         ↑
@@ -45,7 +47,7 @@ export function GuideDeck({
               }}
             >
               <div className="flex items-center gap-5">
-                <GuideMark guide={guide} className={guide.logo ? "h-20 w-32" : "h-20 w-20 text-2xl"} />
+                <GuideMark locale={locale} guide={guide} className={guide.logo ? "h-20 w-32" : "h-20 w-20 text-2xl"} />
                 <div className="min-w-0">
                   <h3 className="font-display text-2xl font-black uppercase leading-none text-ink [font-variation-settings:'wdth'_110]">
                     {guide.name.split(" ").map((part) => (
@@ -86,7 +88,7 @@ export function GuideDeck({
         </RoundButton>
       </div>
     </div>
-  );
+  ), locale);
 }
 
 function RoundButton({
@@ -100,7 +102,8 @@ function RoundButton({
   className?: string;
   children: React.ReactNode;
 }) {
-  return (
+  const locale = useLocale();
+  return localize((
     <button
       type="button"
       aria-label={label}
@@ -109,5 +112,5 @@ function RoundButton({
     >
       {children}
     </button>
-  );
+  ), locale);
 }
