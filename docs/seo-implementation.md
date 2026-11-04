@@ -4,6 +4,8 @@ The canonical production origin is `https://www.copesgidi.lv`. `siteUrl()` norma
 
 All public page metadata is built with `src/lib/seo.ts`. Supply the real route path and a concise, distinct title/description. The root layout deliberately has no inherited homepage canonical. Full biographies remain in page content; `src/data/search-copy.ts` supplies shorter guide snippets. Metadata has page-specific canonical/Open Graph URLs and large-image Twitter cards. `src/lib/social-image.tsx` and `src/app/[lang]/opengraph-image/route.ts` generate a 1200×630 social PNG in the page language.
 
+The language-neutral site icon uses the brand orange and a simple fish silhouette. `src/app/icon.svg` is the vector source; `src/app/favicon.ico` contains matching 16, 32 and 48-pixel PNG images for browser compatibility. Next.js adds both icon links to Latvian and English pages automatically. Keep both files in sync when changing the icon. These root assets bypass locale routing and remain crawlable.
+
 **Indexing policy**
 
 - Core pages, real guides/trips/regions, the About/privacy pages, and the selected fishing landing pages are indexable and listed in the sitemap.
