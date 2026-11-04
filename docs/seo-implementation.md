@@ -38,6 +38,8 @@ These explicit fields exclude contact details and message contents. No booking c
 
 **Verification**
 
+Google Search Console HTML-file ownership verification uses `public/googleb964ec0d368cdbab.html`, copied unchanged from Google's download. Next.js serves it at `https://www.copesgidi.lv/googleb964ec0d368cdbab.html`. Keep its exact filename and contents, and retain it after verification so Google can recheck ownership. This is a verification resource, not a content page; do not add it to `sitemap.xml` or page navigation. In Search Console use HTML-file verification for the URL-prefix property `https://www.copesgidi.lv/`, then submit `https://www.copesgidi.lv/sitemap.xml` separately. Domain properties require DNS verification instead.
+
 ```bash
 npm run lint
 npm run build
